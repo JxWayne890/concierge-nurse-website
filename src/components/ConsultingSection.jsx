@@ -1,0 +1,78 @@
+import { Link } from 'react-router-dom';
+import { ArrowRight, BarChart3, Cog, Map } from 'lucide-react';
+
+export default function ConsultingSection() {
+  return (
+    <section className="py-24 lg:py-32 bg-navy relative overflow-hidden">
+      <div className="absolute inset-0 opacity-[0.02]" style={{
+        backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
+        backgroundSize: '50px 50px'
+      }} />
+
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* Left */}
+          <div>
+            <p className="section-label mb-4">For Established Business Owners</p>
+            <h2 className="font-heading text-3xl sm:text-4xl lg:text-[2.8rem] font-bold text-white leading-tight mb-5">
+              Business Diagnostics &{' '}
+              <span className="text-gold-gradient">Implementation Pathway</span>
+            </h2>
+            <div className="gold-divider mb-6" />
+            <p className="text-white/60 text-[0.95rem] leading-relaxed mb-8 max-w-lg">
+              You built the business. Revenue is coming in. But something is not
+              working the way it should. Growth has stalled, systems are
+              breaking, or you are working harder than you need to. This service
+              is the diagnostic and strategic fix.
+            </p>
+
+            <div className="space-y-6 mb-10">
+              {[
+                { icon: BarChart3, title: 'Deep Business Diagnostic', text: 'A comprehensive analysis of your systems, processes, revenue streams, and operations to uncover exactly what is limiting your growth.' },
+                { icon: Cog, title: 'Full Diagnostic Report', text: 'A detailed report of findings with prioritized recommendations and clear next steps.' },
+                { icon: Map, title: 'Strategic Implementation Pathway', text: 'A custom roadmap designed to fix what is broken, optimize what is working, and position your business for sustainable scale.' },
+              ].map((item) => (
+                <div key={item.title} className="flex gap-4">
+                  <div className="w-10 h-10 bg-white/5 flex items-center justify-center flex-shrink-0">
+                    <item.icon size={18} className="text-gold" />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-semibold text-sm mb-1">{item.title}</h4>
+                    <p className="text-white/50 text-sm leading-relaxed">{item.text}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <Link to="/consulting" className="btn-primary inline-flex items-center gap-2">
+              Explore Consulting <ArrowRight size={14} />
+            </Link>
+          </div>
+
+          {/* Right - Visual */}
+          <div className="hidden lg:flex justify-end">
+            <div className="bg-navy-light border border-white/10 p-10 max-w-sm w-full">
+              <p className="text-gold text-[0.65rem] font-semibold tracking-[0.2em] uppercase mb-6">
+                Designed For
+              </p>
+              <div className="space-y-5">
+                {[
+                  'Concierge nurse businesses generating six to seven figures',
+                  'Owners who have hit a growth ceiling',
+                  'Practices with broken or inefficient systems',
+                  'Business owners working harder than necessary',
+                  'Established practices ready for strategic optimization',
+                ].map((item) => (
+                  <div key={item} className="flex items-start gap-3 pb-5 border-b border-white/5 last:border-0 last:pb-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-gold mt-1.5 flex-shrink-0" />
+                    <span className="text-white/70 text-sm">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
