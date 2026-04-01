@@ -52,10 +52,9 @@ export default function FeaturedPrograms() {
 
         {/* Bottom Full-Width Block - Business Diagnostics */}
         <div
-          className="w-full relative h-[450px] lg:h-[650px] bg-cover bg-center flex flex-col items-center justify-center p-8"
-          style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=1600")'}}
+          className="w-full relative h-[450px] lg:h-[650px] bg-navy flex flex-col items-center justify-center p-8"
         >
-           <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/60 to-navy/30 z-0"></div>
+           <div className="absolute inset-0 bg-navy z-0"></div>
 
            <div className="relative z-10 flex flex-col items-center text-center max-w-2xl mt-auto lg:mt-32 pb-12 lg:pb-0">
              <h2 className="avery-title text-6xl md:text-[5.5rem] lg:text-[7.5rem] text-white tracking-widest leading-[0.9] mb-6 drop-shadow-xl select-none">

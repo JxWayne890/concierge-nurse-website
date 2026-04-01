@@ -79,7 +79,7 @@ export default function AboutSection() {
               </div>
               <div 
                 className="w-full aspect-[3/4] max-w-[320px] ml-auto bg-cover bg-center shadow-md relative z-10" 
-                style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=800")'}}
+                style={{ backgroundImage: 'url("https://i.imgur.com/DvpjpEH.jpg")'}}
               />
             </div>
 
