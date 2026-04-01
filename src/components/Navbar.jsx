@@ -16,6 +16,17 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
 
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [mobileOpen]);
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-navy border-b border-navy-light/20">
       <nav className="max-w-[1400px] mx-auto px-6 h-[70px] md:h-[100px] flex items-center justify-between">
@@ -78,39 +89,88 @@ export default function Navbar() {
         {/* Mobile Toggle */}
         <div className="xl:hidden w-1/3 flex justify-end">
           <button
-            onClick={() => setMobileOpen(!mobileOpen)}
+            onClick={() => setMobileOpen(true)}
             className="p-2 text-white"
-            aria-label="Toggle menu"
+            aria-label="Open menu"
           >
-            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+            <Menu size={24} />
           </button>
         </div>
       </nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Overlay */}
       {mobileOpen && (
-        <div className="xl:hidden bg-navy h-screen overflow-y-auto">
-          <div className="px-6 py-12 flex flex-col gap-6 items-center">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
+        <div className="mobile-menu-overlay animate-menu-fade">
+          {/* Menu Header with X */}
+          <div className="h-[70px] px-6 flex items-center justify-between border-b border-white/5">
+            <div className="w-1/3"></div>
+            <div className="w-1/3 flex justify-center">
+              <span className="avery-title text-xl tracking-[0.1em] text-white">
+                CNS
+              </span>
+            </div>
+            <div className="w-1/3 flex justify-end">
+              <button
                 onClick={() => setMobileOpen(false)}
-                className={`avery-sub text-lg ${
-                  location.pathname === link.path ? 'text-gold' : 'text-white'
-                }`}
+                className="p-2 text-white/80 hover:text-white"
+                aria-label="Close menu"
               >
-                {link.label}
-              </Link>
+                <X size={28} />
+              </button>
+            </div>
+          </div>
+
+          {/* Menu Links Content */}
+          <div className="flex-1 overflow-y-auto flex flex-col items-center justify-center space-y-2 py-12">
+            {navLinks.map((link, index) => (
+              <div 
+                key={link.path} 
+                className="animate-link-slide" 
+                style={{ animationDelay: `${index * 0.05 + 0.1}s` }}
+              >
+                <Link
+                  to={link.path}
+                  onClick={() => setMobileOpen(false)}
+                  className={`mobile-nav-link ${
+                    location.pathname === link.path ? 'active' : ''
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              </div>
             ))}
-            <div className="w-12 h-[1px] bg-gold my-4" />
-            <Link
-              to="/contact"
-              onClick={() => setMobileOpen(false)}
-              className="btn-white text-white"
+
+            <div 
+              className="animate-link-slide pt-8 pb-4" 
+              style={{ animationDelay: `${navLinks.length * 0.05 + 0.1}s` }}
             >
-              Contact / Book
-            </Link>
+              <div className="w-8 h-[1px] bg-gold/40 mx-auto" />
+            </div>
+
+            <div 
+              className="animate-link-slide w-full px-12" 
+              style={{ animationDelay: `${navLinks.length * 0.05 + 0.2}s` }}
+            >
+              <Link
+                to="/contact"
+                onClick={() => setMobileOpen(false)}
+                className="btn-white w-full text-white border-white/30"
+                style={{ fontSize: '0.75rem', padding: '1rem' }}
+              >
+                CONTACT / BOOK NOW
+              </Link>
+            </div>
+          </div>
+
+          {/* Menu Footer */}
+          <div className="p-12 pb-16 flex flex-col items-center gap-6 animate-link-slide" style={{ animationDelay: `${navLinks.length * 0.05 + 0.3}s` }}>
+            <div className="flex gap-8 text-white/60 text-[0.7rem] uppercase tracking-[0.3em] font-body">
+              <span className="cursor-pointer hover:text-gold transition-colors">Instagram</span>
+              <span className="cursor-pointer hover:text-gold transition-colors">Facebook</span>
+            </div>
+            <p className="text-white/30 text-[0.55rem] uppercase tracking-[0.2em] font-body">
+              © 2026 Concierge Nurse Business Society
+            </p>
           </div>
         </div>
       )}

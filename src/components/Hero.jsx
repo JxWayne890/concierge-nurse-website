@@ -31,31 +31,42 @@ export default function Hero() {
            </div>
         </div>
 
-        <div className="flex md:hidden flex-col w-full h-full pb-10 pt-4">
-           {/* Invisible Frame, Perfect Square Photo */}
-           <div className="px-14 w-full mb-4">
-             <div 
-               className="w-full aspect-square bg-cover bg-center shrink-0"
-               style={{ backgroundImage: 'url("https://i.imgur.com/V5zt5SD.jpeg")'}}
-             />
-           </div>
-           
-           {/* Left-Aligned Text Content */}
-           <div className="w-full flex-grow flex flex-col items-start justify-center text-left pt-10">
-              <h1 className="font-heading font-normal text-[3.1rem] text-white mb-6 leading-[1.02] tracking-tight uppercase">
-                BUILD, LAUNCH <br/>
-                <span className="italic normal-case text-gold px-1">&</span> SCALE YOUR <br/>
-                NURSING BUSINESS
-              </h1>
-              
-              <p className="font-body text-white/90 text-[1.1rem] leading-relaxed mb-10 max-w-sm">
-                Strategic business-building for nurses who refuse to settle for the bedside. Education, consulting, and hands-on coaching to scale to six figures and beyond.
-              </p>
-              
-              <Link to="/start-here" className="btn-white text-white border-white bg-transparent hover:bg-white hover:text-navy hover:border-white w-full max-w-[260px] text-center py-4 text-[0.75rem] tracking-widest uppercase mt-auto">
+        {/* Mobile Layout — Full-bleed hero image with overlay text */}
+        <div className="flex md:hidden flex-col w-full h-full relative">
+          {/* Full-bleed background image */}
+          <div
+            className="absolute inset-0 bg-cover"
+            style={{ backgroundImage: 'url("https://i.imgur.com/V5zt5SD.jpeg")', backgroundPosition: '80% 15%' }}
+          />
+          {/* Gradient overlay — darker at bottom for text legibility */}
+          <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/70 to-navy/30" />
+
+          {/* Content pinned to bottom */}
+          <div className="relative z-10 w-full flex-grow flex flex-col justify-end px-6 pb-12 pt-20">
+            {/* Small label */}
+            <p className="font-body text-gold text-[0.6rem] tracking-[0.25em] uppercase mb-5">
+              Concierge Nurse Business Society
+            </p>
+
+            <h1 className="font-heading font-normal text-[2.75rem] text-white mb-5 leading-[1.05] tracking-tight uppercase">
+              BUILD, LAUNCH <br/>
+              <span className="italic normal-case text-gold">&</span> SCALE YOUR <br/>
+              NURSING BUSINESS
+            </h1>
+
+            <p className="font-body text-white/80 text-[0.85rem] leading-relaxed mb-8 max-w-[300px]">
+              Strategic business-building for nurses ready to leave the bedside and scale to six figures and beyond.
+            </p>
+
+            <div className="flex flex-col gap-3 w-full">
+              <Link to="/start-here" className="btn-white text-white border-white bg-transparent hover:bg-white hover:text-navy hover:border-white text-center py-3.5 text-[0.65rem] tracking-[0.2em] uppercase">
                 FIND YOUR PATH
               </Link>
-           </div>
+              <Link to="/community" className="text-center text-white/50 text-[0.6rem] tracking-[0.15em] uppercase py-2 hover:text-white/80 transition-colors">
+                JOIN THE FREE COMMUNITY
+              </Link>
+            </div>
+          </div>
         </div>
 
       </div>
