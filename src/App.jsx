@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import { AuthProvider } from './lib/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminLayout from './components/AdminLayout';
+import PageTracker from './components/PageTracker';
 
 import Home from './pages/Home';
 import About from './pages/About';
@@ -319,6 +320,7 @@ export default function App() {
   return (
     <AuthProvider>
       <ScrollToTop />
+      <PageTracker />
       <Suspense fallback={<Loading />}>
         <Routes>
           {/* Public site — with Navbar + Footer */}

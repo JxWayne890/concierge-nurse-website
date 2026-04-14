@@ -1,16 +1,38 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Users, UserPlus, Mail, TrendingUp, RefreshCw } from 'lucide-react';
+import { Users, UserPlus, Mail, TrendingUp, RefreshCw, Eye, BarChart3, Globe } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
+
+const RANGE_OPTIONS = [
+  { label: '7 Days', value: 7 },
+  { label: '30 Days', value: 30 },
+  { label: '90 Days', value: 90 },
+];
+
+function daysAgo(n) {
+  return new Date(Date.now() - n * 24 * 60 * 60 * 1000).toISOString();
+}
+
+function formatDate(dateStr) {
+  const d = new Date(dateStr);
+  return `${d.getMonth() + 1}/${d.getDate()}`;
+}
 
 export default function Dashboard() {
   const [stats, setStats] = useState({ total: 0, thisWeek: 0, subscribers: 0, consulting: 0 });
   const [recentLeads, setRecentLeads] = useState([]);
   const [loading, setLoading] = useState(true);
+  const hasLoaded = useRef(false);
 
-  const load = useCallback(async (isInitial = false) => {
-    if (isInitial) setLoading(true);
-    const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+  // Analytics state
+  const [range, setRange] = useState(7);
+  const [viewStats, setViewStats] = useState({ today: 0, period: 0, unique: 0 });
+  const [chartData, setChartData] = useState([]);
+  const [topPages, setTopPages] = useState([]);
+
+  const loadLeads = useCallback(async () => {
+    if (!hasLoaded.current) setLoading(true);
+    const weekAgo = daysAgo(7);
 
     const [
       { count: total },
@@ -38,35 +60,106 @@ export default function Dashboard() {
     setStats({ total: total || 0, thisWeek: thisWeek || 0, subscribers: subscriberCount, consulting: consultingCount });
     setRecentLeads(recent || []);
     setLoading(false);
+    hasLoaded.current = true;
   }, []);
 
-  useEffect(() => {
-    load(true);
+  const loadAnalytics = useCallback(async () => {
+    const periodStart = daysAgo(range);
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
 
-    // Realtime: refresh when contacts table changes
+    // Fetch page views for the period
+    const { data: views } = await supabase
+      .from('page_views')
+      .select('path, created_at')
+      .gte('created_at', periodStart)
+      .order('created_at', { ascending: true });
+
+    if (!views) {
+      setViewStats({ today: 0, period: 0, unique: 0 });
+      setChartData([]);
+      setTopPages([]);
+      return;
+    }
+
+    // Today count
+    const todayCount = views.filter((v) => new Date(v.created_at) >= todayStart).length;
+
+    // Unique paths (rough unique visitors proxy — unique path+day combos)
+    const uniqueDays = new Set();
+    views.forEach((v) => {
+      const day = new Date(v.created_at).toDateString();
+      uniqueDays.add(day);
+    });
+
+    setViewStats({
+      today: todayCount,
+      period: views.length,
+      unique: uniqueDays.size,
+    });
+
+    // Build chart data — group by day
+    const dayMap = {};
+    // Pre-fill all days in range
+    for (let i = range - 1; i >= 0; i--) {
+      const d = new Date(Date.now() - i * 24 * 60 * 60 * 1000);
+      const key = d.toISOString().slice(0, 10);
+      dayMap[key] = { date: key, count: 0 };
+    }
+    views.forEach((v) => {
+      const key = v.created_at.slice(0, 10);
+      if (dayMap[key]) dayMap[key].count++;
+    });
+    setChartData(Object.values(dayMap));
+
+    // Top pages
+    const pageCounts = {};
+    views.forEach((v) => {
+      pageCounts[v.path] = (pageCounts[v.path] || 0) + 1;
+    });
+    const sorted = Object.entries(pageCounts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 8)
+      .map(([path, count]) => ({ path, count }));
+    setTopPages(sorted);
+  }, [range]);
+
+  useEffect(() => {
+    loadLeads();
+
     const channel = supabase
       .channel('dashboard-contacts')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'contacts' }, () => {
-        load();
+        loadLeads();
       })
       .subscribe();
 
-    // Fallback: poll every 10 seconds in case realtime isn't connected
-    const interval = setInterval(() => load(), 10000);
+    const interval = setInterval(() => loadLeads(), 10000);
 
     return () => {
       supabase.removeChannel(channel);
       clearInterval(interval);
     };
-  }, [load]);
+  }, [loadLeads]);
+
+  useEffect(() => {
+    loadAnalytics();
+  }, [loadAnalytics]);
 
   if (loading) {
-    return <p className="text-slate text-sm">Loading dashboard...</p>;
+    return (
+      <div className="text-center py-10">
+        <div className="w-8 h-8 border-2 border-gold border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+        <p className="text-slate text-sm">Loading dashboard...</p>
+      </div>
+    );
   }
 
-  const statCards = [
+  const maxChart = Math.max(...chartData.map((d) => d.count), 1);
+
+  const leadCards = [
     { label: 'Total Leads', value: stats.total, icon: Users, color: 'text-navy' },
-    { label: 'This Week', value: stats.thisWeek, icon: UserPlus, color: 'text-green-600' },
+    { label: 'New This Week', value: stats.thisWeek, icon: UserPlus, color: 'text-green-600' },
     { label: 'Subscribers', value: stats.subscribers, icon: Mail, color: 'text-blue-600' },
     { label: 'Consulting', value: stats.consulting, icon: TrendingUp, color: 'text-gold' },
   ];
@@ -75,14 +168,14 @@ export default function Dashboard() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <h1 className="font-heading text-2xl font-bold text-navy">Dashboard</h1>
-        <button onClick={load} className="flex items-center gap-2 text-sm text-charcoal/40 hover:text-navy transition-colors">
+        <button onClick={() => { loadLeads(); loadAnalytics(); }} className="flex items-center gap-2 text-sm text-charcoal/40 hover:text-navy transition-colors">
           <RefreshCw size={14} /> Refresh
         </button>
       </div>
 
-      {/* Stat cards */}
+      {/* Lead stat cards */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-        {statCards.map((s) => (
+        {leadCards.map((s) => (
           <div key={s.label} className="bg-white border border-cream-dark p-6">
             <div className="flex items-center justify-between mb-3">
               <span className="text-[0.7rem] font-semibold tracking-[0.1em] uppercase text-charcoal/40">
@@ -93,6 +186,125 @@ export default function Dashboard() {
             <p className="font-heading text-3xl font-bold text-navy">{s.value}</p>
           </div>
         ))}
+      </div>
+
+      {/* ── Website Analytics ── */}
+      <div className="mb-10">
+        <div className="flex items-center justify-between mb-5">
+          <div className="flex items-center gap-2">
+            <BarChart3 size={18} className="text-gold" />
+            <h2 className="font-heading text-lg font-bold text-navy">Website Traffic</h2>
+          </div>
+          <div className="flex border border-cream-dark">
+            {RANGE_OPTIONS.map((opt) => (
+              <button
+                key={opt.value}
+                onClick={() => setRange(opt.value)}
+                className={`px-3 py-1.5 text-xs font-semibold transition-colors ${
+                  range === opt.value
+                    ? 'bg-navy text-gold'
+                    : 'bg-white text-charcoal/50 hover:text-charcoal'
+                }`}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Visitor stat cards */}
+        <div className="grid sm:grid-cols-3 gap-4 mb-6">
+          <div className="bg-white border border-cream-dark p-5">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[0.7rem] font-semibold tracking-[0.1em] uppercase text-charcoal/40">Today</span>
+              <Eye size={16} className="text-green-500" />
+            </div>
+            <p className="font-heading text-2xl font-bold text-navy">{viewStats.today}</p>
+            <p className="text-[0.65rem] text-charcoal/30 mt-1">page views</p>
+          </div>
+          <div className="bg-white border border-cream-dark p-5">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[0.7rem] font-semibold tracking-[0.1em] uppercase text-charcoal/40">Last {range} Days</span>
+              <BarChart3 size={16} className="text-blue-500" />
+            </div>
+            <p className="font-heading text-2xl font-bold text-navy">{viewStats.period}</p>
+            <p className="text-[0.65rem] text-charcoal/30 mt-1">total page views</p>
+          </div>
+          <div className="bg-white border border-cream-dark p-5">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[0.7rem] font-semibold tracking-[0.1em] uppercase text-charcoal/40">Active Days</span>
+              <Globe size={16} className="text-gold" />
+            </div>
+            <p className="font-heading text-2xl font-bold text-navy">{viewStats.unique}</p>
+            <p className="text-[0.65rem] text-charcoal/30 mt-1">days with traffic</p>
+          </div>
+        </div>
+
+        <div className="grid lg:grid-cols-3 gap-6">
+          {/* Bar chart */}
+          <div className="lg:col-span-2 bg-white border border-cream-dark p-6">
+            <h3 className="text-[0.7rem] font-semibold tracking-[0.1em] uppercase text-charcoal/40 mb-4">Daily Page Views</h3>
+            {chartData.length === 0 ? (
+              <p className="text-slate text-sm py-8 text-center">No data yet. Views will appear as visitors browse the site.</p>
+            ) : (
+              <div className="flex items-end gap-[2px] h-44">
+                {chartData.map((d) => {
+                  const height = maxChart > 0 ? (d.count / maxChart) * 100 : 0;
+                  return (
+                    <div key={d.date} className="flex-1 flex flex-col items-center group relative">
+                      {/* Tooltip */}
+                      <div className="absolute bottom-full mb-2 hidden group-hover:block z-10">
+                        <div className="bg-navy text-white text-[0.6rem] px-2 py-1 whitespace-nowrap">
+                          {formatDate(d.date)}: {d.count} views
+                        </div>
+                      </div>
+                      <div
+                        className="w-full bg-gold/70 hover:bg-gold transition-colors rounded-t-sm min-h-[2px]"
+                        style={{ height: `${Math.max(height, 1)}%` }}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+            {chartData.length > 0 && (
+              <div className="flex justify-between mt-2">
+                <span className="text-[0.6rem] text-charcoal/30">{formatDate(chartData[0]?.date)}</span>
+                <span className="text-[0.6rem] text-charcoal/30">{formatDate(chartData[chartData.length - 1]?.date)}</span>
+              </div>
+            )}
+          </div>
+
+          {/* Top pages */}
+          <div className="bg-white border border-cream-dark p-6">
+            <h3 className="text-[0.7rem] font-semibold tracking-[0.1em] uppercase text-charcoal/40 mb-4">Top Pages</h3>
+            {topPages.length === 0 ? (
+              <p className="text-slate text-sm">No data yet.</p>
+            ) : (
+              <div className="space-y-3">
+                {topPages.map((p, i) => {
+                  const pct = viewStats.period > 0 ? (p.count / viewStats.period) * 100 : 0;
+                  return (
+                    <div key={p.path}>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs text-charcoal truncate max-w-[70%]" title={p.path}>
+                          {p.path === '/' ? 'Homepage' : p.path}
+                        </span>
+                        <span className="text-xs text-charcoal/50 shrink-0 ml-2">{p.count}</span>
+                      </div>
+                      <div className="w-full bg-cream h-1.5">
+                        <div
+                          className="h-full bg-gold/60 transition-all"
+                          style={{ width: `${pct}%` }}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Recent leads */}
