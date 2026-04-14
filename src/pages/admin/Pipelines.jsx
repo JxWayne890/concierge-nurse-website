@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 
@@ -19,48 +19,58 @@ const STAGE_COLORS = {
 export default function Pipelines() {
   const [pipelines, setPipelines] = useState([]);
   const [activePipeline, setActivePipeline] = useState(null);
-  const [contacts, setContacts] = useState([]);
   const [pipelineContacts, setPipelineContacts] = useState([]);
   const [loading, setLoading] = useState(true);
   const hasLoaded = useRef(false);
   const dragItem = useRef(null);
   const dragOverStage = useRef(null);
 
-  const load = useCallback(async () => {
-    if (!hasLoaded.current) setLoading(true);
+  useEffect(() => {
+    async function loadPipelines() {
+      if (!hasLoaded.current) setLoading(true);
 
-    const { data: pipelineData } = await supabase
-      .from('pipelines')
-      .select('*')
-      .order('created_at');
+      const { data: pipelineData } = await supabase
+        .from('pipelines')
+        .select('*')
+        .order('created_at');
 
-    setPipelines(pipelineData || []);
+      const list = (pipelineData || []).map((p) => ({
+        ...p,
+        stages: typeof p.stages === 'string' ? JSON.parse(p.stages) : (p.stages || []),
+      }));
 
-    const active = activePipeline || pipelineData?.[0]?.id;
-    if (active && !activePipeline) setActivePipeline(active);
+      setPipelines(list);
 
-    if (active) {
+      if (!activePipeline && list.length > 0) {
+        setActivePipeline(list[0].id);
+      }
+
+      setLoading(false);
+      hasLoaded.current = true;
+    }
+    loadPipelines();
+  }, []);
+
+  // Load contacts when active pipeline changes
+  useEffect(() => {
+    if (!activePipeline) return;
+
+    async function loadContacts() {
       const { data: pcData } = await supabase
         .from('pipeline_contacts')
         .select('*, contacts(id, first_name, last_name, email, interest, lifecycle_stage)')
-        .eq('pipeline_id', active)
+        .eq('pipeline_id', activePipeline)
         .order('entered_stage_at', { ascending: true });
 
       setPipelineContacts(pcData || []);
     }
-
-    setLoading(false);
-    hasLoaded.current = true;
+    loadContacts();
   }, [activePipeline]);
-
-  useEffect(() => {
-    load();
-  }, [load]);
 
   function getStages() {
     const p = pipelines.find((p) => p.id === activePipeline);
     if (!p) return [];
-    return typeof p.stages === 'string' ? JSON.parse(p.stages) : p.stages;
+    return Array.isArray(p.stages) ? p.stages : [];
   }
 
   function getContactsInStage(stage) {
@@ -149,7 +159,7 @@ export default function Pipelines() {
         {pipelines.map((p) => (
           <button
             key={p.id}
-            onClick={() => { setActivePipeline(p.id); hasLoaded.current = false; }}
+            onClick={() => setActivePipeline(p.id)}
             className={`px-5 py-3 text-sm font-semibold transition-colors relative ${
               activePipeline === p.id
                 ? 'text-navy'
