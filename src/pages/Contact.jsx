@@ -1,9 +1,57 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Calendar, MessageCircle, ArrowRight } from 'lucide-react';
+import SEO from '../components/SEO';
+import { submitContactForm } from '../lib/api';
+
+const INTEREST_OPTIONS = [
+  { label: 'Clarity Consult', value: 'clarity_consult' },
+  { label: 'Accelerator Cohort', value: 'accelerator_cohort' },
+  { label: 'Toolkits & Resources', value: 'toolkits_resources' },
+  { label: '1:1 Private Coaching', value: 'private_coaching' },
+  { label: 'Business Consulting (Established Owners)', value: 'business_consulting' },
+  { label: 'VIP Bridge Session', value: 'vip_bridge_session' },
+  { label: 'General Question', value: 'general_question' },
+  { label: 'Other', value: 'other' },
+];
 
 export default function Contact() {
+  const [form, setForm] = useState({
+    first_name: '',
+    last_name: '',
+    email: '',
+    interest: '',
+    message: '',
+  });
+  const [status, setStatus] = useState('idle'); // idle | submitting | success | error
+  const [errorMsg, setErrorMsg] = useState('');
+
+  function update(field) {
+    return (e) => setForm((prev) => ({ ...prev, [field]: e.target.value }));
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setStatus('submitting');
+    setErrorMsg('');
+
+    try {
+      await submitContactForm(form);
+      setStatus('success');
+      setForm({ first_name: '', last_name: '', email: '', interest: '', message: '' });
+    } catch (err) {
+      setStatus('error');
+      setErrorMsg(err.message || 'Something went wrong. Please try again.');
+    }
+  }
+
   return (
     <>
+      <SEO
+        title="Contact & Book - Concierge Nurse Business Society"
+        description="Book a session, ask a question, or explore how to work with Concierge Nurse Business Society. Contact Tracy Pekurny and her team."
+        canonical="/contact"
+      />
       {/* Hero */}
       <section className="bg-navy pt-32 pb-20">
         <div className="max-w-4xl mx-auto px-6 lg:px-10 text-center">
@@ -78,57 +126,63 @@ export default function Contact() {
                 out the form and we will get back to you within 48 hours.
               </p>
 
-              <form onSubmit={(e) => e.preventDefault()} className="space-y-5">
-                <div className="grid sm:grid-cols-2 gap-5">
+              {status === 'success' ? (
+                <div className="bg-green-50 border border-green-200 p-6 text-center">
+                  <p className="text-green-800 font-semibold mb-1">Message sent!</p>
+                  <p className="text-green-700 text-sm">We will get back to you within 48 hours.</p>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div className="grid sm:grid-cols-2 gap-5">
+                    <div>
+                      <label className="text-[0.7rem] font-semibold tracking-[0.1em] uppercase text-charcoal/60 mb-2 block">
+                        First Name
+                      </label>
+                      <input type="text" required value={form.first_name} onChange={update('first_name')} className="w-full px-4 py-3 border border-cream-dark bg-white text-sm focus:outline-none focus:border-gold transition-colors" />
+                    </div>
+                    <div>
+                      <label className="text-[0.7rem] font-semibold tracking-[0.1em] uppercase text-charcoal/60 mb-2 block">
+                        Last Name
+                      </label>
+                      <input type="text" required value={form.last_name} onChange={update('last_name')} className="w-full px-4 py-3 border border-cream-dark bg-white text-sm focus:outline-none focus:border-gold transition-colors" />
+                    </div>
+                  </div>
+
                   <div>
                     <label className="text-[0.7rem] font-semibold tracking-[0.1em] uppercase text-charcoal/60 mb-2 block">
-                      First Name
+                      Email
                     </label>
-                    <input type="text" className="w-full px-4 py-3 border border-cream-dark bg-white text-sm focus:outline-none focus:border-gold transition-colors" />
+                    <input type="email" required value={form.email} onChange={update('email')} className="w-full px-4 py-3 border border-cream-dark bg-white text-sm focus:outline-none focus:border-gold transition-colors" />
                   </div>
+
                   <div>
                     <label className="text-[0.7rem] font-semibold tracking-[0.1em] uppercase text-charcoal/60 mb-2 block">
-                      Last Name
+                      I am interested in
                     </label>
-                    <input type="text" className="w-full px-4 py-3 border border-cream-dark bg-white text-sm focus:outline-none focus:border-gold transition-colors" />
+                    <select required value={form.interest} onChange={update('interest')} className="w-full px-4 py-3 border border-cream-dark bg-white text-sm text-charcoal focus:outline-none focus:border-gold transition-colors">
+                      <option value="">Select an option</option>
+                      {INTEREST_OPTIONS.map((opt) => (
+                        <option key={opt.value} value={opt.value}>{opt.label}</option>
+                      ))}
+                    </select>
                   </div>
-                </div>
 
-                <div>
-                  <label className="text-[0.7rem] font-semibold tracking-[0.1em] uppercase text-charcoal/60 mb-2 block">
-                    Email
-                  </label>
-                  <input type="email" className="w-full px-4 py-3 border border-cream-dark bg-white text-sm focus:outline-none focus:border-gold transition-colors" />
-                </div>
+                  <div>
+                    <label className="text-[0.7rem] font-semibold tracking-[0.1em] uppercase text-charcoal/60 mb-2 block">
+                      Message
+                    </label>
+                    <textarea rows={5} value={form.message} onChange={update('message')} className="w-full px-4 py-3 border border-cream-dark bg-white text-sm focus:outline-none focus:border-gold transition-colors resize-none" />
+                  </div>
 
-                <div>
-                  <label className="text-[0.7rem] font-semibold tracking-[0.1em] uppercase text-charcoal/60 mb-2 block">
-                    I am interested in
-                  </label>
-                  <select className="w-full px-4 py-3 border border-cream-dark bg-white text-sm text-charcoal focus:outline-none focus:border-gold transition-colors">
-                    <option value="">Select an option</option>
-                    <option>Clarity Consult</option>
-                    <option>Accelerator Cohort</option>
-                    <option>Toolkits & Resources</option>
-                    <option>1:1 Private Coaching</option>
-                    <option>Business Consulting (Established Owners)</option>
-                    <option>VIP Bridge Session</option>
-                    <option>General Question</option>
-                    <option>Other</option>
-                  </select>
-                </div>
+                  {status === 'error' && (
+                    <p className="text-red-600 text-sm">{errorMsg}</p>
+                  )}
 
-                <div>
-                  <label className="text-[0.7rem] font-semibold tracking-[0.1em] uppercase text-charcoal/60 mb-2 block">
-                    Message
-                  </label>
-                  <textarea rows={5} className="w-full px-4 py-3 border border-cream-dark bg-white text-sm focus:outline-none focus:border-gold transition-colors resize-none" />
-                </div>
-
-                <button type="submit" className="btn-primary">
-                  Send Message
-                </button>
-              </form>
+                  <button type="submit" disabled={status === 'submitting'} className="btn-primary disabled:opacity-60">
+                    {status === 'submitting' ? 'Sending...' : 'Send Message'}
+                  </button>
+                </form>
+              )}
             </div>
           </div>
         </div>

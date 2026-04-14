@@ -1,5 +1,8 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, Calendar, Star, Users, Play, Award, Clock } from 'lucide-react';
+import SEO from '../components/SEO';
+import { submitAcceleratorWaitlist } from '../lib/api';
 
 const methodSteps = [
   { num: '01', title: 'Foundation', desc: 'Establish your business identity, niche, and positioning in the concierge nursing market.' },
@@ -20,8 +23,51 @@ const included = [
 ];
 
 export default function Accelerator() {
+  const [form, setForm] = useState({ full_name: '', email: '' });
+  const [status, setStatus] = useState('idle');
+  const [errorMsg, setErrorMsg] = useState('');
+
+  function update(field) {
+    return (e) => setForm((prev) => ({ ...prev, [field]: e.target.value }));
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setStatus('submitting');
+    setErrorMsg('');
+
+    try {
+      await submitAcceleratorWaitlist(form);
+      setStatus('success');
+      setForm({ full_name: '', email: '' });
+    } catch (err) {
+      setStatus('error');
+      setErrorMsg(err.message || 'Something went wrong. Please try again.');
+    }
+  }
+
+  const acceleratorSchema = {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": "The Concierge Nurse Business Method Accelerator",
+    "description": "A 6-week live cohort program where nurses build their entire concierge nursing business from the ground up using a proprietary six-step method.",
+    "provider": { "@type": "Organization", "name": "Concierge Nurse Business Society" },
+    "instructor": { "@type": "Person", "name": "Tracy Pekurny" },
+    "courseMode": "online",
+    "duration": "P6W",
+    "educationalLevel": "Professional",
+    "teaches": "How to build, launch, and operate a concierge nursing business"
+  };
+
   return (
     <>
+      <SEO
+        title="Concierge Nurse Business Accelerator - 6-Week Live Cohort Program"
+        description="The Concierge Nurse Business Method Accelerator is a 6-week live cohort where you build your entire concierge nursing business using a proprietary six-step method. Five-star rated by every graduate."
+        canonical="/accelerator"
+        type="article"
+        schema={acceleratorSchema}
+      />
       {/* Hero */}
       <section className="bg-navy pt-32 pb-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -152,21 +198,41 @@ export default function Accelerator() {
               Spots are limited each cohort. Join the waitlist to be notified
               when enrollment opens and to receive early access and bonuses.
             </p>
-            <form onSubmit={(e) => e.preventDefault()} className="space-y-3 mb-6">
-              <input
-                type="text"
-                placeholder="Full name"
-                className="w-full px-4 py-3 border border-cream-dark text-sm focus:outline-none focus:border-gold transition-colors"
-              />
-              <input
-                type="email"
-                placeholder="Email address"
-                className="w-full px-4 py-3 border border-cream-dark text-sm focus:outline-none focus:border-gold transition-colors"
-              />
-              <button type="submit" className="btn-primary w-full">
-                Join the Waitlist
-              </button>
-            </form>
+
+            {status === 'success' ? (
+              <div className="bg-green-50 border border-green-200 p-6">
+                <p className="text-green-800 font-semibold mb-1">You are on the waitlist!</p>
+                <p className="text-green-700 text-sm">We will notify you when enrollment opens.</p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-3 mb-6">
+                <input
+                  type="text"
+                  required
+                  placeholder="Full name"
+                  value={form.full_name}
+                  onChange={update('full_name')}
+                  className="w-full px-4 py-3 border border-cream-dark text-sm focus:outline-none focus:border-gold transition-colors"
+                />
+                <input
+                  type="email"
+                  required
+                  placeholder="Email address"
+                  value={form.email}
+                  onChange={update('email')}
+                  className="w-full px-4 py-3 border border-cream-dark text-sm focus:outline-none focus:border-gold transition-colors"
+                />
+
+                {status === 'error' && (
+                  <p className="text-red-600 text-sm">{errorMsg}</p>
+                )}
+
+                <button type="submit" disabled={status === 'submitting'} className="btn-primary w-full disabled:opacity-60">
+                  {status === 'submitting' ? 'Joining...' : 'Join the Waitlist'}
+                </button>
+              </form>
+            )}
+
             <p className="text-slate text-xs">
               Already interested?{' '}
               <Link to="/strategy" className="text-gold underline">

@@ -1,9 +1,33 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, Lightbulb, Zap, Crown, Layers, CheckCircle2, Clock, FileText, Video } from 'lucide-react';
+import SEO from '../components/SEO';
+
+const strategySchema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Clarity Consult",
+    "provider": { "@type": "Organization", "name": "Concierge Nurse Business Society" },
+    "description": "One-on-one strategic consultation for nurses building concierge nursing businesses"
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "VIP Bridge Session",
+    "provider": { "@type": "Organization", "name": "Concierge Nurse Business Society" },
+    "description": "Intensive strategy session with implementation support for concierge nurse entrepreneurs"
+  }
+];
 
 export default function Strategy() {
   return (
     <>
+      <SEO
+        title="Strategy Sessions & Coaching - Concierge Nurse Business Society"
+        description="Book a Clarity Consult, VIP Bridge session, or inquire about 1:1 private coaching. Personalized strategy and accountability for nurses building concierge nursing businesses."
+        canonical="/strategy"
+        schema={strategySchema}
+      />
       {/* Hero */}
       <section className="bg-navy pt-32 pb-20">
         <div className="max-w-4xl mx-auto px-6 lg:px-10 text-center">

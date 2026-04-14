@@ -1,7 +1,25 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Users, Heart, ArrowRight, Mail } from 'lucide-react';
+import { submitSubscribe } from '../lib/api';
 
 export default function CommunitySection() {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState('idle');
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setStatus('submitting');
+
+    try {
+      await submitSubscribe({ email, source: 'community_section' });
+      setStatus('success');
+      setEmail('');
+    } catch {
+      setStatus('error');
+    }
+  }
+
   return (
     <section className="py-24 lg:py-32 bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -67,16 +85,27 @@ export default function CommunitySection() {
               Be the first to hear about workshops, enrollment windows, free
               trainings, and new resources.
             </p>
-            <form onSubmit={(e) => e.preventDefault()} className="space-y-3">
-              <input
-                type="email"
-                placeholder="Your email"
-                className="w-full px-4 py-2.5 bg-white/10 border border-white/20 text-white placeholder-white/40 text-sm focus:outline-none focus:border-gold transition-colors"
-              />
-              <button type="submit" className="btn-primary w-full">
-                Subscribe
-              </button>
-            </form>
+
+            {status === 'success' ? (
+              <p className="text-gold text-sm font-semibold">Subscribed!</p>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-3">
+                <input
+                  type="email"
+                  required
+                  placeholder="Your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-4 py-2.5 bg-white/10 border border-white/20 text-white placeholder-white/40 text-sm focus:outline-none focus:border-gold transition-colors"
+                />
+                {status === 'error' && (
+                  <p className="text-red-400 text-xs">Something went wrong. Try again.</p>
+                )}
+                <button type="submit" disabled={status === 'submitting'} className="btn-primary w-full disabled:opacity-60">
+                  {status === 'submitting' ? 'Subscribing...' : 'Subscribe'}
+                </button>
+              </form>
+            )}
           </div>
         </div>
       </div>

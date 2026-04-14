@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Compass, Wrench, Rocket, TrendingUp, ArrowRight, CheckCircle2 } from 'lucide-react';
+import SEO from '../components/SEO';
 
 const paths = [
   {
@@ -82,6 +83,11 @@ const paths = [
 export default function StartHere() {
   return (
     <>
+      <SEO
+        title="Start Here - Find Your Path to a Concierge Nursing Business"
+        description="Whether you are exploring, building, or scaling your concierge nursing business, find the right programs, tools, and support for exactly where you are right now."
+        canonical="/start-here"
+      />
       {/* Hero */}
       <section className="bg-navy pt-32 pb-20">
         <div className="max-w-4xl mx-auto px-6 lg:px-10 text-center">

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import SEO from '../components/SEO';
 
 export default function About() {
   const [offsetY, setOffsetY] = useState(0);
@@ -19,7 +20,13 @@ export default function About() {
 
   return (
     <div className="bg-[#f5f2eb] min-h-screen">
-      
+      <SEO
+        title="About Tracy Pekurny - Concierge Nurse Business Coach & Strategist"
+        description="Meet Tracy Pekurny, registered nurse and business strategist who built her own concierge nursing business and now helps other nurses do the same through proven frameworks and hands-on coaching."
+        canonical="/about"
+        type="website"
+      />
+
       {/* Editorial Hero Layout */}
       <section className="relative pt-[180px] pb-32 overflow-hidden flex flex-col items-center border-b border-navy/5">
         
@@ -82,35 +89,38 @@ export default function About() {
 
       {/* The Story Section */}
       <section className="py-24 lg:py-32 bg-cream">
-        <div className="max-w-[1000px] mx-auto px-6 lg:px-12 flex flex-col lg:flex-row gap-16">
-          <div className="lg:w-1/3">
-            <h2 className="avery-title text-3xl lg:text-4xl text-navy uppercase leading-tight sticky top-32">
+        {/* Desktop — sticky title + scrolling text */}
+        <div className="hidden lg:flex max-w-[1000px] mx-auto px-12 gap-16">
+          <div className="w-1/3">
+            <h2 className="avery-title text-4xl text-navy uppercase leading-tight sticky top-32">
               THE STORY <br/>BEHIND THE <br/>SOCIETY
             </h2>
           </div>
-          <div className="lg:w-2/3 space-y-8 font-body text-navy/70 text-[0.95rem] leading-loose">
-            <p>
-              What she discovered along the way was that there was no roadmap for
-              nurses who wanted to leave the bedside and build independent,
-              private-pay concierge nursing businesses. There was no strategic
-              framework. No step-by-step method. No business ecosystem designed
-              specifically for RNs entering this space.
-            </p>
-            <p>
-              So she built one.
-            </p>
-            <p>
-              The Concierge Nurse Business Society is the result of years of
-              real-world business building, strategic consulting, and hands-on
-              coaching. It is not a generic coaching program repackaged for
-              nurses.
-            </p>
-            <p>
-              It is a purpose-built ecosystem with education, toolkits,
-              cohort-based learning, strategy sessions, private coaching, and
-              consulting services, all designed to meet nurses at every stage
-              of their journey.
-            </p>
+          <div className="w-2/3 space-y-8 font-body text-navy/70 text-[0.95rem] leading-loose">
+            <p>What she discovered along the way was that there was no roadmap for nurses who wanted to leave the bedside and build independent, private-pay concierge nursing businesses. There was no strategic framework. No step-by-step method. No business ecosystem designed specifically for RNs entering this space.</p>
+            <p>So she built one.</p>
+            <p>The Concierge Nurse Business Society is the result of years of real-world business building, strategic consulting, and hands-on coaching. It is not a generic coaching program repackaged for nurses.</p>
+            <p>It is a purpose-built ecosystem with education, toolkits, cohort-based learning, strategy sessions, private coaching, and consulting services, all designed to meet nurses at every stage of their journey.</p>
+          </div>
+        </div>
+
+        {/* Mobile — centered editorial flow */}
+        <div className="lg:hidden max-w-sm mx-auto px-6 flex flex-col items-center text-center">
+          <p className="section-label text-gold mb-4">Her Story</p>
+          <h2 className="avery-title text-2xl text-navy uppercase leading-tight mb-6">
+            THE STORY BEHIND<br/>THE SOCIETY
+          </h2>
+          <div className="w-10 h-[1px] bg-navy/25 mb-8" />
+
+          {/* Pull quote */}
+          <p className="avery-italic text-navy text-xl leading-snug mb-8">
+            "So she built one."
+          </p>
+
+          <div className="space-y-5 font-body text-navy/60 text-[0.85rem] leading-relaxed">
+            <p>There was no roadmap for nurses who wanted to leave the bedside and build independent, private-pay concierge nursing businesses. No strategic framework. No step-by-step method.</p>
+            <p>The Concierge Nurse Business Society is the result of years of real-world business building, strategic consulting, and hands-on coaching. Not a generic coaching program repackaged for nurses.</p>
+            <p>It is a purpose-built ecosystem with education, toolkits, cohort-based learning, strategy sessions, and consulting — all designed to meet nurses at every stage of their journey.</p>
           </div>
         </div>
       </section>
@@ -118,13 +128,17 @@ export default function About() {
       {/* What Sets This Apart */}
       <section className="py-24 lg:py-32 bg-navy">
         <div className="max-w-[1200px] mx-auto px-6 lg:px-12">
-          <div className="text-center mb-20">
-            <h2 className="avery-title text-4xl lg:text-5xl text-white uppercase tracking-wide">
+          <div className="text-center mb-12 lg:mb-20">
+            {/* Mobile label */}
+            <p className="section-label text-gold mb-3 lg:hidden">The Difference</p>
+            <h2 className="avery-title text-2xl lg:text-5xl text-white uppercase tracking-wide">
               WHAT SETS THIS APART
             </h2>
+            <div className="w-10 h-[1px] bg-white/20 mx-auto mt-6 lg:hidden" />
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16">
+          {/* Desktop grid */}
+          <div className="hidden lg:grid lg:grid-cols-3 gap-16">
             {[
               'Built from real-world concierge nursing experience, not theory',
               'A proprietary six-step method validated by every cohort',
@@ -135,9 +149,24 @@ export default function About() {
             ].map((item, i) => (
               <div key={i} className="flex flex-col border-t border-white/20 pt-6">
                 <span className="avery-italic text-gold text-4xl mb-6">0{i+1}.</span>
-                <p className="font-body text-white/80 text-sm leading-loose">
-                  {item}
-                </p>
+                <p className="font-body text-white/80 text-sm leading-loose">{item}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Mobile — stacked cards with number accent */}
+          <div className="lg:hidden flex flex-col gap-6 max-w-sm mx-auto">
+            {[
+              'Built from real-world concierge nursing experience, not theory',
+              'A proprietary six-step method validated by every cohort',
+              'Five-star rated by every graduate of the Accelerator',
+              'Multiple pathways designed for nurses at every stage',
+              'Strategic business-building focused on real outcomes',
+              'A complete ecosystem, not a one-size-fits-all program',
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-4 bg-white/[0.04] rounded-sm p-5 border border-white/[0.06]">
+                <span className="avery-italic text-gold text-2xl leading-none shrink-0 mt-0.5">0{i+1}</span>
+                <p className="font-body text-white/75 text-[0.8rem] leading-relaxed">{item}</p>
               </div>
             ))}
           </div>
@@ -145,16 +174,27 @@ export default function About() {
       </section>
 
       {/* Final CTA Strip */}
-      <section className="bg-navy-dark border-t border-white/5 py-16 flex justify-center">
-         <div className="flex flex-col sm:flex-row gap-6 items-center">
-            <Link to="/start-here" className="btn-secondary border-gold text-gold hover:bg-gold hover:text-navy uppercase tracking-widest text-[0.65rem] px-10 py-4">
-              Find Your Path
-            </Link>
-            <span className="text-white/20 hidden sm:block">|</span>
-            <Link to="/strategy" className="btn-secondary border-white/50 text-white hover:bg-white hover:text-navy hover:border-white uppercase tracking-widest text-[0.65rem] px-10 py-4">
-              Book a Consult
-            </Link>
-         </div>
+      <section className="bg-navy-dark border-t border-white/5 py-12 lg:py-16">
+        {/* Desktop */}
+        <div className="hidden sm:flex justify-center gap-6 items-center">
+          <Link to="/start-here" className="btn-secondary border-gold text-gold hover:bg-gold hover:text-navy uppercase tracking-widest text-[0.65rem] px-10 py-4">
+            Find Your Path
+          </Link>
+          <span className="text-white/20">|</span>
+          <Link to="/strategy" className="btn-secondary border-white/50 text-white hover:bg-white hover:text-navy hover:border-white uppercase tracking-widest text-[0.65rem] px-10 py-4">
+            Book a Consult
+          </Link>
+        </div>
+
+        {/* Mobile — stacked full-width buttons */}
+        <div className="sm:hidden flex flex-col gap-3 px-8 max-w-sm mx-auto">
+          <Link to="/start-here" className="btn-secondary border-gold text-gold hover:bg-gold hover:text-navy text-center py-3.5 text-[0.65rem] tracking-[0.2em] uppercase">
+            Find Your Path
+          </Link>
+          <Link to="/strategy" className="btn-secondary border-white/40 text-white/80 hover:bg-white hover:text-navy hover:border-white text-center py-3.5 text-[0.65rem] tracking-[0.2em] uppercase">
+            Book a Consult
+          </Link>
+        </div>
       </section>
 
     </div>

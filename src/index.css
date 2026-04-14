@@ -244,6 +244,93 @@
   color: var(--color-gold);
 }
 
+/* Resource page prose styling */
+.prose-custom h2 {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-navy);
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+.prose-custom h3 {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-navy);
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.25;
+}
+.prose-custom p {
+  color: var(--color-charcoal);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  margin-bottom: 1.25rem;
+}
+.prose-custom ul, .prose-custom ol {
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+}
+.prose-custom li {
+  color: var(--color-charcoal);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  margin-bottom: 0.5rem;
+}
+.prose-custom ol {
+  list-style-type: decimal;
+}
+.prose-custom ul {
+  list-style-type: disc;
+}
+.prose-custom table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+}
+.prose-custom th {
+  background: var(--color-navy);
+  color: white;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.prose-custom td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--color-cream-dark);
+  color: var(--color-charcoal);
+}
+.prose-custom tr:nth-child(even) td {
+  background: var(--color-cream);
+}
+.prose-custom a {
+  color: var(--color-gold);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.2s ease;
+}
+.prose-custom a:hover {
+  color: var(--color-gold-muted);
+}
+.prose-custom blockquote {
+  border-left: 3px solid var(--color-gold);
+  padding-left: 1.25rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--color-slate);
+}
+.prose-custom strong {
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
 /* Glassmorphism for mobile header in menu */
 .mobile-menu-header {
   backdrop-filter: blur(8px);

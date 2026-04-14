@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, FileText, Shield, Package, CalendarDays, CheckCircle2 } from 'lucide-react';
+import SEO from '../components/SEO';
 
 const products = [
   {
@@ -60,8 +61,22 @@ const products = [
 ];
 
 export default function Toolkits() {
+  const toolkitSchema = products.map(p => ({
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": p.title,
+    "description": p.description,
+    "brand": { "@type": "Organization", "name": "Concierge Nurse Business Society" }
+  }));
+
   return (
     <>
+      <SEO
+        title="Concierge Nursing Business Toolkits & Resources"
+        description="Self-paced business toolkits for nurses building a concierge nursing practice. Includes the RN Concierge Business Toolkit, HIPAA Compliance Toolkit, and 2026 Concierge Nurse Planner."
+        canonical="/toolkits"
+        schema={toolkitSchema}
+      />
       {/* Hero */}
       <section className="bg-navy pt-32 pb-20">
         <div className="max-w-4xl mx-auto px-6 lg:px-10 text-center">

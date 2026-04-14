@@ -1,9 +1,27 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { submitSubscribe } from '../lib/api';
 
 export default function Footer() {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState('idle');
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setStatus('submitting');
+
+    try {
+      await submitSubscribe({ email, source: 'footer_newsletter' });
+      setStatus('success');
+      setEmail('');
+    } catch {
+      setStatus('error');
+    }
+  }
+
   return (
     <footer className="bg-navy text-white pt-24 pb-12">
-      
+
       {/* Massive Logo Section */}
       <div className="max-w-[1400px] mx-auto px-6 mb-20 text-center">
         <h2 className="font-heading text-5xl sm:text-7xl md:text-8xl lg:text-[9rem] font-normal tracking-tight text-white leading-none whitespace-nowrap overflow-hidden">
@@ -12,8 +30,8 @@ export default function Footer() {
       </div>
 
       <div className="max-w-[1200px] mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8">
-          
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-16 md:gap-8">
+
           {/* Column 1: Navigation */}
           <div className="flex flex-col items-center md:items-start">
             <h4 className="avery-sub text-white/50 mb-8">Navigation</h4>
@@ -41,7 +59,32 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 2: Newsletter */}
+          {/* Column 2: Resources */}
+          <div className="flex flex-col items-center md:items-start">
+            <h4 className="avery-sub text-white/50 mb-8">Resources</h4>
+            <ul className="space-y-4 text-center md:text-left">
+              {[
+                { label: 'How to Start', path: '/resources/how-to-start-a-concierge-nursing-business' },
+                { label: 'What Is a Concierge Nurse?', path: '/resources/what-is-a-concierge-nurse' },
+                { label: 'HIPAA Compliance', path: '/resources/hipaa-compliance-for-concierge-nurses' },
+                { label: 'Pricing Guide', path: '/resources/concierge-nurse-pricing-guide' },
+                { label: 'Concierge Nursing Niches', path: '/resources/concierge-nursing-niches' },
+                { label: 'Startup Costs', path: '/resources/concierge-nursing-startup-costs' },
+                { label: 'All Resources', path: '/resources' },
+              ].map((link) => (
+                <li key={link.path}>
+                  <Link
+                    to={link.path}
+                    className="text-white hover:text-gold text-sm tracking-wide transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 3: Newsletter */}
           <div className="flex flex-col items-center text-center px-4">
             <h4 className="avery-sub text-white mb-4">
               Join the Society & Get the Free<br/>Business Playbook
@@ -50,24 +93,35 @@ export default function Footer() {
               Get insider access to workshops, enrollment windows, free resources,
               and strategies for building your concierge nursing business.
             </p>
-            <form
-              className="w-full max-w-sm"
-              onSubmit={(e) => e.preventDefault()}
-            >
-              <div className="flex border-b border-white/30 pb-2">
-                <input
-                  type="email"
-                  placeholder="Email Address..."
-                  className="flex-1 bg-transparent text-white placeholder-white/40 text-sm outline-none"
-                />
-                <button type="submit" className="text-white uppercase tracking-widest text-xs hover:text-gold transition-colors font-medium">
-                  SIGN UP
-                </button>
-              </div>
-            </form>
+
+            {status === 'success' ? (
+              <p className="text-gold text-sm font-semibold">Subscribed!</p>
+            ) : (
+              <form
+                className="w-full max-w-sm"
+                onSubmit={handleSubmit}
+              >
+                <div className="flex border-b border-white/30 pb-2">
+                  <input
+                    type="email"
+                    required
+                    placeholder="Email Address..."
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="flex-1 bg-transparent text-white placeholder-white/40 text-sm outline-none"
+                  />
+                  <button type="submit" disabled={status === 'submitting'} className="text-white uppercase tracking-widest text-xs hover:text-gold transition-colors font-medium disabled:opacity-60">
+                    {status === 'submitting' ? '...' : 'SIGN UP'}
+                  </button>
+                </div>
+                {status === 'error' && (
+                  <p className="text-red-400 text-xs mt-2">Something went wrong. Try again.</p>
+                )}
+              </form>
+            )}
           </div>
 
-          {/* Column 3: Connect */}
+          {/* Column 4: Connect */}
           <div className="flex flex-col items-center md:items-end">
             <h4 className="avery-sub text-white/50 mb-8">Connect</h4>
             <ul className="space-y-4 text-center md:text-right">

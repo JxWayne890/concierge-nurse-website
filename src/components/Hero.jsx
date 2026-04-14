@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 export default function Hero() {
   return (
-    <section className="bg-navy flex flex-col justify-between overflow-hidden h-[calc(100vh-72px)] relative">
+    <section className="bg-navy flex flex-col justify-between overflow-hidden h-[calc(100vh-72px)] md:h-[calc(100vh-114px)] max-md:h-screen max-md:-mt-[72px] max-md:pt-[72px] relative">
       
       {/* Top Part: Content Wrapper */}
       <div className="w-full flex-grow flex flex-col items-center pt-4 lg:pt-12 px-6 lg:px-8 xl:px-12 max-w-[1600px] mx-auto">
@@ -38,8 +38,9 @@ export default function Hero() {
             className="absolute inset-0 bg-cover"
             style={{ backgroundImage: 'url("https://i.imgur.com/V5zt5SD.jpeg")', backgroundPosition: '80% 15%' }}
           />
-          {/* Gradient overlay — darker at bottom for text legibility */}
-          <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/70 to-navy/30" />
+          {/* Gradient overlay — fades from navy at top (seamless with navbar) and bottom (text legibility) */}
+          <div className="absolute inset-0 bg-gradient-to-b from-navy via-transparent to-transparent" style={{ height: '30%' }} />
+          <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/70 to-transparent" />
 
           {/* Content pinned to bottom */}
           <div className="relative z-10 w-full flex-grow flex flex-col justify-end px-6 pb-12 pt-20">

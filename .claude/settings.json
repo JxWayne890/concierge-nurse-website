@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run:*)",
+      "Bash(lsof -i :5173 -sTCP:LISTEN)",
+      "Bash(curl -s \"https://www.google.com/search?q=concierge+nursing+business+how+to+start\")",
+      "Bash(curl -s \"https://www.google.com/search?q=concierge+nurse+business+coaching\")",
+      "WebSearch",
+      "WebFetch(domain:nursepreneurs.com)",
+      "WebFetch(domain:theconciergenursenetwork.teachable.com)",
+      "WebFetch(domain:www.liberatednurse.com)",
+      "Bash(gh repo:*)",
+      "Bash(npx vite:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}

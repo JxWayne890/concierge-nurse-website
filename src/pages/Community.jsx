@@ -1,9 +1,36 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Users, Heart, Mail, ArrowRight, MessageCircle, BookOpen, Calendar } from 'lucide-react';
+import SEO from '../components/SEO';
+import { submitSubscribe } from '../lib/api';
 
 export default function Community() {
+  const [form, setForm] = useState({ first_name: '', email: '' });
+  const [status, setStatus] = useState('idle');
+  const [errorMsg, setErrorMsg] = useState('');
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setStatus('submitting');
+    setErrorMsg('');
+
+    try {
+      await submitSubscribe({ ...form, source: 'community_page' });
+      setStatus('success');
+      setForm({ first_name: '', email: '' });
+    } catch (err) {
+      setStatus('error');
+      setErrorMsg(err.message || 'Something went wrong. Please try again.');
+    }
+  }
+
   return (
     <>
+      <SEO
+        title="Free Concierge Nurse Business Community & Resources"
+        description="Join the free Concierge Nurse Business Society community on Facebook or Heartbeat. Connect with nurses building concierge nursing businesses, access resources, and get support."
+        canonical="/community"
+      />
       {/* Hero */}
       <section className="bg-navy pt-32 pb-20">
         <div className="max-w-4xl mx-auto px-6 lg:px-10 text-center">
@@ -103,21 +130,40 @@ export default function Community() {
             trainings, new resources, and exclusive opportunities. Join the
             email list and stay connected.
           </p>
-          <form onSubmit={(e) => e.preventDefault()} className="space-y-3 max-w-sm mx-auto">
-            <input
-              type="text"
-              placeholder="First name"
-              className="w-full px-4 py-3 bg-white/10 border border-white/20 text-white placeholder-white/40 text-sm focus:outline-none focus:border-gold transition-colors"
-            />
-            <input
-              type="email"
-              placeholder="Email address"
-              className="w-full px-4 py-3 bg-white/10 border border-white/20 text-white placeholder-white/40 text-sm focus:outline-none focus:border-gold transition-colors"
-            />
-            <button type="submit" className="btn-primary w-full">
-              Subscribe
-            </button>
-          </form>
+
+          {status === 'success' ? (
+            <div className="bg-white/10 border border-gold/30 p-6">
+              <p className="text-gold font-semibold mb-1">You are subscribed!</p>
+              <p className="text-white/60 text-sm">Check your inbox for a welcome message.</p>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-3 max-w-sm mx-auto">
+              <input
+                type="text"
+                placeholder="First name"
+                value={form.first_name}
+                onChange={(e) => setForm((prev) => ({ ...prev, first_name: e.target.value }))}
+                className="w-full px-4 py-3 bg-white/10 border border-white/20 text-white placeholder-white/40 text-sm focus:outline-none focus:border-gold transition-colors"
+              />
+              <input
+                type="email"
+                required
+                placeholder="Email address"
+                value={form.email}
+                onChange={(e) => setForm((prev) => ({ ...prev, email: e.target.value }))}
+                className="w-full px-4 py-3 bg-white/10 border border-white/20 text-white placeholder-white/40 text-sm focus:outline-none focus:border-gold transition-colors"
+              />
+
+              {status === 'error' && (
+                <p className="text-red-400 text-sm">{errorMsg}</p>
+              )}
+
+              <button type="submit" disabled={status === 'submitting'} className="btn-primary w-full disabled:opacity-60">
+                {status === 'submitting' ? 'Subscribing...' : 'Subscribe'}
+              </button>
+            </form>
+          )}
+
           <p className="text-white/30 text-xs mt-4">
             No spam. Unsubscribe anytime.
           </p>
