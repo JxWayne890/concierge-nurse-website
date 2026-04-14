@@ -41,46 +41,65 @@ export default function NewEmailCampaign() {
     return selectedTags.reduce((sum, id) => sum + (tagCounts[id] || 0), 0);
   }
 
+  const [sendError, setSendError] = useState('');
+
   async function handleSubmit(asDraft = false) {
     if (!form.name.trim()) return;
     setSaving(true);
+    setSendError('');
 
-    let status = 'draft';
-    let sent_at = null;
-    let scheduled_at = null;
+    const sendNow = !asDraft && schedule === 'now';
 
-    if (!asDraft) {
-      if (schedule === 'now') {
-        status = 'sent';
-        sent_at = new Date().toISOString();
-        console.log(`STUB: Would send email via Resend to ${totalRecipients()} recipients`);
-      } else {
-        status = 'scheduled';
-        scheduled_at = scheduledAt || null;
-      }
-    }
-
+    // Save campaign to database first
     const { data, error } = await supabase.from('campaigns').insert({
       name: form.name.trim(),
       type: 'email',
-      status,
+      status: asDraft ? 'draft' : (sendNow ? 'sending' : 'scheduled'),
       subject: form.subject.trim(),
       from_name: form.from_name.trim(),
       from_email: form.from_email.trim(),
       body: form.body,
       recipient_tag_ids: selectedTags,
       recipient_count: totalRecipients(),
-      sent_at,
-      scheduled_at,
+      sent_at: null,
+      scheduled_at: (!asDraft && schedule === 'later') ? (scheduledAt || null) : null,
     }).select().single();
 
-    if (data) {
-      await supabase.from('campaign_stats').insert({ campaign_id: data.id });
-      navigate(`/admin/campaigns/${data.id}`);
-    } else {
+    if (!data) {
       console.error('Error creating campaign:', error);
       setSaving(false);
+      return;
     }
+
+    await supabase.from('campaign_stats').insert({ campaign_id: data.id });
+
+    // If sending now, call the serverless function to send via Resend
+    if (sendNow) {
+      try {
+        const res = await fetch('/api/send-campaign', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ campaign_id: data.id }),
+        });
+
+        const result = await res.json();
+
+        if (!res.ok) {
+          setSendError(result.error || 'Failed to send campaign');
+          // Update status back to draft so they can retry
+          await supabase.from('campaigns').update({ status: 'draft' }).eq('id', data.id);
+          setSaving(false);
+          return;
+        }
+      } catch (err) {
+        setSendError('Network error sending campaign. It was saved as a draft.');
+        await supabase.from('campaigns').update({ status: 'draft' }).eq('id', data.id);
+        setSaving(false);
+        return;
+      }
+    }
+
+    navigate(`/admin/campaigns/${data.id}`);
   }
 
   return (
@@ -198,6 +217,11 @@ export default function NewEmailCampaign() {
 
           {/* Actions */}
           <div className="space-y-3">
+            {sendError && (
+              <div className="bg-red-50 border border-red-200 p-3 text-red-700 text-sm">
+                {sendError}
+              </div>
+            )}
             <button
               onClick={() => handleSubmit(false)}
               disabled={saving || !form.name.trim()}
