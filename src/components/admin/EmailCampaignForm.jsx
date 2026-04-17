@@ -44,6 +44,7 @@ export default function EmailCampaignForm({ mode = 'new', existingCampaign = nul
   const [brand, setBrand] = useState(null);
   const [saving, setSaving] = useState(false);
   const [sendError, setSendError] = useState('');
+  const [toast, setToast] = useState('');
 
   useEffect(() => {
     async function load() {
@@ -197,11 +198,29 @@ export default function EmailCampaignForm({ mode = 'new', existingCampaign = nul
       }
     }
 
+    if (asDraft) {
+      setSaving(false);
+      setToast(isEdit ? 'Draft updated!' : 'Draft saved!');
+      setTimeout(() => setToast(''), 3000);
+      if (!isEdit) navigate(`/admin/campaigns/email/${campaignId}/edit`);
+      return;
+    }
+
     navigate(`/admin/campaigns/${campaignId}`);
   }
 
   return (
     <div>
+      {/* Success toast */}
+      {toast && (
+        <div className="fixed top-6 right-6 z-50 animate-[fadeIn_0.2s_ease-out]">
+          <div className="bg-navy text-white px-5 py-3 shadow-lg flex items-center gap-3 text-sm font-semibold">
+            <span className="w-2 h-2 bg-green-400 rounded-full" />
+            {toast}
+          </div>
+        </div>
+      )}
+
       <Link
         to={existingCampaign ? `/admin/campaigns/${existingCampaign.id}` : '/admin/campaigns'}
         className="inline-flex items-center gap-2 text-sm text-charcoal/50 hover:text-navy no-underline mb-6 transition-colors"
