@@ -11,7 +11,10 @@
       "WebFetch(domain:www.liberatednurse.com)",
       "Bash(gh repo:*)",
       "Bash(npx vite:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit -m ':*)",
+      "Bash(git push:*)",
+      "Bash(node -e ':*)"
     ]
   }
 }
