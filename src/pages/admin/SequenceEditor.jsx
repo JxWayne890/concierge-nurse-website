@@ -30,6 +30,7 @@ export default function SequenceEditor() {
   const isNew = !id;
 
   const [tags, setTags] = useState([]);
+  const [brand, setBrand] = useState(null);
   const [meta, setMeta] = useState(DEFAULT_META);
   const [emails, setEmails] = useState([]);
   const [expandedKey, setExpandedKey] = useState(null);
@@ -39,8 +40,21 @@ export default function SequenceEditor() {
 
   useEffect(() => {
     async function load() {
-      const { data: tagData } = await supabase.from('tags').select('*').order('name');
+      const [{ data: tagData }, { data: brandData }] = await Promise.all([
+        supabase.from('tags').select('*').order('name'),
+        supabase.from('brand_settings').select('*').limit(1).maybeSingle(),
+      ]);
       setTags(tagData || []);
+      if (brandData) {
+        setBrand(brandData);
+        if (isNew) {
+          setMeta((m) => ({
+            ...m,
+            from_name: brandData.from_name || m.from_name,
+            from_email: brandData.from_email || m.from_email,
+          }));
+        }
+      }
 
       if (isNew) return;
 
@@ -354,6 +368,7 @@ export default function SequenceEditor() {
                     value={email.body}
                     onChange={(next) => updateEmail(email._draftKey, { body: next })}
                     rows={10}
+                    brand={brand}
                   />
                 </div>
               )}

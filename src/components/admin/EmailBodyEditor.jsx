@@ -1,28 +1,57 @@
 import { useRef, useState } from 'react';
+import { Image as ImageIcon } from 'lucide-react';
 import { EMAIL_TEMPLATES } from './emailTemplates';
+import { uploadToImgBB } from '../../lib/imgbb';
+import { wrapInBrandTemplate } from '../../lib/emailBrand';
 
 const PERSONALIZATION_TOKENS = ['{firstName}', '{lastName}', '{email}'];
 
-export default function EmailBodyEditor({ value, onChange, rows = 14, onTemplateApplied }) {
+export default function EmailBodyEditor({ value, onChange, rows = 14, onTemplateApplied, brand = null }) {
   const textareaRef = useRef(null);
+  const imageInputRef = useRef(null);
   const [view, setView] = useState('code');
   const [templateId, setTemplateId] = useState('');
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [imageError, setImageError] = useState('');
 
-  function insertToken(token) {
+  function insertAtCursor(text) {
     const el = textareaRef.current;
+    const current = value || '';
     if (!el) {
-      onChange((value || '') + token);
+      onChange(current + text);
       return;
     }
-    const start = el.selectionStart ?? (value || '').length;
-    const end = el.selectionEnd ?? (value || '').length;
-    const next = (value || '').slice(0, start) + token + (value || '').slice(end);
+    const start = el.selectionStart ?? current.length;
+    const end = el.selectionEnd ?? current.length;
+    const next = current.slice(0, start) + text + current.slice(end);
     onChange(next);
     requestAnimationFrame(() => {
       el.focus();
-      const caret = start + token.length;
+      const caret = start + text.length;
       el.setSelectionRange(caret, caret);
     });
+  }
+
+  function insertToken(token) {
+    insertAtCursor(token);
+  }
+
+  async function handleImageFile(file) {
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      setImageError('Please choose an image file');
+      return;
+    }
+    setImageError('');
+    setUploadingImage(true);
+    try {
+      const url = await uploadToImgBB(file);
+      insertAtCursor(`<img src="${url}" alt="" style="max-width:100%;height:auto;display:block;margin:16px auto;" />`);
+    } catch (err) {
+      setImageError(err.message || 'Upload failed');
+    } finally {
+      setUploadingImage(false);
+    }
   }
 
   function applyTemplate(id) {
@@ -38,6 +67,14 @@ export default function EmailBodyEditor({ value, onChange, rows = 14, onTemplate
     if (onTemplateApplied) onTemplateApplied(tpl);
     setTemplateId('');
   }
+
+  const previewHtml = brand
+    ? wrapInBrandTemplate({
+        body: value || '<p style="color:#999;padding:24px;">Your email preview will appear here.</p>',
+        brand,
+        unsubscribeUrl: '#preview-unsubscribe',
+      })
+    : value || '<p style="color:#999;padding:24px;">Your email preview will appear here.</p>';
 
   return (
     <div>
@@ -79,7 +116,7 @@ export default function EmailBodyEditor({ value, onChange, rows = 14, onTemplate
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-2 mb-2">
+      <div className="flex flex-wrap items-center gap-2 mb-2">
         <span className="text-[0.65rem] font-semibold tracking-wider uppercase text-charcoal/40 self-center">
           Insert:
         </span>
@@ -93,7 +130,37 @@ export default function EmailBodyEditor({ value, onChange, rows = 14, onTemplate
             {token}
           </button>
         ))}
+        <button
+          type="button"
+          onClick={() => imageInputRef.current?.click()}
+          disabled={uploadingImage}
+          className="inline-flex items-center gap-1 px-2 py-1 text-[0.65rem] font-semibold tracking-wider uppercase border border-cream-dark text-charcoal/70 hover:border-gold hover:text-navy transition-colors disabled:opacity-50"
+        >
+          {uploadingImage ? (
+            <>
+              <span className="w-3 h-3 border border-gold border-t-transparent rounded-full animate-spin" />
+              Uploading…
+            </>
+          ) : (
+            <>
+              <ImageIcon size={12} /> Image
+            </>
+          )}
+        </button>
+        <input
+          ref={imageInputRef}
+          type="file"
+          accept="image/*"
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            handleImageFile(file);
+            e.target.value = '';
+          }}
+          className="hidden"
+        />
       </div>
+
+      {imageError && <p className="text-xs text-red-600 mb-2">{imageError}</p>}
 
       {view === 'code' ? (
         <textarea
@@ -107,10 +174,8 @@ export default function EmailBodyEditor({ value, onChange, rows = 14, onTemplate
         <div className="border border-cream-dark bg-cream/40 p-6">
           <div
             className="bg-white border border-cream-dark mx-auto"
-            style={{ maxWidth: '600px', minHeight: '300px' }}
-            dangerouslySetInnerHTML={{
-              __html: value || '<p style="color:#999;padding:24px;">Your email preview will appear here.</p>',
-            }}
+            style={{ maxWidth: '640px', minHeight: '300px' }}
+            dangerouslySetInnerHTML={{ __html: previewHtml }}
           />
         </div>
       )}

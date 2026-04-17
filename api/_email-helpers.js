@@ -1,7 +1,19 @@
 // Shared email-building helpers. Prefixed with `_` so Vercel treats it as
 // private (not exposed as a route).
 
+import { wrapInBrandTemplate } from '../src/lib/emailBrand.js';
+
 const SITE_ORIGIN = process.env.PUBLIC_SITE_ORIGIN || 'https://www.conciergenursesociety.com';
+
+export async function loadBrandSettings(supabase) {
+  try {
+    const { data } = await supabase.from('brand_settings').select('*').limit(1).maybeSingle();
+    return data || null;
+  } catch (err) {
+    console.error('Failed to load brand settings:', err);
+    return null;
+  }
+}
 
 export function personalizeText(text, contact) {
   if (!text) return '';
@@ -11,32 +23,26 @@ export function personalizeText(text, contact) {
     .replace(/\{email\}/g, contact.email || '');
 }
 
-export function buildCampaignEmailHtml({ body, contact, campaignId, recipientId }) {
+export function buildCampaignEmailHtml({ body, contact, campaignId, recipientId, brand }) {
   const personalized = personalizeText(body || '', contact);
-  const withTrackedLinks = wrapLinksForTracking(personalized, { recipientId });
-  const withFooter = withTrackedLinks + unsubscribeFooter({ contactId: contact.id, campaignId });
+  const trackedBody = wrapLinksForTracking(personalized, { recipientId });
+  const unsubscribeUrl = unsubscribeUrlFor({ contactId: contact.id, campaignId });
+  const wrapped = wrapInBrandTemplate({ body: trackedBody, brand, unsubscribeUrl });
   const pixel = `<img src="${SITE_ORIGIN}/api/track/open?rid=${recipientId}" width="1" height="1" alt="" style="display:none;border:0;" />`;
-  return withFooter + pixel;
+  return wrapped + pixel;
 }
 
-export function buildSequenceEmailHtml({ body, contact, sequenceId }) {
+export function buildSequenceEmailHtml({ body, contact, sequenceId, brand }) {
   const personalized = personalizeText(body || '', contact);
-  // Sequence emails don't have a campaign_recipients row, so no pixel/click tracking
-  // through the campaign_stats path. We still attach the unsubscribe footer.
-  return personalized + unsubscribeFooter({ contactId: contact.id, sequenceId });
+  const unsubscribeUrl = unsubscribeUrlFor({ contactId: contact.id, sequenceId });
+  return wrapInBrandTemplate({ body: personalized, brand, unsubscribeUrl });
 }
 
-export function unsubscribeFooter({ contactId, campaignId, sequenceId }) {
+function unsubscribeUrlFor({ contactId, campaignId, sequenceId }) {
   const params = [`id=${contactId}`];
   if (campaignId) params.push(`campaign=${campaignId}`);
   if (sequenceId) params.push(`sequence=${sequenceId}`);
-  const url = `${SITE_ORIGIN}/api/unsubscribe?${params.join('&')}`;
-  return `<div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #E5E7EB; text-align: center;">
-  <p style="color: #999; font-size: 12px; line-height: 1.5;">
-    Concierge Nurse Business Society<br>
-    <a href="${url}" data-skip-tracking="1" style="color: #999; text-decoration: underline;">Unsubscribe</a>
-  </p>
-</div>`;
+  return `${SITE_ORIGIN}/api/unsubscribe?${params.join('&')}`;
 }
 
 export function wrapLinksForTracking(html, { recipientId }) {

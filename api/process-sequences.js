@@ -1,6 +1,6 @@
 import { Resend } from 'resend';
 import { createClient } from '@supabase/supabase-js';
-import { personalizeText, buildSequenceEmailHtml } from './_email-helpers.js';
+import { personalizeText, buildSequenceEmailHtml, loadBrandSettings } from './_email-helpers.js';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -30,6 +30,8 @@ export default async function handler(req, res) {
   if (!enrollments || enrollments.length === 0) {
     return res.status(200).json({ processed: 0, sent: 0, skipped: 0, completed: 0 });
   }
+
+  const brand = await loadBrandSettings(supabase);
 
   const sequenceIds = [...new Set(enrollments.map((e) => e.sequence_id))];
   const contactIds = [...new Set(enrollments.map((e) => e.contact_id))];
@@ -123,10 +125,14 @@ export default async function handler(req, res) {
         body: nextEmail.body || '',
         contact,
         sequenceId: sequence.id,
+        brand,
       });
 
+      const fromName = sequence.from_name || brand?.from_name || 'Concierge Nurse Business Society';
+      const fromEmail = sequence.from_email || brand?.from_email || 'hello@conciergenursesociety.com';
+
       await resend.emails.send({
-        from: `${sequence.from_name || 'Concierge Nurse Business Society'} <${sequence.from_email || 'hello@conciergenursesociety.com'}>`,
+        from: `${fromName} <${fromEmail}>`,
         to: contact.email,
         subject: personalizeText(nextEmail.subject, contact),
         html,

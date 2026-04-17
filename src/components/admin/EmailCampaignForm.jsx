@@ -41,23 +41,40 @@ export default function EmailCampaignForm({ mode = 'new', existingCampaign = nul
   const [testEmail, setTestEmail] = useState('');
   const [testStatus, setTestStatus] = useState({ state: 'idle', message: '' });
 
+  const [brand, setBrand] = useState(null);
   const [saving, setSaving] = useState(false);
   const [sendError, setSendError] = useState('');
 
   useEffect(() => {
     async function load() {
-      const { data: tagData } = await supabase.from('tags').select('*').order('name');
+      const [{ data: tagData }, { data: ctData }, { data: brandData }] = await Promise.all([
+        supabase.from('tags').select('*').order('name'),
+        supabase.from('contact_tags').select('tag_id'),
+        supabase.from('brand_settings').select('*').limit(1).maybeSingle(),
+      ]);
+
       setTags(tagData || []);
 
-      const { data: ctData } = await supabase.from('contact_tags').select('tag_id');
       const counts = {};
       (ctData || []).forEach((r) => {
         counts[r.tag_id] = (counts[r.tag_id] || 0) + 1;
       });
       setTagCounts(counts);
+
+      if (brandData) {
+        setBrand(brandData);
+        // Only override defaults for new campaigns; don't clobber an edited campaign's saved from_*
+        if (!isEdit) {
+          setForm((prev) => ({
+            ...prev,
+            from_name: prev.from_name && prev.from_name !== DEFAULT_FORM.from_name ? prev.from_name : (brandData.from_name || prev.from_name),
+            from_email: prev.from_email && prev.from_email !== DEFAULT_FORM.from_email ? prev.from_email : (brandData.from_email || prev.from_email),
+          }));
+        }
+      }
     }
     load();
-  }, []);
+  }, [isEdit]);
 
   function toggleTag(id) {
     setSelectedTags((prev) =>
@@ -251,6 +268,7 @@ export default function EmailCampaignForm({ mode = 'new', existingCampaign = nul
               value={form.body}
               onChange={(next) => setForm((f) => ({ ...f, body: next }))}
               onTemplateApplied={handleTemplateApplied}
+              brand={brand}
             />
           </div>
         </div>

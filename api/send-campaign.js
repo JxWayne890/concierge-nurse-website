@@ -1,6 +1,6 @@
 import { Resend } from 'resend';
 import { createClient } from '@supabase/supabase-js';
-import { personalizeText, buildCampaignEmailHtml } from './_email-helpers.js';
+import { personalizeText, buildCampaignEmailHtml, loadBrandSettings } from './_email-helpers.js';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -69,6 +69,8 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'No valid email addresses found' });
   }
 
+  const brand = await loadBrandSettings(supabase);
+
   let sent = 0;
   let failed = 0;
   const errors = [];
@@ -97,10 +99,14 @@ export default async function handler(req, res) {
           contact,
           campaignId: campaign.id,
           recipientId: recipientRow.id,
+          brand,
         });
 
+        const fromName = campaign.from_name || brand?.from_name || 'Concierge Nurse Business Society';
+        const fromEmail = campaign.from_email || brand?.from_email || 'hello@conciergenursesociety.com';
+
         await resend.emails.send({
-          from: `${campaign.from_name} <${campaign.from_email}>`,
+          from: `${fromName} <${fromEmail}>`,
           to: contact.email,
           subject: personalizeText(campaign.subject || campaign.name, contact),
           html,
