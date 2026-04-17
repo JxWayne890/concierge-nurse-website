@@ -6,7 +6,7 @@
   "crons": [
     {
       "path": "/api/process-sequences",
-      "schedule": "0 */4 * * *"
+      "schedule": "0 8 * * *"
     }
   ]
 }
