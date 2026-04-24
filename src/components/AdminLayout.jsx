@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, Users, Tag, Send, Settings, LogOut, GitBranch, Workflow, FileText, BookUser, Award, HandCoins, Handshake, Receipt } from 'lucide-react';
 import { supabase } from '../lib/supabase';
@@ -11,15 +12,38 @@ const navItems = [
   { label: 'Sequences', path: '/admin/sequences', icon: Workflow },
   { label: 'Blog', path: '/admin/blog', icon: FileText },
   { label: 'Directory', path: '/admin/directory', icon: BookUser },
-  { label: 'Ambassadors', path: '/admin/ambassadors', icon: Award },
-  { label: 'Referrals', path: '/admin/referrals', icon: Handshake },
+  { label: 'Ambassadors', path: '/admin/ambassadors', icon: Award, countKey: 'pendingAmbassadors' },
+  { label: 'Referrals', path: '/admin/referrals', icon: Handshake, countKey: 'pendingReferrals' },
   { label: 'Enrollments', path: '/admin/enrollments', icon: Receipt },
-  { label: 'Payouts', path: '/admin/payouts', icon: HandCoins },
+  { label: 'Payouts', path: '/admin/payouts', icon: HandCoins, countKey: 'duePayouts' },
   { label: 'Settings', path: '/admin/settings', icon: Settings },
 ];
 
 export default function AdminLayout() {
   const navigate = useNavigate();
+  const [counts, setCounts] = useState({ pendingAmbassadors: 0, pendingReferrals: 0, duePayouts: 0 });
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadCounts() {
+      const [ambRes, refRes, payRes] = await Promise.all([
+        supabase.from('ambassadors').select('*', { count: 'exact', head: true }).eq('status', 'pending'),
+        supabase.from('referrals').select('*', { count: 'exact', head: true }).eq('status', 'pending'),
+        supabase.from('payouts').select('*', { count: 'exact', head: true }).eq('status', 'due'),
+      ]);
+      if (cancelled) return;
+      setCounts({
+        pendingAmbassadors: ambRes.count || 0,
+        pendingReferrals: refRes.count || 0,
+        duePayouts: payRes.count || 0,
+      });
+    }
+
+    loadCounts();
+    const interval = setInterval(loadCounts, 30000);
+    return () => { cancelled = true; clearInterval(interval); };
+  }, []);
 
   async function handleLogout() {
     await supabase.auth.signOut();
@@ -38,23 +62,31 @@ export default function AdminLayout() {
         </div>
 
         <nav className="flex-1 p-4 space-y-1">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              end={item.path === '/admin'}
-              className={({ isActive }) =>
-                `flex items-center gap-3 px-3 py-2.5 text-sm no-underline transition-colors ${
-                  isActive
-                    ? 'bg-white/10 text-gold'
-                    : 'text-white/60 hover:text-white hover:bg-white/5'
-                }`
-              }
-            >
-              <item.icon size={16} />
-              {item.label}
-            </NavLink>
-          ))}
+          {navItems.map((item) => {
+            const count = item.countKey ? counts[item.countKey] : 0;
+            return (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                end={item.path === '/admin'}
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-3 py-2.5 text-sm no-underline transition-colors ${
+                    isActive
+                      ? 'bg-white/10 text-gold'
+                      : 'text-white/60 hover:text-white hover:bg-white/5'
+                  }`
+                }
+              >
+                <item.icon size={16} />
+                <span className="flex-1">{item.label}</span>
+                {count > 0 && (
+                  <span className="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 bg-gold text-navy text-[0.65rem] font-bold rounded-full">
+                    {count}
+                  </span>
+                )}
+              </NavLink>
+            );
+          })}
         </nav>
 
         <div className="p-4 border-t border-white/10">

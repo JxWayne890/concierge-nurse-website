@@ -36,9 +36,20 @@ export default function AmbassadorSignup() {
 
     setLoading(true);
 
+    const emailLc = form.email.trim().toLowerCase();
+    const ambassadorProfile = {
+      ambassador_full_name: form.full_name.trim(),
+      ambassador_phone: form.phone.trim() || null,
+      ambassador_venmo_handle: form.venmo_handle.trim() || null,
+      ambassador_cohort_graduated: form.cohort_graduated.trim() || null,
+    };
+
+    // Stash signup fields on the auth user so the Portal can auto-create the
+    // ambassador row after email confirmation — without re-asking for them.
     const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-      email: form.email.trim().toLowerCase(),
+      email: emailLc,
       password: form.password,
+      options: { data: ambassadorProfile },
     });
 
     if (signUpError) {
@@ -54,14 +65,31 @@ export default function AmbassadorSignup() {
       return;
     }
 
+    async function notifyTracy() {
+      try {
+        await fetch('/api/notify/new-ambassador', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            full_name: ambassadorProfile.ambassador_full_name,
+            email: emailLc,
+            phone: ambassadorProfile.ambassador_phone,
+            cohort_graduated: ambassadorProfile.ambassador_cohort_graduated,
+          }),
+        });
+      } catch {
+        /* non-blocking */
+      }
+    }
+
     if (signUpData.session) {
       const { error: insertError } = await supabase.from('ambassadors').insert({
         user_id: user.id,
-        email: form.email.trim().toLowerCase(),
-        full_name: form.full_name.trim(),
-        phone: form.phone.trim() || null,
-        venmo_handle: form.venmo_handle.trim() || null,
-        cohort_graduated: form.cohort_graduated.trim() || null,
+        email: emailLc,
+        full_name: ambassadorProfile.ambassador_full_name,
+        phone: ambassadorProfile.ambassador_phone,
+        venmo_handle: ambassadorProfile.ambassador_venmo_handle,
+        cohort_graduated: ambassadorProfile.ambassador_cohort_graduated,
         status: 'pending',
       });
 
@@ -71,12 +99,18 @@ export default function AmbassadorSignup() {
         return;
       }
 
+      notifyTracy();
       navigate('/ambassador/portal');
       return;
     }
 
+    // Email-confirmation mode: the row will be auto-created on first login
+    // from user_metadata. Fire the Tracy notification now so she sees the
+    // signup even before they confirm.
+    notifyTracy();
+
     setDoneMessage(
-      "Check your email to confirm your address. Once confirmed, sign in and you'll land in your portal. Tracy will approve your Ambassador status from there."
+      "Check your email to confirm your address. Once confirmed, sign in and you'll land straight in your portal — no re-entering details. Tracy will approve your Ambassador status from there."
     );
     setLoading(false);
   }

@@ -38,7 +38,7 @@ export default function AmbassadorPortal() {
     setLoading(true);
     setLoadError('');
 
-    const [ambRes, cycleRes] = await Promise.all([
+    let [ambRes, cycleRes] = await Promise.all([
       supabase.from('ambassadors').select('*').eq('user_id', session.user.id).maybeSingle(),
       supabase.from('cohort_cycles').select('*').eq('is_active', true).maybeSingle(),
     ]);
@@ -48,6 +48,47 @@ export default function AmbassadorPortal() {
       setLoading(false);
       return;
     }
+
+    // First-login auto-create: if there's no ambassador row but the signup
+    // fields were stashed on the user_metadata (email-confirmation mode),
+    // insert the row now so the user doesn't have to re-enter everything.
+    if (!ambRes.data) {
+      const meta = session.user.user_metadata || {};
+      if (meta.ambassador_full_name) {
+        const { data: inserted, error: insertErr } = await supabase
+          .from('ambassadors')
+          .insert({
+            user_id: session.user.id,
+            email: session.user.email,
+            full_name: meta.ambassador_full_name,
+            phone: meta.ambassador_phone || null,
+            venmo_handle: meta.ambassador_venmo_handle || null,
+            cohort_graduated: meta.ambassador_cohort_graduated || null,
+            status: 'pending',
+          })
+          .select('*')
+          .maybeSingle();
+
+        if (!insertErr && inserted) {
+          ambRes = { data: inserted, error: null };
+          // Fire the Tracy-notification on first login too, in case the signup
+          // page's fire-and-forget call didn't reach the server.
+          try {
+            await fetch('/api/notify/new-ambassador', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                full_name: inserted.full_name,
+                email: inserted.email,
+                phone: inserted.phone,
+                cohort_graduated: inserted.cohort_graduated,
+              }),
+            });
+          } catch { /* non-blocking */ }
+        }
+      }
+    }
+
     setAmbassador(ambRes.data);
     setActiveCycle(cycleRes.data || null);
 
