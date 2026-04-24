@@ -49,17 +49,25 @@ export default function AmbassadorPortal() {
       return;
     }
 
-    // First-login auto-create: if there's no ambassador row but the signup
-    // fields were stashed on the user_metadata (email-confirmation mode),
-    // insert the row now so the user doesn't have to re-enter everything.
+    // First-login auto-create: if there's no ambassador row yet, try to
+    // recover the signup details from user_metadata (signup stashed them
+    // there via options.data). The session.user is sometimes stale right
+    // after email confirmation — always fetch a fresh user first.
     if (!ambRes.data) {
-      const meta = session.user.user_metadata || {};
+      let freshUser = session.user;
+      try {
+        const { data: userData } = await supabase.auth.getUser();
+        if (userData?.user) freshUser = userData.user;
+      } catch { /* fall back to cached session.user */ }
+
+      const meta = freshUser.user_metadata || {};
+
       if (meta.ambassador_full_name) {
         const { data: inserted, error: insertErr } = await supabase
           .from('ambassadors')
           .insert({
-            user_id: session.user.id,
-            email: session.user.email,
+            user_id: freshUser.id,
+            email: freshUser.email,
             full_name: meta.ambassador_full_name,
             phone: meta.ambassador_phone || null,
             venmo_handle: meta.ambassador_venmo_handle || null,
@@ -71,8 +79,6 @@ export default function AmbassadorPortal() {
 
         if (!insertErr && inserted) {
           ambRes = { data: inserted, error: null };
-          // Fire the Tracy-notification on first login too, in case the signup
-          // page's fire-and-forget call didn't reach the server.
           try {
             await fetch('/api/notify/new-ambassador', {
               method: 'POST',
@@ -132,9 +138,24 @@ export default function AmbassadorPortal() {
     );
   }
 
-  // Logged in but no ambassador row — finish setup.
+  // Logged in but no ambassador row — finish setup. Pre-fill from whatever
+  // signup stashed on user_metadata so, at worst, the user just clicks Submit.
   if (!ambassador) {
-    return <FinishSetup userId={session.user.id} email={session.user.email} onDone={loadAll} error={loadError} />;
+    const meta = session.user.user_metadata || {};
+    return (
+      <FinishSetup
+        userId={session.user.id}
+        email={session.user.email}
+        initial={{
+          full_name: meta.ambassador_full_name || '',
+          phone: meta.ambassador_phone || '',
+          venmo_handle: meta.ambassador_venmo_handle || '',
+          cohort_graduated: meta.ambassador_cohort_graduated || '',
+        }}
+        onDone={loadAll}
+        error={loadError}
+      />
+    );
   }
 
   return (
@@ -746,10 +767,16 @@ function Readonly({ label, value }) {
 
 /* ────────────────────────── Finish setup (edge case) ────────────────────────── */
 
-function FinishSetup({ userId, email, onDone, error: initialError }) {
-  const [form, setForm] = useState({ full_name: '', phone: '', venmo_handle: '', cohort_graduated: '' });
+function FinishSetup({ userId, email, initial, onDone, error: initialError }) {
+  const [form, setForm] = useState({
+    full_name: initial?.full_name || '',
+    phone: initial?.phone || '',
+    venmo_handle: initial?.venmo_handle || '',
+    cohort_graduated: initial?.cohort_graduated || '',
+  });
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(initialError || '');
+  const prefilled = !!initial?.full_name;
 
   const update = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
@@ -778,8 +805,14 @@ function FinishSetup({ userId, email, onDone, error: initialError }) {
   return (
     <div className="min-h-screen bg-cream flex items-center justify-center px-6 py-16">
       <div className="max-w-lg w-full bg-white border border-cream-dark p-8">
-        <h1 className="font-heading text-2xl font-bold text-navy mb-1">Finish setting up</h1>
-        <p className="text-charcoal/65 text-sm mb-6">Just a few more details so Tracy can approve your Ambassador account.</p>
+        <h1 className="font-heading text-2xl font-bold text-navy mb-1">
+          {prefilled ? 'Confirm your details' : 'Finish setting up'}
+        </h1>
+        <p className="text-charcoal/65 text-sm mb-6">
+          {prefilled
+            ? 'We pre-filled this from your signup — just hit Submit to send it to Tracy for approval.'
+            : 'Just a few more details so Tracy can approve your Ambassador account.'}
+        </p>
         <form onSubmit={handleSubmit} className="space-y-4">
           <FormField label="Full name" value={form.full_name} onChange={update('full_name')} required />
           <div className="grid sm:grid-cols-2 gap-4">
