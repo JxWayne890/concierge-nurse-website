@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Search, MapPin, Mail, Globe, Phone } from 'lucide-react';
+import { Search, MapPin, Mail, Globe, Phone, ChevronDown } from 'lucide-react';
 import SEO from '../components/SEO';
 import { supabase } from '../lib/supabase';
 
@@ -86,34 +86,49 @@ export default function Directory() {
       />
 
       {/* Hero */}
-      <section className="bg-navy pt-32 pb-14">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <p className="section-label mb-4">Member Directory</p>
-          <h1 className="font-heading text-4xl sm:text-5xl lg:text-[3.5rem] font-bold text-white leading-[1.1] mb-5">
+      <section className="bg-navy pt-20 xl:pt-28 pb-6 xl:pb-8">
+        <div className="max-w-3xl mx-auto px-6 lg:px-10 text-center">
+          <h1 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold text-white leading-[1.15] mb-3">
             Find a <span className="text-gold-gradient">Concierge Nurse</span>
           </h1>
-          <div className="gold-divider mb-6" />
-          <p className="text-white/60 text-lg leading-relaxed max-w-2xl">
-            Every nurse listed here completed the Concierge Nurse Business Method Accelerator and runs an independent private-pay concierge nursing practice.
-          </p>
+          <div className="gold-divider mx-auto mb-3" />
+          <p className="section-label">Member Directory</p>
         </div>
       </section>
 
-      {/* Search + specialty chips */}
-      <section className="bg-cream border-b border-cream-dark py-6 sticky top-[114px] z-30">
+      {/* Sticky search bar + tablet chip row */}
+      <section className="bg-cream border-b border-cream-dark py-4 sm:py-6 sticky top-[70px] xl:top-[114px] z-30">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <div className="relative max-w-2xl mx-auto mb-5">
-            <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-charcoal/30" />
-            <input
-              type="text"
-              placeholder="Search by name, specialty, or location…"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 border border-cream-dark bg-white text-sm focus:outline-none focus:border-gold"
-            />
+          <div className="flex flex-col sm:flex-row gap-3 max-w-3xl mx-auto mb-3 sm:mb-5">
+            <div className="relative flex-1">
+              <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-charcoal/30" />
+              <input
+                type="text"
+                placeholder="Search by name, specialty, or location…"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="w-full pl-12 pr-4 py-3 border border-cream-dark bg-white text-sm focus:outline-none focus:border-gold"
+              />
+            </div>
+            {specialties.length > 0 && (
+              <div className="relative sm:hidden">
+                <select
+                  value={specialty}
+                  onChange={(e) => setSpecialty(e.target.value)}
+                  className="w-full appearance-none pl-4 pr-10 py-3 text-xs uppercase tracking-wider border border-cream-dark bg-white text-charcoal focus:outline-none focus:border-gold"
+                >
+                  <option value="all">All Specialties</option>
+                  {specialties.map((s) => (
+                    <option key={s} value={s}>{s}</option>
+                  ))}
+                </select>
+                <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-charcoal/50 pointer-events-none" />
+              </div>
+            )}
           </div>
+          {/* Tablet: wrap-chip row (sm to lg only) */}
           {specialties.length > 0 && (
-            <div className="flex flex-wrap gap-2 justify-center">
+            <div className="hidden sm:flex lg:hidden flex-wrap gap-2 justify-center">
               <button
                 onClick={() => setSpecialty('all')}
                 className={`px-4 py-2 text-xs uppercase tracking-wider transition-colors ${
@@ -139,31 +154,70 @@ export default function Directory() {
               ))}
             </div>
           )}
-          <p className="text-center text-[0.65rem] uppercase tracking-[0.2em] text-charcoal/50 mt-4">
+          <p className="text-center text-[0.65rem] uppercase tracking-[0.2em] text-charcoal/50 mt-3 sm:mt-4">
             {filtered.length} {filtered.length === 1 ? 'member' : 'members'}
           </p>
         </div>
       </section>
 
-      {/* Member cards */}
-      <section className="py-16 bg-cream">
+      {/* Member cards + desktop sidebar */}
+      <section className="py-12 lg:py-16 bg-cream">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          {loading ? (
-            <div className="py-16 text-center">
-              <div className="w-8 h-8 border-2 border-gold border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-              <p className="text-slate text-sm">Loading directory…</p>
+          <div className="lg:grid lg:grid-cols-[240px_1fr] lg:gap-10 xl:grid-cols-[280px_1fr] xl:gap-12">
+            {/* Desktop sidebar (lg+) */}
+            {specialties.length > 0 && (
+              <aside className="hidden lg:block">
+                <div className="sticky top-[200px] xl:top-[244px]">
+                  <p className="section-label mb-4 pb-4 border-b border-cream-dark">Filter by Specialty</p>
+                  <nav className="flex flex-col">
+                    <button
+                      onClick={() => setSpecialty('all')}
+                      className={`text-left py-2 pl-3 text-sm border-l-2 transition-colors ${
+                        specialty === 'all'
+                          ? 'border-gold text-navy font-semibold'
+                          : 'border-transparent text-charcoal/60 hover:text-navy hover:border-gold/40'
+                      }`}
+                    >
+                      All Specialties
+                    </button>
+                    {specialties.map((s) => (
+                      <button
+                        key={s}
+                        onClick={() => setSpecialty(s)}
+                        className={`text-left py-2 pl-3 text-sm leading-snug border-l-2 transition-colors ${
+                          specialty === s
+                            ? 'border-gold text-navy font-semibold'
+                            : 'border-transparent text-charcoal/60 hover:text-navy hover:border-gold/40'
+                        }`}
+                      >
+                        {s}
+                      </button>
+                    ))}
+                  </nav>
+                </div>
+              </aside>
+            )}
+
+            {/* Main column: cards */}
+            <div>
+              {loading ? (
+                <div className="py-16 text-center">
+                  <div className="w-8 h-8 border-2 border-gold border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+                  <p className="text-slate text-sm">Loading directory…</p>
+                </div>
+              ) : filtered.length === 0 ? (
+                <div className="py-16 text-center">
+                  <p className="text-slate">No members match your search.</p>
+                </div>
+              ) : (
+                <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+                  {filtered.map((m) => (
+                    <MemberCard key={m.id} member={m} />
+                  ))}
+                </div>
+              )}
             </div>
-          ) : filtered.length === 0 ? (
-            <div className="py-16 text-center">
-              <p className="text-slate">No members match your search.</p>
-            </div>
-          ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filtered.map((m) => (
-                <MemberCard key={m.id} member={m} />
-              ))}
-            </div>
-          )}
+          </div>
         </div>
       </section>
 
