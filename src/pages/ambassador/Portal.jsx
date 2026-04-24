@@ -91,6 +91,15 @@ export default function AmbassadorPortal() {
               }),
             });
           } catch { /* non-blocking */ }
+        } else if (insertErr?.code === '23505') {
+          // Row already exists for this user (possibly from a prior attempt).
+          // Re-fetch and treat as success.
+          const { data: existing } = await supabase
+            .from('ambassadors')
+            .select('*')
+            .eq('user_id', freshUser.id)
+            .maybeSingle();
+          if (existing) ambRes = { data: existing, error: null };
         }
       }
     }
@@ -794,7 +803,10 @@ function FinishSetup({ userId, email, initial, onDone, error: initialError }) {
       cohort_graduated: form.cohort_graduated.trim() || null,
       status: 'pending',
     });
-    if (insertError) {
+
+    // Duplicate key means a row already exists for this user — just reload
+    // and land on the dashboard instead of erroring.
+    if (insertError && insertError.code !== '23505') {
       setError(insertError.message);
       setSaving(false);
       return;
