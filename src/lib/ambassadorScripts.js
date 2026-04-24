@@ -1,4 +1,4 @@
-export const ENROLLMENT_URL = 'https://from-bedside-to-business-xm506xz.gamma.site/';
+export const ENROLLMENT_URL = 'https://www.conciergenursesociety.com/accelerator/enroll';
 export const TRACY_EMAIL = 'info@conciergenursesociety.com';
 
 export function buildEnrollmentLink(refCode) {

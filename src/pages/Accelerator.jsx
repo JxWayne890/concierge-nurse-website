@@ -276,6 +276,16 @@ export default function Accelerator() {
               </form>
             )}
 
+            <div className="border-t border-cream-dark pt-6 mt-2 mb-6">
+              <p className="text-charcoal/65 text-xs uppercase tracking-[0.2em] mb-3">Ready to enroll?</p>
+              <Link
+                to="/accelerator/enroll"
+                className="inline-flex items-center justify-center gap-2 bg-navy text-white w-full px-6 py-3 text-xs font-semibold tracking-[0.2em] uppercase no-underline hover:bg-navy/85 transition-colors"
+              >
+                Secure My Spot
+              </Link>
+            </div>
+
             <p className="text-slate text-xs">
               Already interested?{' '}
               <Link to="/strategy" className="text-gold underline">

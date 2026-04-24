@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Mail, Building2, DollarSign, Tag, Clock, FileText, Pencil, Phone, Flame, TrendingUp } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { getIntentMeta, getTemperature } from '../../lib/leadScoring';
+import { SendEnrollmentLinkButton } from './Enrollments';
 
 export default function LeadDetail() {
   const { id } = useParams();
@@ -102,7 +103,7 @@ export default function LeadDetail() {
       </Link>
 
       {/* Header */}
-      <div className="flex items-start justify-between mb-6">
+      <div className="flex items-start justify-between mb-6 flex-wrap gap-3">
         <div>
           <h1 className="font-heading text-2xl font-bold text-navy">
             {contact.first_name || ''} {contact.last_name || ''}
@@ -110,7 +111,8 @@ export default function LeadDetail() {
           </h1>
           <p className="text-slate text-sm mt-1">{contact.email}</p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 flex-wrap">
+          <SendEnrollmentLinkButton lead={contact} />
           {!editing && (
             <button onClick={startEdit} className="btn-navy text-sm flex items-center gap-2">
               <Pencil size={14} /> Edit

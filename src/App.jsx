@@ -31,6 +31,8 @@ const Ambassador = lazy(() => import('./pages/Ambassador'));
 const AmbassadorSignup = lazy(() => import('./pages/ambassador/Signup'));
 const AmbassadorLogin = lazy(() => import('./pages/ambassador/Login'));
 const AmbassadorPortal = lazy(() => import('./pages/ambassador/Portal'));
+const AcceleratorEnroll = lazy(() => import('./pages/accelerator/Enroll'));
+const AcceleratorThankYou = lazy(() => import('./pages/accelerator/ThankYou'));
 
 // Admin pages
 const AdminLogin = lazy(() => import('./pages/admin/Login'));
@@ -59,6 +61,7 @@ const AdminDirectoryMemberEditor = lazy(() => import('./pages/admin/DirectoryMem
 const AdminAmbassadors = lazy(() => import('./pages/admin/Ambassadors'));
 const AdminReferrals = lazy(() => import('./pages/admin/Referrals'));
 const AdminPayouts = lazy(() => import('./pages/admin/Payouts'));
+const AdminEnrollments = lazy(() => import('./pages/admin/Enrollments'));
 
 const L = (p) => lazy(() => import(`./pages/resources/${p}.jsx`));
 const LN = (p) => lazy(() => import(`./pages/resources/niches/${p}.jsx`));
@@ -360,6 +363,8 @@ export default function App() {
             <Route path="/about" element={<About />} />
             <Route path="/start-here" element={<StartHere />} />
             <Route path="/accelerator" element={<Accelerator />} />
+            <Route path="/accelerator/enroll" element={<AcceleratorEnroll />} />
+            <Route path="/accelerator/thank-you" element={<AcceleratorThankYou />} />
             <Route path="/society" element={<Society />} />
             <Route path="/toolkits" element={<Toolkits />} />
             <Route path="/strategy" element={<Strategy />} />
@@ -429,6 +434,7 @@ export default function App() {
             <Route path="ambassadors" element={<AdminAmbassadors />} />
             <Route path="referrals" element={<AdminReferrals />} />
             <Route path="payouts" element={<AdminPayouts />} />
+            <Route path="enrollments" element={<AdminEnrollments />} />
             <Route path="settings" element={<AdminSettings />} />
           </Route>
         </Routes>
