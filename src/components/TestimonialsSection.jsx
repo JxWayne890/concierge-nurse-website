@@ -71,8 +71,8 @@ export default function TestimonialsSection() {
                 backgroundSize: '160% auto',
                 backgroundPosition: 'right center',
                 transform: 'scaleX(-1)',
-                maskImage: 'radial-gradient(ellipse 85% 92% at center, black 55%, transparent 100%)',
-                WebkitMaskImage: 'radial-gradient(ellipse 85% 92% at center, black 55%, transparent 100%)',
+                maskImage: 'radial-gradient(ellipse 85% 92% at center, black 30%, transparent 95%)',
+                WebkitMaskImage: 'radial-gradient(ellipse 85% 92% at center, black 30%, transparent 95%)',
               }}
             />
           </div>
