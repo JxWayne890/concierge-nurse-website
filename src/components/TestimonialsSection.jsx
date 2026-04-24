@@ -66,7 +66,7 @@ export default function TestimonialsSection() {
           <div className="hidden lg:block relative sticky top-32">
             <div
               className="w-full aspect-[4/5] bg-cover bg-center max-w-lg shadow-2xl ml-auto"
-              style={{ backgroundImage: 'url("https://i.imgur.com/L45BgbB.jpg")'}}
+              style={{ backgroundImage: 'url("https://i.imgur.com/jxBFHqK.jpeg")'}}
             />
           </div>
 
