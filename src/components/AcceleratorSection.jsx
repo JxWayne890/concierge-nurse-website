@@ -25,16 +25,17 @@ export default function AcceleratorSection() {
           {/* Text Content */}
           <div className="relative z-10 p-8 sm:p-12 lg:p-16 max-w-4xl text-center flex flex-col items-center">
             <p className="font-body text-gold text-[0.65rem] lg:text-[0.7rem] tracking-[0.35em] uppercase mb-6">
-              Flagship Program · Six Weeks · Live Cohort
+              Live Cohort · Six Weeks · Flagship
             </p>
-            <h2 className="font-heading font-normal text-5xl lg:text-[6rem] text-white mb-8 leading-tight tracking-tight uppercase">
-              THE <br/>
-              ACCELERATOR
+            <h2 className="font-heading font-normal text-3xl sm:text-4xl lg:text-[3.75rem] text-white mb-8 leading-[1.1] tracking-tight uppercase">
+              THE CONCIERGE NURSE <br/>
+              SIX-STEP BUSINESS METHOD <br/>
+              <span className="text-gold">COHORT ACCELERATOR</span>
             </h2>
             <div className="gold-divider mx-auto mb-8" />
 
-            <p className="font-body text-white/90 text-sm lg:text-[1.1rem] leading-loose mb-12 max-w-2xl">
-              A six-week live cohort where you build your entire concierge nursing business from the ground up. Not a course. Not theory. Real business, built step by step.
+            <p className="font-body text-white/90 text-sm lg:text-[1.05rem] leading-loose mb-12 max-w-2xl">
+              Six weeks of live coaching with Tracy specifically for the concierge nurse business model and structured around the proven six-step method. A small cohort of experienced nurses building right alongside you. Healthcare attorney education, CPA Q+A, complete business toolkit, and invitation to The Concierge Nurse Business Society Membership, exclusive to cohort graduates.
             </p>
 
             <Link to="/accelerator" className="btn-white text-white border-white bg-transparent hover:bg-white hover:text-navy hover:border-white px-10 py-4 text-xs tracking-[0.3em] uppercase">

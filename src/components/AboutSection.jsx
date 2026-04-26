@@ -38,14 +38,14 @@ export default function AboutSection() {
         {/* Text Content */}
         <div className="relative z-20 text-center w-full mt-12 display-flex flex-col items-center">
           <p className="avery-italic text-[#d8d0c1] text-xl lg:text-3xl mb-4 font-light drop-shadow-md lg:absolute lg:-top-16 lg:left-1/2 lg:-translate-x-1/2 w-full">
-            You were never meant to stay at the bedside forever.
+            Your expertise. Your schedule. Your business.
           </p>
           <div
             className="transition-transform duration-75 ease-out"
             style={{ transform: `translateX(${textTranslateX}px)` }}
           >
             <h2 className="font-heading text-white text-[7rem] md:text-[10rem] lg:text-[12rem] leading-[0.7] tracking-tighter whitespace-nowrap opacity-95 pointer-events-none select-none uppercase">
-              BEYOND THE BEDSIDE
+              THE CONCIERGE NURSE
             </h2>
           </div>
         </div>
@@ -71,12 +71,12 @@ export default function AboutSection() {
             <div className="lg:col-span-7 flex flex-col pt-8 pl-8">
                <p className="section-label text-gold mb-5">About Tracy</p>
                <h3 className="avery-title text-5xl text-navy mb-10 leading-tight uppercase">
-                 THE PROBLEM, CREDIBILITY <br/> AND TRANSFORMATION
+                 BUILT BY A NURSE. <br/> FOR NURSES.
                </h3>
                <div className="navy-divider mb-8 h-[2px] w-12" />
                <div className="space-y-6 text-navy/70 text-[0.95rem] leading-loose max-w-lg">
-                 <p>Tracy is not a life coach with a vague promise. She is a registered nurse, entrepreneur, and business strategist who has built exactly what she teaches.</p>
-                 <p>She created the Concierge Nurse Business Society to give nurses something that did not exist when she started: a clear, strategic, step-by-step pathway to building an independent, private-pay concierge nursing business.</p>
+                 <p>Tracy Pekurny is a registered nurse with more than twenty years of clinical experience and over a decade as an entrepreneur. She built her own concierge nurse business before she ever taught one.</p>
+                 <p>She created the Concierge Nurse Business Society to give experienced nurses what did not exist when she started: a clear, step-by-step pathway to building an independent concierge nurse business with clinical integrity and legal protection.</p>
                </div>
                <div className="mt-16">
                  <Link to="/about" className="btn-secondary border-navy text-navy hover:bg-navy hover:text-white inline-block">
@@ -104,7 +104,7 @@ export default function AboutSection() {
             <div className="text-center mb-6">
               <p className="section-label text-gold mb-4">About Tracy</p>
               <h3 className="avery-title text-2xl text-navy leading-tight uppercase">
-                THE PROBLEM, CREDIBILITY<br/>AND TRANSFORMATION
+                BUILT BY A NURSE.<br/>FOR NURSES.
               </h3>
             </div>
 
@@ -113,8 +113,8 @@ export default function AboutSection() {
 
             {/* Body text */}
             <div className="text-center space-y-4 text-navy/65 text-[0.85rem] leading-relaxed max-w-sm mb-8">
-              <p>Tracy is not a life coach with a vague promise. She is a registered nurse, entrepreneur, and business strategist who has built exactly what she teaches.</p>
-              <p>She created the Concierge Nurse Business Society to give nurses something that did not exist when she started: a clear, strategic, step-by-step pathway to building an independent, private-pay concierge nursing business.</p>
+              <p>Tracy Pekurny is a registered nurse with more than twenty years of clinical experience and over a decade as an entrepreneur. She built her own concierge nurse business before she ever taught one.</p>
+              <p>She created the Concierge Nurse Business Society to give experienced nurses what did not exist when she started: a clear, step-by-step pathway to building an independent concierge nurse business with clinical integrity and legal protection.</p>
             </div>
 
             {/* CTA */}

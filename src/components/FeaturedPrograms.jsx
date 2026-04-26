@@ -25,14 +25,14 @@ export default function FeaturedPrograms() {
 
             <div className="relative z-10 flex flex-col items-center text-center max-w-sm">
               <p className="font-body text-gold text-[0.6rem] tracking-[0.3em] uppercase mb-4">
-                Flagship · Six Weeks · Live
+                Live Cohort · Six Weeks · Flagship
               </p>
               <h3 className="avery-title text-4xl lg:text-5xl text-white mb-5 uppercase tracking-wider drop-shadow-md">
                 THE ACCELERATOR
               </h3>
               <div className="gold-divider mx-auto mb-6" />
-              <p className="font-body text-white/80 text-xs lg:text-[0.85rem] leading-relaxed mb-10 drop-shadow">
-                A six-week live cohort where you build your entire concierge nursing business from the ground up. Not a course. Not theory. Real business, built step by step.
+              <p className="font-body text-white/80 text-[0.7rem] lg:text-[0.78rem] leading-relaxed mb-10 drop-shadow">
+                Six weeks of live coaching with Tracy specifically for the concierge nurse business model and structured around the proven six-step method. A small cohort of experienced nurses building right alongside you. Healthcare attorney education, CPA Q+A, complete business toolkit, and invitation to The Concierge Nurse Business Society Membership, exclusive to cohort graduates.
               </p>
               <Link to="/accelerator" className="btn-white text-white border-white bg-transparent hover:bg-white hover:text-navy hover:border-white text-[0.65rem] px-8 tracking-[0.2em]">
                 JOIN THE WAITLIST
@@ -57,14 +57,14 @@ export default function FeaturedPrograms() {
 
             <div className="relative z-10 flex-grow flex flex-col justify-end px-6 pb-10">
               <p className="font-body text-gold text-[0.6rem] tracking-[0.25em] uppercase mb-4">
-                Flagship Cohort
+                Live Cohort
               </p>
               <h3 className="font-heading font-normal text-[2.25rem] text-white mb-4 leading-[1.05] tracking-tight uppercase">
                 THE<br/>ACCELERATOR
               </h3>
               <div className="gold-divider mb-5" />
-              <p className="font-body text-white/75 text-[0.8rem] leading-relaxed mb-7 max-w-[280px]">
-                A six-week live cohort where you build your entire concierge nursing business from the ground up. Not a course. Not theory.
+              <p className="font-body text-white/75 text-[0.72rem] leading-relaxed mb-7 max-w-[300px]">
+                Six weeks of live coaching with Tracy specifically for the concierge nurse business model and structured around the proven six-step method. A small cohort of experienced nurses building right alongside you. Healthcare attorney education, CPA Q+A, complete business toolkit, and invitation to The Concierge Nurse Business Society Membership, exclusive to cohort graduates.
               </p>
               <Link to="/accelerator" className="btn-white text-white border-white bg-transparent hover:bg-white hover:text-navy hover:border-white text-center py-3.5 text-[0.65rem] tracking-[0.2em] uppercase">
                 JOIN THE WAITLIST
@@ -75,15 +75,18 @@ export default function FeaturedPrograms() {
           {/* Right Block - Clarity Consult */}
           <div
             className="flex-1 relative bg-cover bg-center flex items-center justify-center p-8 min-h-[500px] max-md:hidden"
-            style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200")'}}
+            style={{ backgroundImage: 'url("https://i.imgur.com/vzUKQAC.png")'}}
           >
              <div className="absolute inset-0 bg-white/10 z-0 mix-blend-overlay"></div>
-             <div className="relative z-10 bg-cream p-12 lg:p-16 w-full max-w-md flex flex-col items-center text-center shadow-2xl">
+             <div className="relative z-10 bg-cream/40 backdrop-blur-xl border border-white/30 p-12 lg:p-16 w-full max-w-md flex flex-col items-center text-center shadow-2xl">
+                <p className="font-body text-gold text-[0.6rem] lg:text-[0.65rem] tracking-[0.3em] uppercase mb-3">
+                  RN Concierge Business
+                </p>
                 <h3 className="avery-title text-3xl lg:text-[2.5rem] text-navy mb-6 tracking-normal">
                   CLARITY CONSULT
                 </h3>
-                <p className="font-body text-navy/70 text-xs lg:text-[0.8rem] leading-relaxed mb-10 pb-2 max-w-[280px]">
-                  A 60-minute private strategy session to expose exactly where you are, what is holding you back, and what your next move should be. Walk away with a personalized 30-day action plan.
+                <p className="font-body text-navy/70 text-[0.7rem] lg:text-[0.78rem] leading-relaxed mb-10 pb-2 max-w-[300px]">
+                  A focused 60-minute Zoom session for nurses who are just starting or stuck in the early phases. We work on one thing: getting clear on the problem you solve and who you solve it for. You walk away with a digital outline of next steps, delivered within 48 hours. The clarity you need before you can move forward.
                 </p>
                 <Link to="/strategy" className="btn-secondary border-navy text-navy hover:bg-navy hover:text-white uppercase tracking-widest text-[0.65rem] px-8 py-[0.6rem]">
                   BOOK YOUR SESSION
@@ -95,18 +98,18 @@ export default function FeaturedPrograms() {
           <div className="md:hidden relative min-h-[75vh] flex flex-col">
             <div
               className="absolute inset-0 bg-cover"
-              style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200")', backgroundPosition: 'center' }}
+              style={{ backgroundImage: 'url("https://i.imgur.com/vzUKQAC.png")', backgroundPosition: 'center' }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/60 to-transparent" />
             <div className="relative z-10 flex-grow flex flex-col justify-end px-6 pb-10">
               <p className="font-body text-gold text-[0.6rem] tracking-[0.25em] uppercase mb-4">
-                Strategy Session
+                RN Concierge Business
               </p>
               <h3 className="font-heading font-normal text-[2.25rem] text-white mb-4 leading-[1.05] tracking-tight uppercase">
                 CLARITY<br/>CONSULT
               </h3>
-              <p className="font-body text-white/75 text-[0.8rem] leading-relaxed mb-7 max-w-[280px]">
-                A 60-minute private strategy session to expose exactly where you are, what is holding you back, and what your next move should be.
+              <p className="font-body text-white/75 text-[0.72rem] leading-relaxed mb-7 max-w-[300px]">
+                A focused 60-minute Zoom session for nurses who are just starting or stuck in the early phases. We work on one thing: getting clear on the problem you solve and who you solve it for. You walk away with a digital outline of next steps, delivered within 48 hours. The clarity you need before you can move forward.
               </p>
               <Link to="/strategy" className="btn-white text-white border-white bg-transparent hover:bg-white hover:text-navy hover:border-white text-center py-3.5 text-[0.65rem] tracking-[0.2em] uppercase">
                 BOOK YOUR SESSION

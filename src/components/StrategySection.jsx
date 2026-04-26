@@ -7,8 +7,8 @@ const services = [
     title: 'RN Concierge Business Clarity Consult',
     subtitle: 'Your Strategic Starting Point',
     description:
-      'A 60-minute private 1:1 Zoom strategy session designed to expose exactly where you are, what is holding you back, and what you need to do next. You will receive a personalized 30-day digital action plan within 48 hours.',
-    details: ['60-minute private Zoom session', 'Personalized 30-day action plan', 'Diagnostic, not a teaching session'],
+      'A focused 60-minute Zoom session for nurses who are just starting or stuck in the early phases. We work on one thing: getting clear on the problem you solve and who you solve it for. You walk away with a digital outline of next steps, delivered within 48 hours. The clarity you need before you can move forward.',
+    details: ['60-minute Zoom session', 'Digital outline within 48 hours', 'For early-stage nurses'],
     highlight: true,
     cta: 'Book a Clarity Consult',
   },

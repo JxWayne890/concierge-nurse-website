@@ -15,14 +15,14 @@ export default function Hero() {
            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(10,22,40,0.7)_0%,rgba(10,22,40,0.1)_60%,transparent_100%)]"></div>
            
            <div className="relative z-10 p-12 lg:p-16 max-w-3xl">
-              <h1 className="font-heading font-normal text-6xl lg:text-[5.8rem] text-white mb-6 leading-[1.02] drop-shadow-md tracking-tight uppercase">
-                BUILD, LAUNCH <br/>
-                <span className="italic normal-case text-gold px-1">&</span> SCALE YOUR <br/>
-                NURSING BUSINESS
+              <h1 className="font-heading font-normal text-5xl lg:text-[5rem] text-white mb-6 leading-[1.05] drop-shadow-md tracking-tight uppercase">
+                THE CONCIERGE <br/>
+                NURSE BUSINESS <br/>
+                <span className="text-gold">METHOD</span>
               </h1>
-              
+
               <p className="font-body text-white/90 text-sm lg:text-[1rem] leading-loose mb-10 max-w-md drop-shadow-md">
-                Strategic business-building for nurses who refuse to settle for the bedside. Education, consulting, and hands-on coaching to scale to six figures and beyond.
+                Education, strategy, and coaching for registered nurses building private-pay concierge businesses.
               </p>
               
               <Link to="/start-here" className="btn-white text-white border-white bg-transparent hover:bg-white hover:text-navy hover:border-white shadow-sm">
@@ -49,14 +49,14 @@ export default function Hero() {
               Concierge Nurse Business Society
             </p>
 
-            <h1 className="font-heading font-normal text-[2.75rem] text-white mb-5 leading-[1.05] tracking-tight uppercase">
-              BUILD, LAUNCH <br/>
-              <span className="italic normal-case text-gold">&</span> SCALE YOUR <br/>
-              NURSING BUSINESS
+            <h1 className="font-heading font-normal text-[2.5rem] text-white mb-5 leading-[1.05] tracking-tight uppercase">
+              THE CONCIERGE <br/>
+              NURSE BUSINESS <br/>
+              <span className="text-gold">METHOD</span>
             </h1>
 
             <p className="font-body text-white/80 text-[0.85rem] leading-relaxed mb-8 max-w-[300px]">
-              Strategic business-building for nurses ready to leave the bedside and scale to six figures and beyond.
+              Education, strategy, and coaching for nurses building private-pay concierge businesses.
             </p>
 
             <div className="flex flex-col gap-3 w-full">
