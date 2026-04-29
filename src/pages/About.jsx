@@ -1,23 +1,7 @@
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 import SEO from '../components/SEO';
 
 export default function About() {
-  const [offsetY, setOffsetY] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setOffsetY(window.scrollY);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Start with just the "E" visible at left edge, then scroll reveals full text
-  // Negative = pushed far right off screen, scroll pulls it left
-  const textTranslateX = -50 - (offsetY * 0.65);
-
   return (
     <div className="bg-[#f5f2eb] min-h-screen">
       <SEO
@@ -30,18 +14,10 @@ export default function About() {
       {/* Editorial Hero Layout */}
       <section className="relative pt-[180px] pb-32 overflow-hidden flex flex-col items-center border-b border-navy/5">
         
-        {/* Faded background images (B&W effect) */}
-        <div className="absolute left-[15%] top-[10%] w-[25%] h-[60%] opacity-20 mix-blend-luminosity grayscale z-0">
-          <div className="w-full h-full bg-cover bg-center" style={{ backgroundImage: 'url("https://i.imgur.com/9rJwMd8.jpg")'}} />
-        </div>
-        <div className="absolute right-[5%] top-[10%] w-[25%] h-[60%] opacity-20 mix-blend-luminosity grayscale z-0">
-          <div className="w-full h-full bg-cover bg-center" style={{ backgroundImage: 'url("https://i.imgur.com/m2huabH.jpg")'}} />
-        </div>
-
         {/* Top content */}
         <div className="relative z-10 text-center w-full flex flex-col items-center px-4">
           <p className="avery-italic flex text-navy/70 text-lg lg:text-xl mb-4 text-center">
-            Registered Nurse. Entrepreneur. Business Strategist.
+            Registered Nurse. Founder. Strategist.
           </p>
         </div>
 
@@ -50,7 +26,7 @@ export default function About() {
           
           {/* Overlapping Photo (Starts higher via negative margins on desktop to overlap text) */}
           <div className="w-full max-w-[380px] lg:-mt-[120px] shadow-2xl z-30 ml-0 lg:ml-24">
-            <div className="w-full aspect-[3/4] bg-cover bg-center border border-white/20" style={{ backgroundImage: 'url("https://plus.unsplash.com/premium_photo-1661601614742-99052b0cc812?auto=format&fit=crop&q=80&w=1000")'}} />
+            <div className="w-full aspect-[3/4] bg-cover bg-center border border-white/20" style={{ backgroundImage: 'url("/images/about-tracy-ai.png")'}} />
           </div>
 
           {/* Text block on the right */}
@@ -63,12 +39,12 @@ export default function About() {
                   Tracy did not start the Concierge Nurse Business Society because she read about concierge nursing in a textbook. She started it because she lived it.
                 </p>
                 <p>
-                  She built her own private-pay nursing business from scratch, navigated every obstacle, made the mistakes, found the solutions, and created the systems that actually work.
+                  She built her own concierge nurse business from the beginning, navigated the real challenges of running a private-pay model, refined the systems, and developed the frameworks that now form the foundation of every program she teaches.
                 </p>
              </div>
              <div>
-               <Link to="/start-here" className="btn-secondary border-navy text-navy hover:bg-navy hover:text-white uppercase tracking-widest text-[0.65rem] px-8 py-3">
-                 WORK WITH TRACY
+               <Link to="/accelerator" className="btn-secondary border-navy text-navy hover:bg-navy hover:text-white uppercase tracking-widest text-[0.65rem] px-8 py-3">
+                 EXPLORE THE COHORT ACCELERATOR
                </Link>
              </div>
           </div>
@@ -76,13 +52,12 @@ export default function About() {
 
         {/* Parallax scrolling text at bottom of hero */}
         <div className="relative z-10 w-full overflow-hidden mt-16 lg:mt-24">
-          <div
-            className="transition-transform duration-75 ease-out"
-            style={{ transform: `translateX(${textTranslateX}px)` }}
-          >
-            <h1 className="font-heading text-navy text-[7rem] md:text-[10rem] lg:text-[13rem] leading-[0.8] tracking-tighter whitespace-nowrap opacity-90 select-none uppercase pointer-events-none">
-              EVERYTHING ABOUT TRACY
-            </h1>
+          <div className="marquee-left flex w-max">
+            {[0, 1, 2, 3].map((i) => (
+              <h1 key={i} className="font-heading text-navy text-[5rem] md:text-[8rem] lg:text-[12rem] leading-[0.85] tracking-normal whitespace-nowrap opacity-90 select-none uppercase pointer-events-none px-10">
+                TWENTY YEARS NURSING. A DECADE BUILDING.
+              </h1>
+            ))}
           </div>
         </div>
       </section>
@@ -97,10 +72,10 @@ export default function About() {
             </h2>
           </div>
           <div className="w-2/3 space-y-8 font-body text-navy/70 text-[0.95rem] leading-loose">
-            <p>What she discovered along the way was that there was no roadmap for nurses who wanted to leave the bedside and build independent, private-pay concierge nursing businesses. There was no strategic framework. No step-by-step method. No business ecosystem designed specifically for RNs entering this space.</p>
+            <p>What she discovered along the way was that there was no roadmap for nurses who wanted to build an independent concierge nurse business. No strategic framework. No step-by-step method. No business ecosystem designed specifically for RNs entering this emerging space.</p>
             <p>So she built one.</p>
-            <p>The Concierge Nurse Business Society is the result of years of real-world business building, strategic consulting, and hands-on coaching. It is not a generic coaching program repackaged for nurses.</p>
-            <p>It is a purpose-built ecosystem with education, toolkits, cohort-based learning, strategy sessions, private coaching, and consulting services, all designed to meet nurses at every stage of their journey.</p>
+            <p>The Concierge Nurse Business Society is the result of years of real-world business building, strategic consulting, and direct experience inside the work. It is a method designed for nurses, by a nurse, with structure that does not exist anywhere else in this category.</p>
+            <p>The Society is a complete ecosystem with education, toolkits, cohort-based instruction, consultations, and consulting services, designed to meet experienced nurses at every stage of building their concierge nurse business.</p>
           </div>
         </div>
 
@@ -118,9 +93,9 @@ export default function About() {
           </p>
 
           <div className="space-y-5 font-body text-navy/60 text-[0.85rem] leading-relaxed">
-            <p>There was no roadmap for nurses who wanted to leave the bedside and build independent, private-pay concierge nursing businesses. No strategic framework. No step-by-step method.</p>
-            <p>The Concierge Nurse Business Society is the result of years of real-world business building, strategic consulting, and hands-on coaching. Not a generic coaching program repackaged for nurses.</p>
-            <p>It is a purpose-built ecosystem with education, toolkits, cohort-based learning, strategy sessions, and consulting — all designed to meet nurses at every stage of their journey.</p>
+            <p>There was no roadmap for nurses who wanted to build an independent concierge nurse business. No strategic framework. No step-by-step method.</p>
+            <p>The Concierge Nurse Business Society is the result of years of real-world business building, strategic consulting, and direct experience inside the work.</p>
+            <p>It is a complete ecosystem with education, toolkits, cohort-based instruction, consultations, and consulting services, designed to meet experienced nurses at every stage of building their concierge nurse business.</p>
           </div>
         </div>
       </section>
@@ -140,12 +115,12 @@ export default function About() {
           {/* Desktop grid */}
           <div className="hidden lg:grid lg:grid-cols-3 gap-16">
             {[
-              'Built from real-world concierge nursing experience, not theory',
-              'A proprietary six-step method validated by every cohort',
-              'Five-star rated by every graduate of the Accelerator',
-              'Multiple pathways designed for nurses at every stage',
-              'Strategic business-building focused on real outcomes',
-              'A complete ecosystem, not a one-size-fits-all program',
+              'Built from real concierge nurse business experience inside the work, not from a coaching framework borrowed from another industry.',
+              'A proprietary six-step method developed, tested, and refined inside live cohorts of working RNs.',
+              'Five-star rated by Cohort Accelerator graduates.',
+              'Multiple pathways designed for nurses at every stage of building their concierge nurse business.',
+              'Strategic, structured business education focused on real outcomes, not motivation or mindset alone.',
+              'A complete ecosystem of education, toolkits, cohorts, consultations, and consulting, all built specifically for the concierge nurse business model.',
             ].map((item, i) => (
               <div key={i} className="flex flex-col border-t border-white/20 pt-6">
                 <span className="avery-italic text-gold text-4xl mb-6">0{i+1}.</span>
@@ -157,12 +132,12 @@ export default function About() {
           {/* Mobile — stacked cards with number accent */}
           <div className="lg:hidden flex flex-col gap-6 max-w-sm mx-auto">
             {[
-              'Built from real-world concierge nursing experience, not theory',
-              'A proprietary six-step method validated by every cohort',
-              'Five-star rated by every graduate of the Accelerator',
-              'Multiple pathways designed for nurses at every stage',
-              'Strategic business-building focused on real outcomes',
-              'A complete ecosystem, not a one-size-fits-all program',
+              'Built from real concierge nurse business experience inside the work, not from a coaching framework borrowed from another industry.',
+              'A proprietary six-step method developed, tested, and refined inside live cohorts of working RNs.',
+              'Five-star rated by Cohort Accelerator graduates.',
+              'Multiple pathways designed for nurses at every stage of building their concierge nurse business.',
+              'Strategic, structured business education focused on real outcomes, not motivation or mindset alone.',
+              'A complete ecosystem of education, toolkits, cohorts, consultations, and consulting, all built specifically for the concierge nurse business model.',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-4 bg-white/[0.04] rounded-sm p-5 border border-white/[0.06]">
                 <span className="avery-italic text-gold text-2xl leading-none shrink-0 mt-0.5">0{i+1}</span>

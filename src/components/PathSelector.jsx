@@ -1,114 +1,163 @@
 import { Link } from 'react-router-dom';
-import { Compass, Wrench, Rocket, TrendingUp, ArrowRight } from 'lucide-react';
+import { Compass, Wrench, TrendingUp, ArrowRight } from 'lucide-react';
 
 const paths = [
   {
     id: 'explorer',
     icon: Compass,
-    title: 'Explorer',
-    identity: '"I\'m curious about concierge nursing and want to learn before I commit to anything."',
+    title: 'The Explorer',
+    subtitle: 'CURIOUS & LEARNING',
+    identity: '"I am curious about concierge nursing and want to learn before I commit to anything."',
     description:
-      'You have been thinking about this for a while. You want to understand the concierge nursing model before making any moves. Start with free resources and our community.',
+      'You are exploring concierge nursing as a possible next chapter in your career. You want to understand the model, the opportunity, and whether it is the right fit for you before making any financial or time commitments.',
+    bestFor: [
+      'Nurses curious about concierge nursing',
+      'Nurses who want to learn before investing',
+      'Anyone new to the concierge nurse business model',
+    ],
+    nextSteps: [
+      'Join the Free Facebook Community',
+      'Join the Free Heartbeat Community',
+      'Subscribe to the Email List',
+    ],
     cta: 'Explore Free Resources',
     link: '/community',
-    items: ['Free communities', 'Educational resources', 'Email updates on workshops & events'],
   },
   {
-    id: 'diyer',
+    id: 'self-paced-builder',
     icon: Wrench,
-    title: 'DIYer',
-    identity: '"I want to start building on my own and I need the right tools."',
+    title: 'The Self-Paced Builder',
+    subtitle: 'READY TO OPERATIONALIZE',
+    identity: '"I know what I am offering and who I am serving. I need the business templates and agreements to launch."',
     description:
-      'You are ready to take action and want practical, proven tools to start building your concierge nursing business at your own pace.',
+      'You have done the foundational work. You have clarity on your offer and your ideal client. Now you need the operational documents: consents, waivers, service agreements, intake forms, and templates to run your business professionally and confidently.',
+    bestFor: [
+      'Nurses who have validated their offer and identified their ideal client',
+      'Nurses ready to operationalize their business',
+      'Nurses who have clarity and want the templates to launch',
+    ],
+    nextSteps: [
+      'RN Concierge Business Toolkit',
+      'HIPAA Business Compliance Toolkit',
+      'HIPAA + RN Business Bundle',
+      '2026 Concierge Nurse Planner',
+    ],
+    note: 'Both toolkits are also included as a bonus inside the Concierge Nurse Six Step Business Method Cohort Accelerator.',
     cta: 'Browse Toolkits',
     link: '/toolkits',
-    items: ['RN Concierge Business Toolkit', 'HIPAA Compliance Toolkit', 'Business Planner'],
-  },
-  {
-    id: 'builder',
-    icon: Rocket,
-    title: 'Builder',
-    identity: '"I want hands-on guidance and accountability to build this the right way."',
-    description:
-      'You know you need more than tools. You want expert guidance, a proven framework, and accountability to build your business step by step.',
-    cta: 'See Coaching Options',
-    link: '/strategy',
-    items: ['Clarity Consult', 'Accelerator Cohort', '1:1 Private Coaching'],
   },
   {
     id: 'established',
     icon: TrendingUp,
-    title: 'Established Owner',
-    identity: '"I already have a concierge nurse business and I need help fixing or scaling what I\'ve built."',
+    title: 'The Established Owner',
+    subtitle: 'SCALING OR REFINING WHAT EXISTS',
+    identity: '"I already have a concierge nurse business and I need help refining or scaling what I have built."',
     description:
-      'You are generating revenue but you have hit a ceiling. You need a strategic diagnostic to identify what is broken and a clear pathway to fix it.',
+      'You are generating revenue. The business is real. But growth has stalled, systems are inefficient, or you are working harder than you should for the results you are getting. You need a strategic diagnostic and a clear implementation pathway.',
+    bestFor: [
+      'Concierge nurse businesses generating six to seven figures',
+      'Owners who have hit a growth ceiling',
+      'Businesses ready for systems and operational refinement',
+    ],
+    nextSteps: [
+      'Explore Business Diagnostics & Implementation Pathway'
+    ],
     cta: 'Learn About Consulting',
     link: '/consulting',
-    items: ['Business Diagnostics', 'Implementation Pathway', 'Systems & Operations Review'],
   },
 ];
 
 export default function PathSelector() {
   return (
-    <section className="py-24 lg:py-32 bg-white">
+    <section className="py-24 lg:py-32 bg-cream">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <p className="section-label mb-4">Your Journey Starts Here</p>
-          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-navy mb-5">
-            Where Are You Right Now?
+        <div className="text-center max-w-4xl mx-auto mb-20">
+          <p className="section-label mb-6 tracking-[0.3em]">START HERE</p>
+          <h2 className="avery-title text-5xl md:text-7xl lg:text-[6.5rem] text-navy mb-8 leading-[0.9]">
+            CHOOSE YOUR PATH
           </h2>
           <div className="gold-divider mx-auto mb-6" />
           <p className="text-slate text-[0.95rem] leading-relaxed">
-            Every nurse is at a different stage. Find the path that matches where
-            you are today, and we will guide you to exactly what you need next.
+            Every nurse is at a different stage. Identify where you are right now and we will guide you to the right resources, programs, and support for your next step.
           </p>
         </div>
 
         {/* Path Cards */}
-        <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-6">
+        <div className="grid lg:grid-cols-3 gap-6 items-stretch">
           {paths.map((path) => (
-            <Link
+            <div
               key={path.id}
-              to={path.link}
-              className="path-card group bg-white border border-cream-dark rounded-sm p-8 flex flex-col no-underline"
+              className="path-card group bg-white border border-cream-dark rounded-sm p-8 flex flex-col relative shadow-sm"
             >
-              {/* Icon */}
-              <div className="w-12 h-12 bg-navy flex items-center justify-center mb-6">
-                <path.icon size={22} className="text-gold" />
+              {/* Icon & Title */}
+              <div className="mb-6">
+                <p className="text-gold text-[0.65rem] font-bold tracking-[0.15em] uppercase mb-3">
+                  {path.subtitle}
+                </p>
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 bg-navy flex items-center justify-center flex-shrink-0">
+                    <path.icon size={26} className="text-gold" />
+                  </div>
+                  <h3 className="avery-title text-3xl lg:text-5xl text-navy">
+                    {path.title}
+                  </h3>
+                </div>
               </div>
 
-              {/* Title */}
-              <h3 className="font-heading text-xl font-bold text-navy mb-3">
-                {path.title}
-              </h3>
-
               {/* Identity quote */}
-              <p className="font-accent text-[0.95rem] italic text-charcoal/70 mb-4 leading-relaxed">
+              <p className="font-accent text-[1.05rem] italic text-navy/80 mb-5 leading-relaxed font-semibold">
                 {path.identity}
               </p>
 
               {/* Description */}
-              <p className="text-slate text-sm leading-relaxed mb-5">
+              <p className="text-slate text-sm leading-relaxed mb-8 flex-1">
                 {path.description}
               </p>
 
-              {/* Items */}
-              <ul className="space-y-2 mb-6 flex-1 list-none p-0 m-0">
-                {path.items.map((item) => (
-                  <li key={item} className="flex items-start gap-2">
-                    <span className="w-1 h-1 rounded-full bg-gold mt-2 flex-shrink-0" />
-                    <span className="text-charcoal/60 text-xs">{item}</span>
-                  </li>
-                ))}
-              </ul>
+              <div className="space-y-6 mb-8 border-t border-navy/10 pt-6">
+                {/* Best For */}
+                <div>
+                  <p className="text-navy text-xs font-bold tracking-[0.1em] uppercase mb-3">
+                    BEST FOR
+                  </p>
+                  <ul className="space-y-2 list-none p-0 m-0">
+                    {path.bestFor.map((item) => (
+                      <li key={item} className="flex items-start gap-2">
+                        <span className="w-1 h-1 rounded-full bg-gold mt-1.5 flex-shrink-0" />
+                        <span className="text-charcoal/75 text-xs">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Next Steps */}
+                <div>
+                  <p className="text-navy text-xs font-bold tracking-[0.1em] uppercase mb-3">
+                    YOUR NEXT STEPS
+                  </p>
+                  <ul className="space-y-2 list-none p-0 m-0">
+                    {path.nextSteps.map((item) => (
+                      <li key={item} className="flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-navy mt-1 flex-shrink-0" />
+                        <span className="text-navy font-medium text-xs">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              
+              {path.note && (
+                <p className="text-slate text-[0.65rem] italic mb-6 leading-relaxed bg-cream p-3 border-l-2 border-gold">
+                  Note: {path.note}
+                </p>
+              )}
 
               {/* CTA */}
-              <div className="flex items-center gap-2 text-gold font-semibold text-[0.75rem] tracking-[0.08em] uppercase group-hover:gap-3 transition-all">
+              <Link to={path.link} className="btn-secondary w-full text-center mt-auto">
                 {path.cta}
-                <ArrowRight size={14} />
-              </div>
-            </Link>
+              </Link>
+            </div>
           ))}
         </div>
       </div>

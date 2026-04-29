@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, User } from 'lucide-react';
 
 function HamburgerIcon({ isOpen, onClick }) {
   return (
@@ -43,6 +43,14 @@ function HamburgerIcon({ isOpen, onClick }) {
   );
 }
 
+function BrandMark({ compact = false }) {
+  return (
+    <span className={`${compact ? 'w-8 h-8 text-[0.55rem]' : 'w-10 h-10 text-[0.6rem]'} border border-gold/70 text-gold flex items-center justify-center font-body tracking-[0.18em] shrink-0`}>
+      CN
+    </span>
+  );
+}
+
 // Nav structure: 5 top-level items. Dropdowns group related destinations.
 const NAV = [
   { label: 'About', path: '/about' },
@@ -66,9 +74,8 @@ const NAV = [
   {
     label: 'Learn',
     children: [
-      { label: 'Blog', path: '/blog', description: 'Notes from the build' },
-      { label: 'Find a Nurse', path: '/directory', description: 'Concierge nurse directory' },
-      { label: 'Resources', path: '/resources', description: 'Guides and references' },
+      { label: 'Blog', path: '/blog', description: 'Category authority and founder commentary' },
+      { label: 'Resources', path: '/resources', description: 'Approved category guides' },
       { label: 'Community', path: '/community', description: 'Free Facebook group' },
     ],
   },
@@ -144,41 +151,12 @@ export default function Navbar() {
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 bg-navy transition-shadow duration-300 ${scrolled ? 'shadow-lg shadow-black/20' : ''}`}>
 
-      {/* Top Bar: Logo centered, CTA right */}
+      {/* Desktop Single Row Nav */}
       <div className="hidden xl:block border-b border-white/10">
-        <div className="max-w-[1400px] mx-auto px-8 h-[72px] flex items-center justify-between">
-          <div className="flex gap-5 text-white/50 text-[0.6rem] uppercase tracking-[0.2em] font-body w-48">
-            <span className="cursor-pointer hover:text-white transition-colors">Instagram</span>
-            <span className="cursor-pointer hover:text-white transition-colors">Facebook</span>
-          </div>
-
-          <Link to="/" className="flex flex-col items-center leading-none text-center no-underline gap-1">
-            <span className="avery-title text-3xl tracking-[0.12em] text-white">
-              CONCIERGE NURSE
-            </span>
-            <span className="font-body text-[0.55rem] tracking-[0.35em] font-medium text-gold uppercase">
-              Business Society
-            </span>
-          </Link>
-
-          <div className="w-48 flex justify-end items-center gap-5">
-            <Link
-              to="/ambassador/login"
-              className="text-white/50 hover:text-gold text-[0.6rem] uppercase tracking-[0.2em] font-body no-underline transition-colors"
-            >
-              Ambassador Login
-            </Link>
-            <Link to="/contact" className="btn-white text-white border-white/40 hover:bg-white hover:text-navy hover:border-white" style={{ padding: '0.5rem 1.4rem', fontSize: '0.6rem' }}>
-              CONTACT / BOOK
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom Bar: Navigation links centered */}
-      <div className="hidden xl:block">
-        <div className="max-w-[1400px] mx-auto px-8 h-[42px] flex items-center justify-center">
-          <div className="flex items-center gap-10">
+        <div className="max-w-[1400px] mx-auto px-8 h-[90px] flex items-center justify-between">
+          
+          {/* Left: Navigation */}
+          <div className="flex items-center gap-8 w-1/3">
             {NAV.map((item) => (
               item.children
                 ? <DesktopDropdown key={item.label} item={item} pathname={location.pathname} />
@@ -195,6 +173,36 @@ export default function Navbar() {
                 )
             ))}
           </div>
+
+          {/* Center: Logo */}
+          <div className="flex justify-center w-1/3">
+            <Link to="/" className="flex items-center leading-none text-center no-underline gap-4">
+              <BrandMark />
+              <span className="flex flex-col items-center gap-1">
+                <span className="avery-title text-3xl tracking-[0.12em] text-white">
+                  CONCIERGE NURSE
+                </span>
+                <span className="font-body text-[0.55rem] tracking-[0.35em] font-medium text-gold uppercase">
+                  Business Society
+                </span>
+              </span>
+            </Link>
+          </div>
+
+          {/* Right: Ambassador Icon & Contact Pill */}
+          <div className="w-1/3 flex justify-end items-center gap-6">
+            <Link
+              to="/ambassador/login"
+              className="text-white hover:text-gold transition-colors flex items-center justify-center w-9 h-9 rounded-full border border-white/20 hover:border-gold"
+              title="Ambassador Login"
+            >
+              <User size={15} />
+            </Link>
+            <Link to="/contact" className="text-white border border-white rounded-full hover:bg-white hover:text-navy transition-colors font-body text-[0.6rem] uppercase tracking-[0.2em] font-medium" style={{ padding: '0.65rem 1.8rem' }}>
+              CONTACT / BOOK
+            </Link>
+          </div>
+
         </div>
       </div>
 
@@ -202,12 +210,15 @@ export default function Navbar() {
       <nav className="xl:hidden max-w-[1400px] mx-auto px-6 h-[70px] flex items-center justify-between">
         <div className="w-1/3" />
         <div className="w-1/3 flex justify-center">
-          <Link to="/" className="flex flex-col items-center leading-none text-center no-underline gap-1 pt-1" onClick={() => setMobileOpen(false)}>
-            <span className="avery-title text-2xl tracking-[0.1em] text-white">
-              CONCIERGE NURSE
-            </span>
-            <span className="font-body text-[0.55rem] tracking-[0.3em] font-medium text-gold uppercase hidden sm:block">
-              Business Society
+          <Link to="/" className="flex items-center leading-none text-center no-underline gap-2 pt-1" onClick={() => setMobileOpen(false)}>
+            <BrandMark compact />
+            <span className="flex flex-col items-center gap-1">
+              <span className="avery-title text-xl sm:text-2xl tracking-[0.1em] text-white">
+                CONCIERGE NURSE
+              </span>
+              <span className="font-body text-[0.55rem] tracking-[0.3em] font-medium text-gold uppercase hidden sm:block">
+                Business Society
+              </span>
             </span>
           </Link>
         </div>
@@ -222,7 +233,7 @@ export default function Navbar() {
           <div className="h-[70px] px-6 flex items-center justify-between border-b border-white/5">
             <div className="w-1/3" />
             <div className="w-1/3 flex justify-center">
-              <span className="avery-title text-xl tracking-[0.1em] text-white">CNS</span>
+              <BrandMark compact />
             </div>
             <div className="w-1/3 flex justify-end">
               <HamburgerIcon isOpen={mobileOpen} onClick={() => setMobileOpen(false)} />

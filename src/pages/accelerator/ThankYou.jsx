@@ -10,8 +10,8 @@ export default function AcceleratorThankYou() {
   return (
     <>
       <SEO
-        title="You're in — Method Accelerator Cohort"
-        description="Your Method Accelerator enrollment is confirmed."
+        title="You're in — Concierge Nurse Six Step Business Method Cohort Accelerator"
+        description="Your Cohort Accelerator enrollment is confirmed."
         canonical="/accelerator/thank-you"
       />
       <section className="bg-navy min-h-screen flex items-center justify-center px-6 pt-20 pb-16 relative">
@@ -27,7 +27,7 @@ export default function AcceleratorThankYou() {
             You're in.
           </h1>
           <p className="text-white/70 text-sm md:text-base leading-relaxed max-w-md mx-auto mb-8">
-            Your seat in the Method Accelerator Cohort is secured. Tracy will reach out personally with your kickoff info, cohort schedule, and pre-work.
+            Your seat in the Cohort Accelerator is secured. Tracy will reach out personally with your kickoff info, cohort schedule, and pre-work.
           </p>
 
           <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-6 md:p-8 space-y-5 text-left">

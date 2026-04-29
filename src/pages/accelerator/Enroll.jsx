@@ -70,8 +70,8 @@ export default function AcceleratorEnroll() {
   return (
     <>
       <SEO
-        title="Enroll — Method Accelerator Cohort"
-        description="Enroll in the Concierge Nurse Business Society Method Accelerator Cohort. Six weeks, your business built from the ground up."
+        title="Enroll — Concierge Nurse Six Step Business Method Cohort Accelerator"
+        description="Enroll in the Concierge Nurse Six Step Business Method Cohort Accelerator. Six weeks of live instruction, structure, and strategy."
         canonical="/accelerator/enroll"
       />
 
@@ -86,10 +86,10 @@ export default function AcceleratorEnroll() {
               Concierge Nurse Business Society
             </p>
             <h1 className="font-heading text-3xl sm:text-4xl font-bold text-white mb-3 leading-tight">
-              Method Accelerator Cohort
+              Concierge Nurse Six Step Business Method Cohort Accelerator
             </h1>
             <p className="text-white/60 text-sm md:text-base max-w-xl mx-auto">
-              Six weeks. One business. Built from the ground up with the structure, strategy, and legal protection you need to launch with confidence.
+              Six weeks of live instruction, structure, and strategy for nurses building a concierge nurse business with clarity and confidence.
             </p>
             {cycle?.label && (
               <div className="inline-flex items-center gap-2 mt-5 bg-white/[0.04] border border-white/10 px-4 py-1.5">

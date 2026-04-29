@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, FileText, Shield, Package, CalendarDays, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, CalendarDays, CheckCircle2, FileText, Package, Shield } from 'lucide-react';
 import SEO from '../components/SEO';
 
 const products = [
@@ -8,27 +8,29 @@ const products = [
     title: 'RN Concierge Business Toolkit',
     tag: 'Most Popular',
     description:
-      'The complete resource package for nurses who are ready to build a concierge nursing business. This toolkit gives you the templates, checklists, frameworks, and guides you need to structure your business from the ground up.',
+      'The complete set of business templates and operational documents for nurses ready to operationalize their concierge nurse business. Service agreements, intake forms, consents, waivers, and the documentation you need to run your business professionally and confidently.',
     features: [
-      'Business structure and setup guides',
-      'Service packaging frameworks',
-      'Client onboarding templates',
-      'Marketing and positioning guides',
-      'Financial planning tools',
+      'Service agreement templates',
+      'Client intake forms',
+      'Consent and waiver templates',
+      'Communication and scheduling templates',
+      'Business positioning and offer guides',
+      'AND MORE',
     ],
   },
   {
     icon: Shield,
-    title: 'HIPAA Compliance Upgrade Toolkit',
+    title: 'HIPAA Business Compliance Toolkit',
     tag: null,
     description:
-      'Ensure your concierge nursing practice meets HIPAA compliance standards. This focused toolkit walks you through everything you need to protect your clients and your business.',
+      'Business-side HIPAA documentation and templates for nurses building a concierge nurse business. Administrative documents that help you set up your business communications, technology consents, and client documentation with confidence.',
     features: [
-      'HIPAA compliance checklists',
-      'Policy and procedure templates',
-      'Risk assessment tools',
-      'Documentation frameworks',
-      'Staff training guides',
+      'Business HIPAA consent templates',
+      'Technology and communication consent templates',
+      'Home visit administrative addendum',
+      'Termination of services notice template',
+      'Business documentation guides',
+      'AND MORE',
     ],
   },
   {
@@ -36,11 +38,11 @@ const products = [
     title: 'HIPAA + RN Concierge Business Toolkit Bundle',
     tag: 'Best Value',
     description:
-      'Get both the RN Concierge Business Toolkit and the HIPAA Compliance Toolkit at a bundled price. This is the complete foundation for launching a compliant, well-structured concierge nursing business.',
+      'Both toolkits at a bundled price. The complete set of business templates and administrative documentation for nurses operationalizing a concierge nurse business with structure, organization, and confidence.',
     features: [
       'Everything in both individual toolkits',
       'Bundled at a reduced price',
-      'Complete business + compliance foundation',
+      'Complete business and administrative foundation',
       'Immediate digital access',
     ],
   },
@@ -49,50 +51,49 @@ const products = [
     title: '2026 Concierge Nurse Planner',
     tag: null,
     description:
-      'A purpose-built planner designed specifically for concierge nurse business owners. More than a calendar, this planner is designed to keep you organized, strategic, and on track throughout the year.',
+      'A business planner template designed specifically for concierge nurse business owners. Built in Canva, fully customizable. Print it, bind it, or use it on your iPad. Ready to use, ready to make your own.',
     features: [
-      'Purpose-built for concierge nurse businesses',
-      'Strategic planning sections',
-      'Revenue tracking tools',
-      'Client management pages',
-      'Quarterly review frameworks',
+      'Editable Canva template',
+      'Designed for concierge nurse business owners',
+      'Print, bind, or use digitally',
+      'Fully customizable to fit your business',
+      'Instant digital download',
     ],
   },
 ];
 
 export default function Toolkits() {
-  const toolkitSchema = products.map(p => ({
-    "@context": "https://schema.org",
-    "@type": "Product",
-    "name": p.title,
-    "description": p.description,
-    "brand": { "@type": "Organization", "name": "Concierge Nurse Business Society" }
+  const toolkitSchema = products.map((p) => ({
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: p.title,
+    description: p.description,
+    brand: { '@type': 'Organization', name: 'Concierge Nurse Business Society' },
   }));
 
   return (
     <>
       <SEO
-        title="Concierge Nursing Business Toolkits & Resources"
-        description="Self-paced business toolkits for nurses building a concierge nursing practice. Includes the RN Concierge Business Toolkit, HIPAA Compliance Toolkit, and 2026 Concierge Nurse Planner."
+        title="Toolkits & Resources for Concierge Nurse Businesses"
+        description="Self-paced business toolkits and professional resources for nurses operationalizing a concierge nurse business with structure and confidence."
         canonical="/toolkits"
         schema={toolkitSchema}
       />
-      {/* Hero */}
+
       <section className="bg-navy pt-32 pb-20">
         <div className="max-w-4xl mx-auto px-6 lg:px-10 text-center">
-          <p className="section-label mb-4">For the DIYer</p>
-          <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.1] mb-5">
+          <p className="section-label mb-4">Self-Paced Resources</p>
+          <h1 className="font-heading text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-[1.1] mb-5">
             Toolkits & <span className="text-gold-gradient">Resources</span>
           </h1>
           <div className="gold-divider mx-auto mb-6" />
           <p className="text-white/60 text-lg leading-relaxed max-w-2xl mx-auto">
-            Proven, practical resources designed specifically for nurses building
-            concierge nursing businesses. Built from real experience, not theory.
+            Professional resources designed for nurses building a concierge
+            nurse business. Built from real experience inside the work.
           </p>
         </div>
       </section>
 
-      {/* Products */}
       <section className="py-24 bg-white">
         <div className="max-w-6xl mx-auto px-6 lg:px-10 space-y-8">
           {products.map((product, i) => (
@@ -141,24 +142,19 @@ export default function Toolkits() {
         </div>
       </section>
 
-      {/* Upsell */}
       <section className="py-20 bg-navy text-center">
         <div className="max-w-2xl mx-auto px-6">
           <h2 className="font-heading text-3xl font-bold text-white mb-4">
-            Want More Than Tools?
+            Ready for Structured Instruction?
           </h2>
           <p className="text-white/50 mb-8 leading-relaxed">
-            If you are ready for hands-on guidance and accountability, explore
-            the Accelerator or book a Clarity Consult for personalized strategy.
+            Explore the Cohort Accelerator for live group instruction and the
+            proven six-step method, or book a Clarity Consult for a focused
+            conversation on where to start.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/accelerator" className="btn-primary flex items-center justify-center gap-2">
-              See the Accelerator <ArrowRight size={14} />
-            </Link>
-            <Link to="/strategy" className="btn-secondary flex items-center justify-center gap-2">
-              Book a Clarity Consult
-            </Link>
-          </div>
+          <Link to="/strategy" className="btn-primary inline-flex items-center justify-center gap-2">
+            Book a Clarity Consult <ArrowRight size={14} />
+          </Link>
         </div>
       </section>
     </>

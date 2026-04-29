@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Compass, Wrench, Rocket, TrendingUp, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Compass, Rocket, TrendingUp, Wrench } from 'lucide-react';
 import SEO from '../components/SEO';
 
 const paths = [
@@ -10,11 +10,12 @@ const paths = [
     title: 'The Explorer',
     tagline: 'Curious & Learning',
     identity: 'I am curious about concierge nursing and want to learn before I commit to anything.',
-    description: 'You have been thinking about leaving the bedside or adding a concierge component to your nursing career. You want to understand the model, the opportunity, and whether this is really for you before making any financial or time commitments.',
+    description:
+      'You are exploring concierge nursing as a possible next chapter in your career. You want to understand the model, the opportunity, and whether it is the right fit for you before making any financial or time commitments.',
     bestFor: [
-      'Nurses still working bedside who want to explore',
-      'Those who want to learn before investing',
-      'Anyone new to the concierge nursing model',
+      'Nurses curious about concierge nursing',
+      'Nurses who want to learn before investing',
+      'Anyone new to the concierge nurse business model',
     ],
     nextSteps: [
       { label: 'Join the Free Facebook Community', link: '/community' },
@@ -23,42 +24,45 @@ const paths = [
     ],
   },
   {
-    id: 'diyer',
+    id: 'self-paced-builder',
     icon: Wrench,
     color: 'bg-white',
-    title: 'The DIYer',
-    tagline: 'Ready to Build Independently',
-    identity: 'I want to start building on my own and I need the right tools to do it well.',
-    description: 'You are ready to take action. You prefer to work at your own pace with proven, structured tools that give you a clear framework to follow. You want the resources without the hand-holding.',
+    title: 'The Self-Paced Builder',
+    tagline: 'Ready to Operationalize',
+    identity: 'I know what I am offering and who I am serving. I need the business templates and agreements to launch.',
+    description:
+      'You have done the foundational work. You have clarity on your offer and your ideal client. Now you need the operational documents: consents, waivers, service agreements, intake forms, and templates to run your business professionally and confidently.',
     bestFor: [
-      'Self-starters who prefer independent work',
-      'Nurses ready to take first action steps',
-      'Those who want structure at an accessible price point',
+      'Nurses who have validated their offer and identified their ideal client',
+      'Nurses ready to operationalize their business',
+      'Nurses who have clarity and want the templates to launch',
     ],
     nextSteps: [
       { label: 'RN Concierge Business Toolkit', link: '/toolkits' },
-      { label: 'HIPAA Compliance Toolkit', link: '/toolkits' },
+      { label: 'HIPAA Business Compliance Toolkit', link: '/toolkits' },
       { label: 'HIPAA + RN Business Bundle', link: '/toolkits' },
       { label: '2026 Concierge Nurse Planner', link: '/toolkits' },
     ],
+    note:
+      'Both toolkits are also included as a bonus inside the Concierge Nurse Six Step Business Method Cohort Accelerator.',
   },
   {
-    id: 'builder',
+    id: 'cohort-builder',
     icon: Rocket,
     color: 'bg-cream',
-    title: 'The Builder',
-    tagline: 'Wants Guidance & Accountability',
-    identity: 'I want hands-on guidance and accountability to build this the right way.',
-    description: 'You know that building a real business requires more than templates and tools. You want expert guidance, a proven step-by-step method, and accountability to make sure you build it right from the start.',
+    title: 'The Cohort Builder',
+    tagline: 'Ready for Structured Instruction',
+    identity: 'I am ready to build a complete concierge nurse business with live instruction, structure, and accountability.',
+    description:
+      'You want a proven six-step method, live cohort instruction, direct access to Tracy, and the operational toolkits included as part of the build. This is the structured path for nurses ready to move with guidance.',
     bestFor: [
-      'Nurses who want structured expert guidance',
-      'Those ready to invest in doing it right',
-      'Anyone who values accountability and community',
+      'Nurses ready for live group instruction',
+      'Nurses who want the six-step method and direct guidance',
+      'Nurses who value structure, accountability, and a small cohort experience',
     ],
     nextSteps: [
+      { label: 'Explore the Cohort Accelerator', link: '/accelerator' },
       { label: 'Book a Clarity Consult', link: '/strategy' },
-      { label: 'Join the Accelerator', link: '/accelerator' },
-      { label: 'Inquire About 1:1 Coaching', link: '/strategy' },
     ],
   },
   {
@@ -66,13 +70,14 @@ const paths = [
     icon: TrendingUp,
     color: 'bg-white',
     title: 'The Established Owner',
-    tagline: 'Scaling or Fixing What Exists',
-    identity: 'I already have a concierge nurse business and I need help fixing or scaling what I have built.',
-    description: 'You are generating revenue. The business is real. But growth has stalled, systems are breaking, or you are working too hard for the results you are getting. You need a strategic diagnostic and implementation pathway.',
+    tagline: 'Scaling or Refining What Exists',
+    identity: 'I already have a concierge nurse business and I need help refining or scaling what I have built.',
+    description:
+      'You are generating revenue. The business is real. But growth has stalled, systems are inefficient, or you are working harder than you should for the results you are getting. You need a strategic diagnostic and a clear implementation pathway.',
     bestFor: [
-      'Businesses doing six to seven figures',
+      'Concierge nurse businesses generating six to seven figures',
       'Owners who have hit a growth ceiling',
-      'Practices needing systems and operational optimization',
+      'Businesses ready for systems and operational refinement',
     ],
     nextSteps: [
       { label: 'Explore Business Diagnostics & Implementation Pathway', link: '/consulting' },
@@ -84,11 +89,11 @@ export default function StartHere() {
   return (
     <>
       <SEO
-        title="Start Here - Find Your Path to a Concierge Nursing Business"
-        description="Whether you are exploring, building, or scaling your concierge nursing business, find the right programs, tools, and support for exactly where you are right now."
+        title="Start Here - Find Your Path to a Concierge Nurse Business"
+        description="Choose the right next step for your concierge nurse business based on where you are now: exploring, operationalizing, building, or scaling."
         canonical="/start-here"
       />
-      {/* Hero */}
+
       <section className="bg-navy pt-32 pb-20">
         <div className="max-w-4xl mx-auto px-6 lg:px-10 text-center">
           <p className="section-label mb-4">Start Here</p>
@@ -98,23 +103,21 @@ export default function StartHere() {
           <div className="gold-divider mx-auto mb-6" />
           <p className="text-white/60 text-lg leading-relaxed max-w-2xl mx-auto">
             Every nurse is at a different stage. Identify where you are right
-            now, and we will guide you to exactly the right resources, programs,
-            and support for your next step.
+            now and we will guide you to the right resources, programs, and
+            support for your next step.
           </p>
         </div>
       </section>
 
-      {/* Paths */}
       <section className="py-20">
         <div className="max-w-6xl mx-auto px-6 lg:px-10 space-y-8">
-          {paths.map((path, i) => (
+          {paths.map((path) => (
             <div
               key={path.id}
               id={path.id}
               className={`${path.color} border border-cream-dark p-8 lg:p-12`}
             >
               <div className="grid lg:grid-cols-3 gap-10">
-                {/* Left */}
                 <div className="lg:col-span-2">
                   <div className="flex items-center gap-4 mb-5">
                     <div className="w-12 h-12 bg-navy flex items-center justify-center">
@@ -151,9 +154,14 @@ export default function StartHere() {
                       ))}
                     </div>
                   </div>
+
+                  {path.note && (
+                    <p className="mt-6 text-xs leading-relaxed text-navy/60 border-l-2 border-gold pl-4">
+                      {path.note}
+                    </p>
+                  )}
                 </div>
 
-                {/* Right - Next Steps */}
                 <div className="bg-navy p-8">
                   <p className="text-gold text-[0.65rem] font-semibold tracking-[0.2em] uppercase mb-5">
                     Your Next Steps
@@ -177,7 +185,6 @@ export default function StartHere() {
         </div>
       </section>
 
-      {/* Bottom CTA */}
       <section className="py-20 bg-navy text-center">
         <div className="max-w-2xl mx-auto px-6">
           <h2 className="font-heading text-3xl font-bold text-white mb-4">

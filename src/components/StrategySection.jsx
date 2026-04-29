@@ -1,57 +1,46 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Lightbulb, Zap, Crown } from 'lucide-react';
+import { ArrowRight, Lightbulb, Zap, Layers } from 'lucide-react';
 
 const services = [
   {
     icon: Lightbulb,
     title: 'RN Concierge Business Clarity Consult',
-    subtitle: 'Your Strategic Starting Point',
+    subtitle: 'Recommended',
     description:
-      'A focused 60-minute Zoom session for nurses who are just starting or stuck in the early phases. We work on one thing: getting clear on the problem you solve and who you solve it for. You walk away with a digital outline of next steps, delivered within 48 hours. The clarity you need before you can move forward.',
-    details: ['60-minute Zoom session', 'Digital outline within 48 hours', 'For early-stage nurses'],
+      'A focused 60-minute private Zoom session for nurses who are just starting or stuck in the early phases. We work on one thing: getting clear on the problem you solve and who you solve it for. You walk away with a digital outline of next steps, delivered within 48 hours.',
+    details: ['60-minute private Zoom', 'Focused on offer and ideal client clarity', 'Digital outline within 48 hours'],
     highlight: true,
-    cta: 'Book a Clarity Consult',
+    cta: 'Learn More',
   },
   {
     icon: Zap,
     title: 'VIP Bridge Consultation',
-    subtitle: 'Continued Strategic Support',
+    subtitle: 'Continued Private Strategy',
     description:
-      'A single session for previous consult or Accelerator clients who want continued private strategic support as they implement and grow.',
-    details: ['Single strategic session', 'For returning clients', 'Focused implementation support'],
+      'A private one-hour Zoom session for nurses who have already completed the Clarity Consult or the Cohort Accelerator and want focused strategic time with Tracy without waiting for the next cohort. Ideal for working through a specific decision, a stuck point, or a piece of your build that needs a second set of eyes.',
+    details: ['60-minute private Zoom', 'For Clarity Consult and Accelerator clients', 'Focused on one decision or stuck point'],
     highlight: false,
     cta: 'Learn More',
-  },
-  {
-    icon: Crown,
-    title: '1:1 Private Coaching',
-    subtitle: 'Premium & Limited',
-    description:
-      'Direct strategic guidance throughout your entire build. Limited to two to three seats per quarter. This is the highest level of private access and support Tracy offers.',
-    details: ['Limited to 2-3 seats per quarter', 'Direct strategic guidance', 'High-touch premium support'],
-    highlight: false,
-    cta: 'Inquire About Availability',
   },
 ];
 
 export default function StrategySection() {
   return (
-    <section className="py-24 lg:py-32 bg-cream">
+    <section className="py-24 lg:py-32 bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <p className="section-label mb-4">Strategy & Coaching</p>
-          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-navy mb-5">
-            Expert Guidance, Tailored to You
+        <div className="text-center max-w-4xl mx-auto mb-20">
+          <p className="section-label mb-6 tracking-[0.3em]">Strategy & Coaching</p>
+          <h2 className="avery-title text-5xl md:text-7xl lg:text-[6.5rem] text-navy mb-8 leading-[0.9] uppercase">
+            Work with Tracy Directly
           </h2>
-          <div className="gold-divider mx-auto mb-6" />
           <p className="text-slate text-[0.95rem] leading-relaxed">
-            When you are ready for more than tools and templates, these strategic
-            sessions and coaching pathways give you the direct guidance and
-            accountability to build with confidence.
+            Two private pathways for nurses who want strategic guidance from Tracy
+            outside the cohort. Choose the level of access that fits where you are
+            right now.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 max-w-5xl mx-auto gap-6">
           {services.map((svc) => (
             <div
               key={svc.title}
@@ -79,7 +68,7 @@ export default function StrategySection() {
                 {svc.subtitle}
               </p>
 
-              <h3 className={`font-heading text-xl font-bold mb-3 ${
+              <h3 className={`avery-title text-3xl lg:text-4xl mb-4 leading-tight uppercase ${
                 svc.highlight ? 'text-white' : 'text-navy'
               }`}>
                 {svc.title}
@@ -114,20 +103,6 @@ export default function StrategySection() {
               </Link>
             </div>
           ))}
-        </div>
-
-        {/* VIP Bridge 3-Session note */}
-        <div className="mt-8 bg-white border border-cream-dark p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div>
-            <h4 className="font-heading text-lg font-bold text-navy">VIP Bridge 3-Session Series</h4>
-            <p className="text-slate text-sm mt-1">
-              Three private sessions over six weeks for high-touch implementation
-              support. Includes an AI-built presentation and landing page.
-            </p>
-          </div>
-          <Link to="/strategy" className="btn-navy whitespace-nowrap flex items-center gap-2">
-            Learn More <ArrowRight size={14} />
-          </Link>
         </div>
       </div>
     </section>

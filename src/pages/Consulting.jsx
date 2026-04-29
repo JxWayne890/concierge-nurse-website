@@ -66,9 +66,10 @@ export default function Consulting() {
             </h1>
             <div className="gold-divider mb-6" />
             <p className="text-white/60 text-lg leading-relaxed max-w-2xl mb-8">
-              Already launched your concierge nurse business but not getting
-              consistent clients? This is the strategic diagnostic and
-              implementation fix for established concierge nurse business owners.
+              You built the business. Revenue is coming in. But something is not
+              working the way it should. Growth has stalled, systems are
+              breaking, or you are working harder than you need to. This is the
+              diagnostic and the strategic fix.
             </p>
             <a href="#inquire" className="btn-primary inline-flex items-center gap-2">
               Inquire About Consulting <ArrowRight size={14} />
@@ -129,7 +130,7 @@ export default function Consulting() {
                   <TrendingUp size={18} className="text-gold flex-shrink-0" />
                   <div>
                     <p className="text-navy font-semibold text-sm">The Accelerator</p>
-                    <p className="text-slate text-xs">For nurses ready to build from scratch</p>
+                    <p className="text-slate text-xs">For nurses ready for structured instruction</p>
                   </div>
                   <ArrowRight size={14} className="text-gold ml-auto group-hover:translate-x-1 transition-transform" />
                 </Link>

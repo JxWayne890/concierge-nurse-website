@@ -66,13 +66,9 @@ export default function Footer() {
             <h4 className="avery-sub text-white/50 mb-8">Resources</h4>
             <ul className="space-y-4 text-center md:text-left">
               {[
-                { label: 'How to Start', path: '/resources/how-to-start-a-concierge-nursing-business' },
                 { label: 'What Is a Concierge Nurse?', path: '/resources/what-is-a-concierge-nurse' },
-                { label: 'HIPAA Compliance', path: '/resources/hipaa-compliance-for-concierge-nurses' },
-                { label: 'Pricing Guide', path: '/resources/concierge-nurse-pricing-guide' },
                 { label: 'Concierge Nursing Niches', path: '/resources/concierge-nursing-niches' },
-                { label: 'Startup Costs', path: '/resources/concierge-nursing-startup-costs' },
-                { label: 'All Resources', path: '/resources' },
+                { label: 'Approved Resources', path: '/resources' },
               ].map((link) => (
                 <li key={link.path}>
                   <Link

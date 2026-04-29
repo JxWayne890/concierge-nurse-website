@@ -1,52 +1,20 @@
-import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function AboutSection() {
-  const [offsetY, setOffsetY] = useState(0);
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (sectionRef.current) {
-        const rect = sectionRef.current.getBoundingClientRect();
-        // Calculate progress based on distance from viewport
-        const distance = window.innerHeight - rect.top;
-        if (distance > 0 && rect.bottom > 0) {
-          setOffsetY(distance);
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Parallax calculations - High-Speed Scroll (0.85) to ensure full text reveals rapidly
-  const textTranslateX = 350 - (offsetY * 0.85); // High starting offset, much faster slide Left on scroll down
-  const frontImageY = (offsetY * 0.12); // Pronounced 3D depth effect movement
-
   return (
-    <div ref={sectionRef} className="flex flex-col relative">
+    <div className="flex flex-col relative">
       
       {/* Top Dark Statement Section */}
-      <section className="bg-navy relative pt-40 pb-56 overflow-hidden z-10 flex flex-col justify-center items-center h-[90vh] lg:h-auto min-h-[600px]">
-
-        {/* Decorative gold ornaments */}
-        <div className="hidden lg:block absolute left-[8%] top-1/2 -translate-y-1/2 w-24 h-[1px] bg-gold/60" />
-        <div className="hidden lg:block absolute right-[8%] top-1/2 -translate-y-1/2 w-24 h-[1px] bg-gold/60" />
+      <section className="bg-navy relative py-24 lg:py-32 overflow-hidden z-10 flex flex-col justify-center items-center min-h-[360px] lg:min-h-[460px]">
 
         {/* Text Content */}
-        <div className="relative z-20 text-center w-full mt-12 display-flex flex-col items-center">
-          <p className="avery-italic text-[#d8d0c1] text-xl lg:text-3xl mb-4 font-light drop-shadow-md lg:absolute lg:-top-16 lg:left-1/2 lg:-translate-x-1/2 w-full">
-            Your expertise. Your schedule. Your business.
-          </p>
-          <div
-            className="transition-transform duration-75 ease-out"
-            style={{ transform: `translateX(${textTranslateX}px)` }}
-          >
-            <h2 className="font-heading text-white text-[7rem] md:text-[10rem] lg:text-[12rem] leading-[0.7] tracking-tighter whitespace-nowrap opacity-95 pointer-events-none select-none uppercase">
-              THE CONCIERGE NURSE
-            </h2>
+        <div className="relative z-20 w-full overflow-hidden">
+          <div className="marquee-left flex w-max">
+            {[0, 1, 2, 3].map((i) => (
+              <h2 key={i} className="font-heading text-white text-[5rem] md:text-[8rem] lg:text-[11rem] leading-normal tracking-normal whitespace-nowrap opacity-95 pointer-events-none select-none uppercase px-10 pb-4">
+                THE CONCIERGE NURSE
+              </h2>
+            ))}
           </div>
         </div>
       </section>
@@ -70,7 +38,7 @@ export default function AboutSection() {
             </div>
             <div className="lg:col-span-7 flex flex-col pt-8 pl-8">
                <p className="section-label text-gold mb-5">About Tracy</p>
-               <h3 className="avery-title text-5xl text-navy mb-10 leading-tight uppercase">
+               <h3 className="avery-title text-6xl md:text-7xl lg:text-[6.5rem] text-navy mb-10 leading-[0.9] uppercase">
                  BUILT BY A NURSE. <br/> FOR NURSES.
                </h3>
                <div className="navy-divider mb-8 h-[2px] w-12" />

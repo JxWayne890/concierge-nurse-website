@@ -8,11 +8,9 @@ import {
   Brain,
   Target,
   Sparkles,
-  BookOpen,
   TrendingUp,
   UserCheck,
   Megaphone,
-  Heart,
   Star,
   Calendar,
 } from 'lucide-react';
@@ -35,7 +33,7 @@ const features = [
     num: '03',
     icon: FileText,
     title: 'Discounted HIPAA-Compliant Charting System',
-    desc: 'Access to a HIPAA-compliant, encrypted charting platform that includes direct client payment through Stripe. Available to members at a discounted rate of $17.99 per month. This is the operational backbone of a professional concierge nursing practice, and as a member you get preferred pricing that is not available to the general public.',
+    desc: 'Member access to a HIPAA-compliant, encrypted charting platform that includes direct client payment through Stripe. Available to members at a discounted rate of $17.99 per month. As a member, you receive preferred pricing that is not available to the general public.',
     badge: 'Coming Soon',
   },
   {
@@ -58,31 +56,25 @@ const features = [
   },
   {
     num: '07',
-    icon: BookOpen,
-    title: 'Member Directory',
-    desc: 'A searchable directory where members can list their concierge nursing business for connection and collaboration. This is how you find each other, refer to each other, and build the kind of professional network that does not exist anywhere else in this space.',
-  },
-  {
-    num: '08',
     icon: TrendingUp,
     title: 'Progress Posts and Peer Support',
     desc: 'A dedicated space for members to share wins, client acquisition stories, networking events and ideas, breakthroughs, financial milestones, and challenge posts when you need feedback and ongoing support. You are not building alone. You are building alongside people who are in it with you and who understand what it takes.',
   },
   {
-    num: '09',
+    num: '08',
     icon: UserCheck,
     title: 'Quarterly Guest Experts',
     desc: 'I am building a roster of guest experts including CPAs, attorneys, and successful concierge nurse business owners who will join us for live Q&A sessions. These are professionals who understand this space and who can speak directly to the questions and challenges that come up as you grow. This is access you will not find in a Facebook group.',
     badge: 'In Progress',
   },
   {
-    num: '10',
+    num: '09',
     icon: Star,
     title: 'Occasional Group Challenges',
     desc: 'Optional group challenges designed to create focused momentum around a specific business goal. These are not homework. They are concentrated pushes that help the entire room move together on something that matters. Participate when the timing is right for you.',
   },
   {
-    num: '11',
+    num: '10',
     icon: Megaphone,
     title: 'Personal Cross-Marketing on My Platforms',
     desc: 'I will personally market and share your success stories, your business links, your journey, how the Accelerator helped you, noteworthy updates, reviews, and other content that gives you additional exposure and visibility. This is not an automated repost. I am carrying your story to my audience across multiple high-volume social media platforms because your success is the best proof that this work matters.',
@@ -95,13 +87,13 @@ export default function Society() {
     '@type': 'Service',
     name: 'Concierge Nurse Business Society Membership',
     description:
-      'An exclusive monthly membership for graduates of the Concierge Nurse Business Method Accelerator. Ongoing coaching, community, and resources for nurses building concierge nursing businesses.',
+      'An exclusive monthly membership for graduates of the Concierge Nurse Six Step Business Method Cohort Accelerator. Ongoing coaching, community, and resources for nurses building concierge nurse businesses.',
     provider: { '@type': 'Organization', name: 'Concierge Nurse Business Society' },
     offers: {
       '@type': 'Offer',
       price: '97.00',
       priceCurrency: 'USD',
-      description: 'Founding member early-bird pricing through April 26, 2026. $147/month thereafter.',
+      description: 'Founding member pricing. $147/month after the early bird window closes.',
     },
   };
 
@@ -109,7 +101,7 @@ export default function Society() {
     <>
       <SEO
         title="The Concierge Nurse Business Society Membership — Exclusive to Accelerator Graduates"
-        description="The only membership built exclusively for nurses who completed the Concierge Nurse Business Method Accelerator. Ongoing coaching, community, and resources for concierge nurse business owners."
+        description="The only membership built exclusively for nurses who completed the Concierge Nurse Six Step Business Method Cohort Accelerator. Ongoing coaching, community, and resources for concierge nurse business owners."
         canonical="/society"
         type="article"
         schema={societySchema}
@@ -132,8 +124,8 @@ export default function Society() {
             </h1>
             <div className="gold-divider mb-6" />
             <p className="text-white/70 text-lg leading-relaxed max-w-2xl mb-4">
-              The only membership built exclusively for nurses who completed the
-              Concierge Nurse Business Method Accelerator.
+              The only membership built exclusively for graduates of the
+              Concierge Nurse Six Step Business Method Cohort Accelerator.
             </p>
             <p className="text-white/50 text-base leading-relaxed max-w-2xl italic">
               This room does not open to the public. You earned your way in.
@@ -171,8 +163,8 @@ export default function Society() {
             </p>
             <p>
               Not as more education. Not as another program. This is your ongoing
-              room. The place you stay connected to while you grow, refine, and keep
-              momentum without burning out or disappearing for three months and
+              room. The place you stay connected while you grow and refine,
+              without losing momentum or disappearing for three months and
               trying to start over again.
             </p>
           </div>
@@ -187,14 +179,14 @@ export default function Society() {
               Earned Access
             </p>
             <h2 className="font-heading text-3xl sm:text-4xl font-bold text-white mb-5">
-              This Is Not an Open Community
+              A Closed Room by Design
             </h2>
             <div className="gold-divider mx-auto" />
           </div>
           <div className="space-y-6 text-white/70 text-[1.05rem] leading-[1.8]">
             <p>
               The only way into this membership is through the Concierge Nurse
-              Business Method Accelerator. No exceptions. No outside invitations.
+              Six Step Business Method Cohort Accelerator. No exceptions. No outside invitations.
               Every person in this room went through the same process you did. They
               speak the same language. They understand the same frameworks. They
               are building in the same emerging lane.
@@ -217,7 +209,7 @@ export default function Society() {
           <div className="text-center max-w-2xl mx-auto mb-16">
             <p className="section-label mb-4">What You Get Inside</p>
             <h2 className="font-heading text-3xl sm:text-4xl font-bold text-navy mb-5">
-              Every Feature Designed to Keep You Moving
+              Built to Keep You Building
             </h2>
             <div className="gold-divider mx-auto mb-6" />
             <p className="text-slate text-[0.95rem] leading-relaxed">
@@ -299,7 +291,7 @@ export default function Society() {
             <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 bg-gold/10 border border-gold/40">
               <Calendar size={13} className="text-gold" />
               <span className="font-body text-[0.6rem] uppercase tracking-[0.2em] text-gold font-medium">
-                Early Bird Pricing Through April 26, 2026
+                Founding Member Pricing
               </span>
             </div>
 
@@ -308,24 +300,24 @@ export default function Society() {
               <span className="text-slate text-lg ml-1">/month</span>
             </div>
             <p className="text-slate text-sm mb-8">
-              Founding member pricing. Increases to{' '}
-              <span className="text-navy font-semibold">$147/month</span> after
-              early bird window closes.
+              Founding member rate. Increases to{' '}
+              <span className="text-navy font-semibold">$147/month</span> when
+              the early bird window closes.
             </p>
 
             <div className="gold-divider mx-auto mb-8" />
 
             <p className="text-charcoal text-sm leading-relaxed mb-8">
-              Early bird pricing is available when you enroll during Week 6 of the
-              Accelerator. Your Week 6 materials include your direct enrollment
-              link and full member onboarding.
+              Founding member pricing is locked in when you enroll during Week 6
+              of the Cohort Accelerator. Your Week 6 materials include your
+              direct enrollment link and full member onboarding.
             </p>
 
             <Link
               to="/accelerator"
               className="btn-primary inline-flex items-center justify-center gap-2 w-full"
             >
-              Start with the Accelerator <ArrowRight size={14} />
+              Start with the Cohort Accelerator <ArrowRight size={14} />
             </Link>
 
             <p className="text-slate/80 text-xs mt-6 leading-relaxed">
@@ -376,14 +368,14 @@ export default function Society() {
       {/* Closing CTA */}
       <section className="py-24 bg-cream border-t border-cream-dark">
         <div className="max-w-3xl mx-auto px-6 lg:px-10 text-center">
-          <Heart size={28} className="text-gold mx-auto mb-6" />
           <h2 className="font-heading text-3xl sm:text-4xl font-bold text-navy mb-4">
             You Earned Your Seat. Now Stay in the Room.
           </h2>
           <div className="gold-divider mx-auto mb-8" />
           <p className="text-slate text-base mb-8 max-w-xl mx-auto leading-relaxed">
-            The Society opens its doors to every Accelerator graduate. If you have
-            not started the Accelerator yet, that is where your seat begins.
+            The Society opens its doors to every Cohort Accelerator graduate. If
+            you have not started the Cohort Accelerator yet, that is where your
+            seat begins.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/accelerator" className="btn-primary inline-flex items-center justify-center gap-2">

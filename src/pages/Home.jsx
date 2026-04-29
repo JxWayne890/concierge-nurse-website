@@ -1,6 +1,5 @@
 import SEO from '../components/SEO';
 import Hero from '../components/Hero';
-import TrustStrip from '../components/TrustStrip';
 import AboutSection from '../components/AboutSection';
 import FeaturedPrograms from '../components/FeaturedPrograms';
 import TestimonialsSection from '../components/TestimonialsSection';
@@ -41,7 +40,6 @@ export default function Home() {
         schema={homeSchema}
       />
       <Hero />
-      <TrustStrip />
       <AboutSection />
       <FeaturedPrograms />
       <TestimonialsSection />

@@ -378,6 +378,25 @@
   }
 }
 
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-left {
+  animation: marquee-left 28s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-left {
+    animation: none;
+  }
+}
+
 @keyframes trust-scroll-right {
   0% {
     transform: translateX(-33.33%);

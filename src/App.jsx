@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation, Outlet } from 'react-router-dom';
+import { Routes, Route, useLocation, Outlet, Navigate } from 'react-router-dom';
 import { useEffect, lazy, Suspense } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -25,8 +25,6 @@ import Disclaimer from './pages/Disclaimer';
 
 const Blog = lazy(() => import('./pages/Blog'));
 const BlogPost = lazy(() => import('./pages/BlogPost'));
-const BlogCategory = lazy(() => import('./pages/BlogCategory'));
-const Directory = lazy(() => import('./pages/Directory'));
 const Ambassador = lazy(() => import('./pages/Ambassador'));
 const AmbassadorSignup = lazy(() => import('./pages/ambassador/Signup'));
 const AmbassadorLogin = lazy(() => import('./pages/ambassador/Login'));
@@ -350,6 +348,10 @@ const resourceRoutes = [
   ['/resources/for/concierge-nursing-nurses-with-disabilities', LFo('nurses-with-disabilities')],
 ];
 
+const activeResourceRoutes = resourceRoutes.filter(([path]) =>
+  ['/resources/what-is-a-concierge-nurse', '/resources/concierge-nursing-niches'].includes(path)
+);
+
 export default function App() {
   return (
     <AuthProvider>
@@ -373,14 +375,14 @@ export default function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/resources" element={<Resources />} />
             <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/category/:slug" element={<BlogCategory />} />
+            <Route path="/blog/category/:slug" element={<Navigate to="/blog" replace />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
-            <Route path="/directory" element={<Directory />} />
+            <Route path="/directory" element={<Navigate to="/society" replace />} />
             <Route path="/ambassador" element={<Ambassador />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/disclaimer" element={<Disclaimer />} />
-            {resourceRoutes.map(([path, Component]) => (
+            {activeResourceRoutes.map(([path, Component]) => (
               <Route key={path} path={path} element={<Component />} />
             ))}
           </Route>

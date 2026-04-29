@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Users, Heart, ArrowRight, Mail } from 'lucide-react';
+import { Users, MessageCircle, Mail } from 'lucide-react';
 import { submitSubscribe } from '../lib/api';
 
 export default function CommunitySection() {
@@ -23,15 +22,15 @@ export default function CommunitySection() {
   return (
     <section className="py-24 lg:py-32 bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <p className="section-label mb-4">Always Free</p>
-          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-navy mb-5">
-            Join the Community
+        <div className="text-center max-w-4xl mx-auto mb-20">
+          <p className="section-label mb-6 tracking-[0.3em]">Community</p>
+          <h2 className="avery-title text-5xl md:text-7xl lg:text-[6.5rem] text-navy mb-8 leading-[0.9]">
+            JOIN THE COMMUNITY
           </h2>
-          <div className="gold-divider mx-auto mb-6" />
           <p className="text-slate text-[0.95rem] leading-relaxed">
-            Not ready to commit? No pressure. Start here. Join thousands of
-            nurses exploring and building concierge nursing businesses.
+            Two free communities for nurses exploring and building concierge
+            nurse businesses. Choose the platform that fits how you like to
+            connect.
           </p>
         </div>
 
@@ -43,12 +42,12 @@ export default function CommunitySection() {
             <div className="w-14 h-14 bg-navy mx-auto flex items-center justify-center mb-5">
               <Users size={24} className="text-gold" />
             </div>
-            <h3 className="font-heading text-lg font-bold text-navy mb-2">
+            <h3 className="avery-title text-2xl lg:text-3xl text-navy mb-4 leading-tight uppercase">
               Facebook Community
             </h3>
             <p className="text-slate text-sm leading-relaxed mb-5">
-              Connect with nurses at every stage. Ask questions, share wins, and
-              stay connected.
+              Connect with nurses at every stage of the journey. Ask questions,
+              share wins, and stay close to the conversation.
             </p>
             <span className="text-gold font-semibold text-[0.72rem] tracking-[0.08em] uppercase group-hover:underline">
               Join Free
@@ -60,14 +59,14 @@ export default function CommunitySection() {
             className="bg-cream border border-cream-dark p-8 text-center group hover:border-gold/40 transition-all duration-300 no-underline"
           >
             <div className="w-14 h-14 bg-navy mx-auto flex items-center justify-center mb-5">
-              <Heart size={24} className="text-gold" />
+              <MessageCircle size={24} className="text-gold" />
             </div>
-            <h3 className="font-heading text-lg font-bold text-navy mb-2">
+            <h3 className="avery-title text-2xl lg:text-3xl text-navy mb-4 leading-tight uppercase">
               Heartbeat Community
             </h3>
             <p className="text-slate text-sm leading-relaxed mb-5">
-              Our dedicated community platform with resources, discussions, and
-              direct access to support.
+              Our private community platform with weekly content, discussions,
+              and direct access to resources.
             </p>
             <span className="text-gold font-semibold text-[0.72rem] tracking-[0.08em] uppercase group-hover:underline">
               Join Free
@@ -78,12 +77,12 @@ export default function CommunitySection() {
             <div className="w-14 h-14 bg-white/10 mx-auto flex items-center justify-center mb-5">
               <Mail size={24} className="text-gold" />
             </div>
-            <h3 className="font-heading text-lg font-bold text-white mb-2">
+            <h3 className="avery-title text-2xl lg:text-3xl text-white mb-4 leading-tight uppercase">
               Email Insider Access
             </h3>
             <p className="text-white/50 text-sm leading-relaxed mb-5">
-              Be the first to hear about workshops, enrollment windows, free
-              trainings, and new resources.
+              Be the first to hear about workshops, waitlist for cohort
+              enrollment, free trainings, and new resources.
             </p>
 
             {status === 'success' ? (

@@ -110,7 +110,7 @@ export default function Ambassador() {
     <>
       <SEO
         title="Ambassador Pathway — Concierge Nurse Business Society"
-        description="Get rewarded for referring nurses to the Concierge Nurse Business Society Method Accelerator Cohort. Earn up to $1,200 per cycle plus a Founding Ambassador badge."
+        description="Get rewarded for referring nurses to the Concierge Nurse Six Step Business Method Cohort Accelerator. Earn up to $1,200 per cycle plus Founding Ambassador recognition."
         canonical="/ambassador"
       />
 
@@ -226,7 +226,7 @@ function ProgramTab() {
       refs: '3 Referrals',
       amount: '$1,200',
       sub: 'total cash via Venmo',
-      perks: ['$500 bonus on top of $700', 'Founding Ambassador badge', 'Featured in the Member Directory', 'Priority access to future offerings'],
+      perks: ['$500 bonus on top of $700', 'Founding Ambassador recognition', 'Priority access to future offerings'],
       top: true,
     },
   ];
@@ -236,7 +236,7 @@ function ProgramTab() {
       <SectionCard>
         <SectionHeading>How It Works</SectionHeading>
         <p className="text-charcoal/80 leading-relaxed mb-8">
-          You know what this program did for you. When you refer a nurse who enrolls in the Concierge Nurse Business Society Method Accelerator Cohort, you earn cash. The more nurses you bring in, the more you earn. Tiers reset each cohort cycle.
+          You know what this program did for you. When you refer a nurse who enrolls in the Concierge Nurse Six Step Business Method Cohort Accelerator, you earn cash. The more nurses you bring in, the more you earn. Tiers reset each cohort cycle.
         </p>
         <div className="grid md:grid-cols-3 gap-4">
           {steps.map((s) => (
@@ -293,7 +293,7 @@ function ProgramTab() {
           <div>
             <h2 className="font-heading text-xl md:text-2xl font-bold text-navy mb-3">The Founding Ambassador Badge</h2>
             <p className="text-charcoal/80 leading-relaxed">
-              Hit tier three and you earn the Founding Ambassador designation. This is permanent. It appears next to your name in the Society Member Directory and recognizes you as someone who helped build this community from the ground up. This isn't a title you buy. It's one you earn.
+              Hit tier three and you earn the Founding Ambassador designation. This is permanent recognition that you helped build this community from the ground up. This isn't a title you buy. It's one you earn.
             </p>
           </div>
         </div>
@@ -302,12 +302,12 @@ function ProgramTab() {
       <SectionCard>
         <SectionHeading>The Details</SectionHeading>
         <div className="space-y-4 text-charcoal/80 leading-relaxed">
-          <p>This program is exclusively for Concierge Nurse Business Society members who have completed the Method Accelerator Cohort.</p>
-          <p>A referral counts when the nurse you referred enrolls in the Concierge Nurse Business Society Method Accelerator Cohort and their payment clears. Payment plans count once the first payment is processed.</p>
+          <p>This program is exclusively for Concierge Nurse Business Society members who have completed the Concierge Nurse Six Step Business Method Cohort Accelerator.</p>
+          <p>A referral counts when the nurse you referred enrolls in the Concierge Nurse Six Step Business Method Cohort Accelerator and their payment clears. Payment plans count once the first payment is processed.</p>
           <p>Tiers reset each cohort cycle. If you refer 2 nurses for the May cohort, you earn $700 total. When the next cohort opens, your count starts fresh.</p>
           <p>Your referred nurse must mention your name at enrollment so we can track and credit you properly.</p>
           <p>All cash payouts are sent via Venmo within one week of the referred nurse's payment clearing.</p>
-          <p>The Founding Ambassador badge is permanent once earned and will appear on your Member Directory listing.</p>
+          <p>The Founding Ambassador designation is permanent once earned.</p>
         </div>
       </SectionCard>
     </div>
@@ -320,11 +320,11 @@ function ToolkitTab() {
   const texts = [
     {
       title: 'Nurse You Know Well',
-      body: `Hey! Random question. Have you ever thought about doing concierge nursing on your own? I went through this program that walked me through how to build an independent concierge nursing business from scratch. The actual business side, not just the clinical. It was the thing that finally got me moving. They have a new cohort starting in May if you're curious. I can send you the info. No pressure, just thought of you.`,
+      body: `Hey! Random question. Have you ever thought about doing concierge nursing on your own? I went through this program that walked me through the business side of building an independent concierge nurse business. It gave me structure, strategy, and a clear path to move forward. They have a new cohort starting in May if you're curious. I can send you the info. No pressure, just thought of you.`,
     },
     {
-      title: "Nurse Who's Mentioned Burnout",
-      body: `I keep thinking about our last conversation. I know you're over it. I was too. I ended up going through a program that helped me build a concierge nursing business on my own terms. Private pay, my schedule, my clients. It changed everything for me. There's a new cohort opening in May and I think you'd be great at this. Want me to send you the details?`,
+      title: 'Nurse Exploring a New Direction',
+      body: `I keep thinking about our last conversation. I know you have been curious about what else is possible with your nursing experience. I went through a program that helped me understand the business side of concierge nursing and build with structure. There is a new cohort opening in May and I think you would be great at this. Want me to send you the details?`,
     },
     {
       title: 'Nurse Already Interested in Concierge',
@@ -342,7 +342,7 @@ function ToolkitTab() {
 
 Hey [Name],
 
-I wanted to share something with you because I think you'd be a really good fit. Last year I went through the Concierge Nurse Business Society Method Accelerator Cohort. It's a six-week program where you actually build your concierge nursing business. Not just learn about it. Build it.
+I wanted to share something with you because I think you'd be a really good fit. Last year I went through the Concierge Nurse Six Step Business Method Cohort Accelerator. It's a six-week live cohort where experienced nurses build the foundation, strategy, and systems for a concierge nurse business.
 
 The woman who runs it, Tracy Pekurny, is an RN herself who built her own concierge business and now teaches other nurses how to do the same thing. In six weeks I had my LLC, my pricing, my client onboarding process, my legal protections, and a real plan for getting visible and getting clients. It wasn't theoretical. It was practical and it moved fast.
 
@@ -358,7 +358,7 @@ No pressure. Just didn't want you to miss it.
   const social = [
     {
       title: 'Instagram / Facebook — Your Story',
-      body: `A year ago I was still trying to figure out how to start a concierge nursing business on my own. I had the clinical skills. I had the desire. What I didn't have was the business blueprint. Then I went through the Concierge Nurse Business Society Method Accelerator Cohort and in six weeks I had my business name, my LLC, my pricing, my onboarding process, my legal protections, and an actual plan to get in front of clients. Not someday. Now. If you're an RN who has been thinking about building an independent concierge nursing business but you don't know where to start or you're tired of trying to piece it together yourself, the next cohort starts in May. This is the program I wish I had found sooner. DM me if you want details.`,
+      body: `A year ago I was still trying to figure out how to start a concierge nurse business on my own. I had the clinical skills. I had the desire. What I didn't have was the business blueprint. Then I went through the Concierge Nurse Six Step Business Method Cohort Accelerator and in six weeks I had my business name, my pricing, my onboarding process, my legal protections, and an actual plan to get in front of clients. If you're an RN who has been thinking about building an independent concierge nurse business but you don't know where to start, the next cohort starts in May. This is the program I wish I had found sooner. DM me if you want details.`,
     },
     {
       title: 'Shorter Version',
@@ -366,7 +366,7 @@ No pressure. Just didn't want you to miss it.
     },
     {
       title: 'LinkedIn',
-      body: `Nurses are leaving bedside care every day. Most of them don't know there's a third option between staying miserable and leaving nursing entirely. Concierge nursing is that option. Independent, private pay, on your terms, using the license you already earned. I built my concierge nursing business through the Concierge Nurse Business Society Method Accelerator Cohort. Six weeks of building the actual business, not just learning about it. LLC formation, pricing strategy, legal compliance, client acquisition, all of it. They're enrolling for the May cohort now. If you're a registered nurse who has been thinking about this, or if you know one who has, I'm happy to share more. Drop a comment or send me a message.`,
+      body: `Experienced nurses are building concierge nurse businesses with structure, strategy, and real ownership. Concierge nursing is independent, private pay, and built around the license and expertise you already earned. I built my concierge nurse business through the Concierge Nurse Six Step Business Method Cohort Accelerator. Six weeks of building the foundation, business strategy, operations, and client acquisition plan. They're enrolling for the May cohort now. If you're a registered nurse who has been thinking about this, or if you know one who has, I'm happy to share more. Drop a comment or send me a message.`,
     },
   ];
 
@@ -441,7 +441,7 @@ No pressure. Just didn't want you to miss it.
         <div className="mb-6">
           <h4 className="font-heading text-base font-bold text-navy mb-3">Getting Started</h4>
           <ol className="space-y-3 text-charcoal/80 text-sm leading-relaxed list-decimal pl-5">
-            <li>Think of 3 to 5 nurses you know who have talked about wanting more, leaving bedside, or starting something of their own. Write their names down.</li>
+            <li>Think of 3 to 5 nurses you know who have talked about building something of their own or using their nursing expertise in a new way. Write their names down.</li>
             <li>Pick the script that fits your relationship with each person. A personal text to someone you know well. A social post for your broader network. An email for someone you want to give the full picture to.</li>
             <li>Send it. Personalize it with your own words and experience. The more it sounds like you, the better it works.</li>
             <li>When they're interested, connect them with Tracy directly or share the enrollment link from the "Share This" tab. Make sure they mention your name when they enroll so you get credit.</li>
@@ -637,10 +637,10 @@ function ShareTab() {
     <div>
       <div className="bg-navy p-8 md:p-12 mb-8 text-center">
         <h2 className="font-heading text-2xl md:text-3xl font-bold text-white leading-tight mb-4 max-w-3xl mx-auto">
-          The Concierge Nurse Business Society Method Accelerator Cohort
+          The Concierge Nurse Six Step Business Method Cohort Accelerator
         </h2>
         <p className="text-white/70 text-sm md:text-base max-w-2xl mx-auto mb-8 leading-relaxed">
-          Six weeks. One business. Built from the ground up with the structure, strategy, and legal protection you need to launch with confidence.
+          Six weeks of live instruction, structure, and strategy for nurses building a concierge nurse business with clarity and confidence.
         </p>
         <a
           href={ENROLLMENT_URL}
@@ -720,7 +720,7 @@ function ShareTab() {
       <SectionCard>
         <SectionHeading>Who Runs This</SectionHeading>
         <p className="text-charcoal/80 leading-relaxed">
-          Tracy Pekurny, RN. Founder of the Concierge Nurse Business Society. She built her own concierge nursing business, lived the same struggle you're in right now, and created the method that has helped nurses across the country launch their own independent practices. She's not coaching from theory. She's coaching from experience.
+          Tracy Pekurny, RN. Founder of the Concierge Nurse Business Society. She built her own concierge nurse business and created the method that has helped nurses across the country launch independent concierge nurse businesses. She's not coaching from theory. She's coaching from experience.
         </p>
       </SectionCard>
 

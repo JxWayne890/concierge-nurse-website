@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Users, Heart, Mail, ArrowRight, MessageCircle, BookOpen, Calendar } from 'lucide-react';
+import { Users, Mail, ArrowRight, MessageCircle, BookOpen, Calendar } from 'lucide-react';
 import SEO from '../components/SEO';
 import { submitSubscribe } from '../lib/api';
 
@@ -34,15 +34,15 @@ export default function Community() {
       {/* Hero */}
       <section className="bg-navy pt-32 pb-20">
         <div className="max-w-4xl mx-auto px-6 lg:px-10 text-center">
-          <p className="section-label mb-4">Always Free</p>
+          <p className="section-label mb-4">Community</p>
           <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.1] mb-5">
             Join the <span className="text-gold-gradient">Community</span>
           </h1>
           <div className="gold-divider mx-auto mb-6" />
           <p className="text-white/60 text-lg leading-relaxed max-w-2xl mx-auto">
-            Start here. No commitment, no cost. Connect with nurses at every
-            stage of their concierge nursing journey and get access to free
-            resources, support, and community.
+            Two free communities for nurses exploring and building concierge
+            nurse businesses. Choose the platform that fits how you like to
+            connect.
           </p>
         </div>
       </section>
@@ -60,15 +60,14 @@ export default function Community() {
                 Facebook Community
               </h2>
               <p className="text-slate text-[0.95rem] leading-relaxed mb-6">
-                Our active Facebook group is where nurses connect, ask
-                questions, share wins, and support each other through the
-                journey of building concierge nursing businesses.
+                Connect with nurses at every stage of the journey. Ask
+                questions, share wins, and stay close to the conversation.
               </p>
               <div className="space-y-3 mb-8">
                 {[
                   { icon: MessageCircle, text: 'Active discussions and Q&A' },
-                  { icon: BookOpen, text: 'Free educational content and tips' },
-                  { icon: Calendar, text: 'Event and workshop announcements' },
+                  { icon: BookOpen, text: 'Category-aware resources' },
+                  { icon: Calendar, text: 'Workshop announcements' },
                   { icon: Users, text: 'Peer support from nurses at every stage' },
                 ].map((item) => (
                   <div key={item.text} className="flex items-center gap-3">
@@ -85,20 +84,19 @@ export default function Community() {
             {/* Heartbeat */}
             <div className="bg-cream border border-cream-dark p-10">
               <div className="w-14 h-14 bg-navy flex items-center justify-center mb-6">
-                <Heart size={26} className="text-gold" />
+                <MessageCircle size={26} className="text-gold" />
               </div>
               <h2 className="font-heading text-2xl font-bold text-navy mb-3">
                 Heartbeat Community
               </h2>
               <p className="text-slate text-[0.95rem] leading-relaxed mb-6">
-                Our dedicated community platform offers a more focused,
-                organized space for discussions, resources, and direct support
-                outside of social media.
+                Our private community platform with weekly content,
+                discussions, and direct access to resources.
               </p>
               <div className="space-y-3 mb-8">
                 {[
                   { icon: MessageCircle, text: 'Organized discussion channels' },
-                  { icon: BookOpen, text: 'Resource library access' },
+                  { icon: BookOpen, text: 'Weekly content and resources' },
                   { icon: Calendar, text: 'Community events and networking' },
                   { icon: Users, text: 'Direct access to support' },
                 ].map((item) => (
@@ -126,9 +124,8 @@ export default function Community() {
             Get Insider Access
           </h2>
           <p className="text-white/50 mb-8 leading-relaxed">
-            Be the first to hear about workshops, enrollment windows, free
-            trainings, new resources, and exclusive opportunities. Join the
-            email list and stay connected.
+            Be the first to hear about workshops, waitlist for cohort
+            enrollment, free trainings, and new resources.
           </p>
 
           {status === 'success' ? (
@@ -180,8 +177,8 @@ export default function Community() {
           <div className="gold-divider mx-auto mb-6" />
           <p className="text-slate text-[0.95rem] leading-relaxed mb-4">
             An invite-only membership exclusively for graduates of the
-            Concierge Nurse Business Method Accelerator. This ongoing community
-            provides continued accountability, strategic support, guest
+            Concierge Nurse Six Step Business Method Cohort Accelerator. This
+            ongoing community provides continued accountability, strategic support, guest
             experts, and connection with fellow alumni.
           </p>
           <p className="text-charcoal/50 text-sm mb-8">

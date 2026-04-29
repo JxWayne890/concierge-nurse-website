@@ -47,9 +47,9 @@ export default function TestimonialsSection() {
       <div className="max-w-[1400px] mx-auto px-6">
 
         {/* Header Block */}
-        <div className="flex items-center justify-center gap-8 mb-8">
+        <div className="flex items-center justify-center gap-8 mb-8 mt-10">
           <div className="h-[1px] bg-white/20 flex-1 max-w-[200px]" />
-          <h2 className="avery-title text-3xl sm:text-4xl lg:text-5xl text-white tracking-widest uppercase">
+          <h2 className="avery-title text-4xl sm:text-5xl lg:text-7xl text-white tracking-widest uppercase text-center leading-[0.9]">
             TRANSFORMATION STORIES
           </h2>
           <div className="h-[1px] bg-white/20 flex-1 max-w-[200px]" />
