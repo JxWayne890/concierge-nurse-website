@@ -1,19 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Copy, Check, Star, ExternalLink, Plus, Minus, Lock, LayoutDashboard } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Check, Star, ExternalLink, LayoutDashboard } from 'lucide-react';
 import SEO from '../components/SEO';
 import { useAuth } from '../lib/AuthContext';
 
 const TABS = [
   { id: 'program', label: 'The Program' },
-  { id: 'toolkit', label: 'Your Toolkit' },
-  { id: 'signup', label: 'Sign Up' },
-  { id: 'tracker', label: 'Your Tracker' },
-  { id: 'share', label: 'Share This' },
+  { id: 'signup', label: 'Apply' },
 ];
-
-const ENROLLMENT_URL = 'https://from-bedside-to-business-xm506xz.gamma.site/';
-const TRACY_EMAIL = 'info@conciergenursesociety.com';
 
 function useActiveTab() {
   const [activeTab, setActiveTab] = useState(() => {
@@ -40,57 +34,6 @@ function useActiveTab() {
   };
 
   return [activeTab, selectTab];
-}
-
-function CopyButton({ text, label = 'Copy', gated = false }) {
-  const { session } = useAuth();
-  const navigate = useNavigate();
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = async () => {
-    if (gated && !session) {
-      navigate('/ambassador/login?next=' + encodeURIComponent('/ambassador/portal'));
-      return;
-    }
-    try {
-      await navigator.clipboard.writeText(text);
-    } catch {
-      const ta = document.createElement('textarea');
-      ta.value = text;
-      ta.style.position = 'fixed';
-      ta.style.left = '-9999px';
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
-    }
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  const isLocked = gated && !session;
-  return (
-    <button
-      onClick={handleCopy}
-      className="inline-flex items-center gap-1.5 bg-navy text-white px-3 py-1.5 text-[0.65rem] font-semibold tracking-[0.15em] uppercase hover:bg-navy/85 transition-colors shrink-0"
-      title={isLocked ? 'Sign in to copy with your personal referral link' : undefined}
-    >
-      {isLocked ? <Lock size={12} /> : copied ? <Check size={12} /> : <Copy size={12} />}
-      {isLocked ? 'Sign in' : copied ? 'Copied' : label}
-    </button>
-  );
-}
-
-function ScriptCard({ title, body }) {
-  return (
-    <div className="bg-cream-dark border-l-2 border-gold p-5 mb-4">
-      <div className="flex items-start justify-between gap-4 mb-3">
-        <p className="text-gold text-[0.65rem] font-semibold tracking-[0.2em] uppercase">{title}</p>
-        <CopyButton text={body} gated />
-      </div>
-      <p className="text-charcoal/85 text-sm leading-relaxed whitespace-pre-wrap">{body}</p>
-    </div>
-  );
 }
 
 function SectionCard({ children, className = '' }) {
@@ -169,10 +112,7 @@ export default function Ambassador() {
       <section className="bg-cream py-12 md:py-16">
         <div className="max-w-5xl mx-auto px-6 lg:px-10">
           {activeTab === 'program' && <ProgramTab />}
-          {activeTab === 'toolkit' && <ToolkitTab />}
           {activeTab === 'signup' && <SignUpTab onGoto={selectTab} />}
-          {activeTab === 'tracker' && <TrackerTab />}
-          {activeTab === 'share' && <ShareTab />}
         </div>
       </section>
 
@@ -200,7 +140,7 @@ function ProgramTab() {
     {
       n: '02',
       title: 'Share',
-      body: 'Use the scripts, texts, and posts in the Toolkit tab. Send them directly or post on your social. Make sure your referral mentions your name at enrollment.',
+      body: 'Once approved, sign in to your private Ambassador portal for referral tools, tracking, and approved sharing resources.',
     },
     {
       n: '03',
@@ -314,162 +254,13 @@ function ProgramTab() {
   );
 }
 
-/* ------------------------------- Tab: Toolkit ------------------------------ */
-
-function ToolkitTab() {
-  const texts = [
-    {
-      title: 'Nurse You Know Well',
-      body: `Hey! Random question. Have you ever thought about doing concierge nursing on your own? I went through this program that walked me through the business side of building an independent concierge nurse business. It gave me structure, strategy, and a clear path to move forward. They have a new cohort starting in May if you're curious. I can send you the info. No pressure, just thought of you.`,
-    },
-    {
-      title: 'Nurse Exploring a New Direction',
-      body: `I keep thinking about our last conversation. I know you have been curious about what else is possible with your nursing experience. I went through a program that helped me understand the business side of concierge nursing and build with structure. There is a new cohort opening in May and I think you would be great at this. Want me to send you the details?`,
-    },
-    {
-      title: 'Nurse Already Interested in Concierge',
-      body: `Okay so remember when we talked about concierge nursing? The program I went through just opened enrollment for their May cohort. Six weeks, you come out with your business actually built. Not a bunch of theory, the real thing. LLC, pricing, clients, legal, all of it. I can connect you with Tracy who runs it. She's the real deal.`,
-    },
-    {
-      title: 'Follow-Up',
-      body: `Hey, just circling back on that concierge nursing thing I mentioned. No worries if the timing isn't right. Just didn't want you to miss it since enrollment is open now for May. Let me know if you want the info.`,
-    },
-  ];
-
-  const email = {
-    title: 'Full Email to a Colleague',
-    body: `Subject: Thought of you for this
-
-Hey [Name],
-
-I wanted to share something with you because I think you'd be a really good fit. Last year I went through the Concierge Nurse Six Step Business Method Cohort Accelerator. It's a six-week live cohort where experienced nurses build the foundation, strategy, and systems for a concierge nurse business.
-
-The woman who runs it, Tracy Pekurny, is an RN herself who built her own concierge business and now teaches other nurses how to do the same thing. In six weeks I had my LLC, my pricing, my client onboarding process, my legal protections, and a real plan for getting visible and getting clients. It wasn't theoretical. It was practical and it moved fast.
-
-They have a new cohort starting in May and I thought of you because I know you've been thinking about doing something different.
-
-If you want more info I can connect you directly with Tracy, or you can check it out here: [LINK]
-
-No pressure. Just didn't want you to miss it.
-
-[Your Name]`,
-  };
-
-  const social = [
-    {
-      title: 'Instagram / Facebook — Your Story',
-      body: `A year ago I was still trying to figure out how to start a concierge nurse business on my own. I had the clinical skills. I had the desire. What I didn't have was the business blueprint. Then I went through the Concierge Nurse Six Step Business Method Cohort Accelerator and in six weeks I had my business name, my pricing, my onboarding process, my legal protections, and an actual plan to get in front of clients. If you're an RN who has been thinking about building an independent concierge nurse business but you don't know where to start, the next cohort starts in May. This is the program I wish I had found sooner. DM me if you want details.`,
-    },
-    {
-      title: 'Shorter Version',
-      body: `If you're a nurse who keeps googling "how to start a concierge nursing business" and getting nowhere, I was you. The program that changed it for me is opening a new cohort in May. Six weeks. You come out with the business built, not just the idea. DM me if you want the info. I'll tell you exactly what to expect.`,
-    },
-    {
-      title: 'LinkedIn',
-      body: `Experienced nurses are building concierge nurse businesses with structure, strategy, and real ownership. Concierge nursing is independent, private pay, and built around the license and expertise you already earned. I built my concierge nurse business through the Concierge Nurse Six Step Business Method Cohort Accelerator. Six weeks of building the foundation, business strategy, operations, and client acquisition plan. They're enrolling for the May cohort now. If you're a registered nurse who has been thinking about this, or if you know one who has, I'm happy to share more. Drop a comment or send me a message.`,
-    },
-  ];
-
-  const dms = [
-    {
-      title: '"Tell Me More"',
-      body: `It's a six-week cohort program run by Tracy Pekurny, RN. She built her own concierge nursing business and now teaches other nurses how to do the same. Each week covers a different piece: clarifying your niche, validating your market, building your financial blueprint, setting up your operations and legal, getting visible to clients, and protecting your business. You come out the other side with your business actually built, not just planned. The next cohort starts in May. Want me to connect you with Tracy directly?`,
-    },
-    {
-      title: `"I Can't Afford It"`,
-      body: `I totally understand. There are payment plan options that make it more manageable. I'd say reach out to Tracy directly and have an honest conversation about it. She's real people and she'll give you the straight answer on what makes sense for your situation. Here's how to reach her: [LINK]`,
-    },
-    {
-      title: `"I'm Not Ready Yet"`,
-      body: `That's fair. I felt the same way before I joined. The thing I'll say is that the program is designed for people who aren't ready yet. That's the whole point. You go in with the idea and come out with the business. But no pressure. When the timing feels right, the next cohort is never too far away.`,
-    },
-    {
-      title: '"Is It Worth It?"',
-      body: `I can only tell you what it did for me. Before the cohort I had an idea and a lot of confusion. After, I had a real business with real structure. LLC done, pricing figured out, legal covered, and a plan to actually get clients. Six weeks moved me further than the previous year of trying to figure it out on my own. That's my honest experience.`,
-    },
-  ];
-
-  return (
-    <div>
-      <SectionCard>
-        <SectionHeading>Your Ambassador Toolkit</SectionHeading>
-        <p className="text-charcoal/80 leading-relaxed">
-          Everything you need to refer nurses, right here. Copy any script, personalize it with your own words, and send. The more it sounds like you, the better it works.
-        </p>
-      </SectionCard>
-
-      <SectionCard>
-        <h3 className="font-heading text-xl font-bold text-navy mb-1">Text Messages</h3>
-        <p className="text-charcoal/60 italic text-sm mb-6">
-          One genuine text to the right person outperforms a post that reaches 500 strangers.
-        </p>
-        {texts.map((s) => (
-          <ScriptCard key={s.title} title={s.title} body={s.body} />
-        ))}
-      </SectionCard>
-
-      <SectionCard>
-        <h3 className="font-heading text-xl font-bold text-navy mb-1">Email</h3>
-        <p className="text-charcoal/60 italic text-sm mb-6">
-          For colleagues you don't text with regularly. More room to paint the full picture.
-        </p>
-        <ScriptCard title={email.title} body={email.body} />
-      </SectionCard>
-
-      <SectionCard>
-        <h3 className="font-heading text-xl font-bold text-navy mb-1">Social Media Posts</h3>
-        <p className="text-charcoal/60 italic text-sm mb-6">
-          For your personal Instagram, Facebook, or LinkedIn. Add your own story. The more real it sounds, the more it resonates.
-        </p>
-        {social.map((s) => (
-          <ScriptCard key={s.title} title={s.title} body={s.body} />
-        ))}
-      </SectionCard>
-
-      <SectionCard>
-        <h3 className="font-heading text-xl font-bold text-navy mb-1">DM Responses</h3>
-        <p className="text-charcoal/60 italic text-sm mb-6">When someone responds to your post or asks questions.</p>
-        {dms.map((s) => (
-          <ScriptCard key={s.title} title={s.title} body={s.body} />
-        ))}
-      </SectionCard>
-
-      <SectionCard>
-        <SectionHeading>How to Use This Program</SectionHeading>
-        <p className="text-charcoal/60 italic text-sm mb-6">Quick reference so you know exactly what to do.</p>
-
-        <div className="mb-6">
-          <h4 className="font-heading text-base font-bold text-navy mb-3">Getting Started</h4>
-          <ol className="space-y-3 text-charcoal/80 text-sm leading-relaxed list-decimal pl-5">
-            <li>Think of 3 to 5 nurses you know who have talked about building something of their own or using their nursing expertise in a new way. Write their names down.</li>
-            <li>Pick the script that fits your relationship with each person. A personal text to someone you know well. A social post for your broader network. An email for someone you want to give the full picture to.</li>
-            <li>Send it. Personalize it with your own words and experience. The more it sounds like you, the better it works.</li>
-            <li>When they're interested, connect them with Tracy directly or share the enrollment link from the "Share This" tab. Make sure they mention your name when they enroll so you get credit.</li>
-            <li>When they enroll and pay, you get paid via Venmo within one week. That's it.</li>
-          </ol>
-        </div>
-
-        <div>
-          <h4 className="font-heading text-base font-bold text-navy mb-3">What Actually Converts</h4>
-          <ul className="space-y-3 text-charcoal/80 text-sm leading-relaxed">
-            <li><strong className="text-navy">Personal conversations beat blast posts every time.</strong> One real text to the right person will do more than a post that 500 people scroll past.</li>
-            <li><strong className="text-navy">Share your own story.</strong> Why you joined. What changed. What your business looks like now. People don't buy programs. They buy the transformation they see in someone they trust.</li>
-            <li><strong className="text-navy">Don't sell. Just share.</strong> If someone is interested, connect them. If they're not, that's fine. The nurses who are ready will move fast. The ones who aren't will remember you when they are.</li>
-            <li><strong className="text-navy">Follow up once.</strong> If you sent someone the info and haven't heard back, one check-in is fine. "Hey, did you get a chance to look at that? No worries either way." One follow-up. Not five.</li>
-          </ul>
-        </div>
-      </SectionCard>
-    </div>
-  );
-}
-
 /* ------------------------------- Tab: Sign Up ------------------------------ */
 
 function SignUpTab() {
   const steps = [
     { n: '1', title: 'Submit the Form', body: `Takes 2 minutes. Your info goes straight to Tracy's dashboard.` },
     { n: '2', title: 'Get Confirmed', body: `Tracy confirms your Ambassador status. You're officially in.` },
-    { n: '3', title: 'Start Sharing', body: 'Use the Toolkit tab for scripts, posts, and DM responses. Log referrals in the Tracker tab.' },
+    { n: '3', title: 'Start Sharing', body: 'Use your private Ambassador portal for approved scripts, posts, DM responses, and referral tracking.' },
   ];
 
   return (
@@ -519,266 +310,6 @@ function SignUpTab() {
             </div>
           ))}
         </div>
-      </SectionCard>
-    </div>
-  );
-}
-
-/* ------------------------------- Tab: Tracker ------------------------------ */
-
-function TrackerTab() {
-  const tiers = [
-    { n: 'Tier 1', amount: '$300', sub: '1 referral' },
-    { n: 'Tier 2', amount: '$700', sub: '2 referrals' },
-    { n: 'Tier 3', amount: '$1,200', sub: '3 referrals + badge', top: true },
-  ];
-
-  return (
-    <div>
-      <SectionCard>
-        <SectionHeading>Your Referral Tracker</SectionHeading>
-        <p className="text-charcoal/80 leading-relaxed">
-          Track your referrals and see where you stand in the current cohort cycle. Submit a new referral below and Tracy will verify and update your status once the referred nurse enrolls.
-        </p>
-      </SectionCard>
-
-      <SectionCard>
-        <h3 className="font-heading text-xl font-bold text-navy mb-3">Submit a Referral</h3>
-        <p className="text-charcoal/80 leading-relaxed mb-6">
-          Referred a nurse? Sign in to your Ambassador portal and log the referral there. Tracy sees every submission instantly and matches it against enrollments automatically.
-        </p>
-        <div className="bg-navy p-8 text-center">
-          <p className="text-white/80 text-sm md:text-base leading-relaxed max-w-md mx-auto mb-6">
-            Takes about 1 minute inside your portal. You'll enter the referred nurse's details and their preferred way to be contacted.
-          </p>
-          <Link
-            to="/ambassador/login?next=%2Fambassador%2Fportal"
-            className="inline-flex items-center gap-2 bg-gold text-navy px-8 py-3 text-xs font-semibold tracking-[0.2em] uppercase hover:bg-gold/90 transition-colors no-underline"
-          >
-            Sign in to log a referral <ExternalLink size={14} />
-          </Link>
-        </div>
-      </SectionCard>
-
-      <SectionCard>
-        <SectionHeading>How the Tracker Works</SectionHeading>
-        <p className="text-charcoal/80 leading-relaxed mb-4">
-          When you submit a referral above, Tracy receives it on her end via Google Sheets. Once the referred nurse enrolls and their payment clears, Tracy updates your status and sends your Venmo payout within one week.
-        </p>
-        <p className="text-charcoal/80 leading-relaxed mb-6">Your current tier resets each cohort cycle:</p>
-        <div className="grid md:grid-cols-3 gap-4">
-          {tiers.map((t) => (
-            <div
-              key={t.n}
-              className={`border-t-2 p-5 text-center ${
-                t.top ? 'bg-gold/5 border-gold' : 'bg-cream-dark border-gold/40'
-              }`}
-            >
-              <p className="text-charcoal/60 text-[0.65rem] font-semibold tracking-[0.2em] uppercase mb-2">{t.n}</p>
-              <p className="font-heading text-3xl font-bold text-navy mb-1">{t.amount}</p>
-              <p className="text-charcoal/60 text-xs">{t.sub}</p>
-            </div>
-          ))}
-        </div>
-      </SectionCard>
-
-      <div className="bg-white border border-cream-dark p-6 text-center">
-        <p className="text-charcoal/80 text-sm">
-          Questions about your referral status or payouts? Reach out to Tracy directly at{' '}
-          <a href={`mailto:${TRACY_EMAIL}`} className="text-navy font-semibold underline decoration-gold/60 underline-offset-2 hover:decoration-gold">
-            {TRACY_EMAIL}
-          </a>
-        </p>
-      </div>
-    </div>
-  );
-}
-
-/* -------------------------------- Tab: Share ------------------------------- */
-
-function ShareTab() {
-  const weeks = [
-    { n: 'Week 1', title: 'Clarify' },
-    { n: 'Week 2', title: 'Validate' },
-    { n: 'Week 3', title: 'Package' },
-    { n: 'Week 4', title: 'Operationalize' },
-    { n: 'Week 5', title: 'Get Visible' },
-    { n: 'Week 6', title: 'Protect' },
-  ];
-
-  const [openWeek, setOpenWeek] = useState(null);
-
-  const testimonials = [
-    {
-      body: `I would take this course again without hesitation, even at double the price. The education didn't end after six weeks. I gained much-needed clarity around legal structure, pricing, and marketing, areas where I previously lacked confidence.`,
-      who: 'Vanessa Chambers, RN, BSN | New York, NY',
-    },
-    {
-      body: `I realize now how detrimental things could have gone if I had tried to do this without a good business foundation. She equipped me with the steps, processes, documentation, legal, and accounting. 10 out of 10 experience.`,
-      who: 'Jessica Morse, RN | Philadelphia suburbs',
-    },
-    {
-      body: `Within just two weeks I had a clear vision of my offer, my ideal client, and the exact next steps. This accelerator is the best investment you can make.`,
-      who: 'Nikki Sheilds, RN',
-    },
-  ];
-
-  const connectLinks = [
-    { emoji: '🚀', label: 'Enroll Now', sub: 'View Program + Checkout', href: ENROLLMENT_URL, external: true },
-    { emoji: '✉️', label: 'Email', sub: 'New domain coming soon', href: `mailto:${TRACY_EMAIL}`, text: TRACY_EMAIL },
-    { emoji: '🔗', label: 'All Links', sub: 'Linktree', href: 'https://linktr.ee/', external: true },
-    { emoji: '👥', label: 'Free Community', sub: 'Facebook Group', href: 'https://facebook.com/groups/', external: true },
-    { emoji: '💬', label: 'Heartbeat', sub: 'Join Free Community', href: '#', external: true },
-  ];
-
-  const shareMessage = `Here's the full breakdown of the program I told you about. You can read through everything and enroll right from this page when you're ready: ${ENROLLMENT_URL}`;
-
-  return (
-    <div>
-      <div className="bg-navy p-8 md:p-12 mb-8 text-center">
-        <h2 className="font-heading text-2xl md:text-3xl font-bold text-white leading-tight mb-4 max-w-3xl mx-auto">
-          The Concierge Nurse Six Step Business Method Cohort Accelerator
-        </h2>
-        <p className="text-white/70 text-sm md:text-base max-w-2xl mx-auto mb-8 leading-relaxed">
-          Six weeks of live instruction, structure, and strategy for nurses building a concierge nurse business with clarity and confidence.
-        </p>
-        <a
-          href={ENROLLMENT_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 bg-gold text-navy px-8 py-3 text-xs font-semibold tracking-[0.2em] uppercase hover:bg-gold/90 transition-colors no-underline"
-        >
-          See the Full Program + Enroll <ExternalLink size={14} />
-        </a>
-      </div>
-
-      <SectionCard>
-        <SectionHeading>What Happens in Six Weeks</SectionHeading>
-        <p className="text-charcoal/80 leading-relaxed mb-6">
-          This isn't a course you watch. It's a cohort you build inside of. Each week covers one critical piece of your concierge nursing business, and you leave with it done, not just discussed.
-        </p>
-        <div className="space-y-2">
-          {weeks.map((w, i) => {
-            const isOpen = openWeek === i;
-            return (
-              <div key={w.n} className="bg-cream-dark border-t-2 border-gold">
-                <button
-                  onClick={() => setOpenWeek(isOpen ? null : i)}
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-cream-dark/70 transition-colors"
-                >
-                  <div>
-                    <p className="text-gold text-[0.65rem] font-semibold tracking-[0.2em] uppercase mb-1">{w.n}</p>
-                    <p className="font-heading font-bold text-navy">{w.title}</p>
-                  </div>
-                  {isOpen ? <Minus size={18} className="text-gold" /> : <Plus size={18} className="text-gold" />}
-                </button>
-                {isOpen && (
-                  <div className="px-4 pb-4">
-                    <p className="text-charcoal/75 text-sm leading-relaxed">
-                      Full details for this week, including exactly what gets built and what you walk away with, live on the Accelerator program page.
-                    </p>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-        <p className="text-charcoal/60 italic text-sm mt-6">
-          For full details on each week and to enroll, visit the{' '}
-          <a href="/accelerator" className="text-navy font-semibold underline decoration-gold/60 underline-offset-2 hover:decoration-gold">
-            program page
-          </a>
-          . Checkout is built right in.
-        </p>
-      </SectionCard>
-
-      <SectionCard>
-        <SectionHeading>Who This Is For</SectionHeading>
-        <p className="text-charcoal/80 leading-relaxed">
-          Registered nurses who want to build an independent, private-pay concierge nursing business. Nurses who are done waiting for the "right time" and ready to build with structure, support, and a proven method. Whether you're still working full-time, on travel contracts, or recently stepped away from bedside, this cohort meets you where you are and moves you forward.
-        </p>
-      </SectionCard>
-
-      <SectionCard>
-        <SectionHeading>What Graduates Are Saying</SectionHeading>
-        <div className="space-y-5">
-          {testimonials.map((t) => (
-            <div key={t.who} className="bg-cream-dark border-l-2 border-gold p-5">
-              <p className="text-charcoal/85 text-sm leading-relaxed italic mb-3">"{t.body}"</p>
-              <p className="text-navy text-sm font-semibold">— {t.who}</p>
-            </div>
-          ))}
-        </div>
-        <p className="text-charcoal/60 italic text-sm mt-5">
-          Read all graduate reviews:{' '}
-          <a href="/about" className="text-navy font-semibold underline decoration-gold/60 underline-offset-2 hover:decoration-gold">
-            Full testimonials
-          </a>
-        </p>
-      </SectionCard>
-
-      <SectionCard>
-        <SectionHeading>Who Runs This</SectionHeading>
-        <p className="text-charcoal/80 leading-relaxed">
-          Tracy Pekurny, RN. Founder of the Concierge Nurse Business Society. She built her own concierge nurse business and created the method that has helped nurses across the country launch independent concierge nurse businesses. She's not coaching from theory. She's coaching from experience.
-        </p>
-      </SectionCard>
-
-      <SectionCard>
-        <h3 className="font-heading text-xl font-bold text-navy mb-2">Connect with Tracy</h3>
-        <p className="text-charcoal/80 leading-relaxed mb-6">Ready to learn more or have questions? Reach out directly.</p>
-        <div className="grid sm:grid-cols-2 gap-3">
-          {connectLinks.map((l) => (
-            <a
-              key={l.label}
-              href={l.href}
-              target={l.external ? '_blank' : undefined}
-              rel={l.external ? 'noopener noreferrer' : undefined}
-              className="flex items-start gap-4 bg-cream-dark border border-cream-dark p-4 hover:border-gold transition-colors no-underline group"
-            >
-              <span className="text-2xl" aria-hidden>{l.emoji}</span>
-              <div className="min-w-0">
-                <p className="font-heading font-bold text-navy group-hover:text-navy">{l.label}</p>
-                <p className="text-charcoal/60 text-xs">{l.sub}</p>
-                {l.text && <p className="text-charcoal text-xs mt-1 break-all">{l.text}</p>}
-              </div>
-            </a>
-          ))}
-        </div>
-      </SectionCard>
-
-      <SectionCard>
-        <SectionHeading>Share With a Nurse You've Already Talked To</SectionHeading>
-        <p className="text-charcoal/80 leading-relaxed mb-6">
-          This isn't for cold outreach. This is for after you've had the conversation, answered their questions, and they're ready to see the full program. Send them the enrollment link below so they can read the details and check out directly.
-        </p>
-
-        <div className="bg-cream-dark border-l-2 border-gold p-5 mb-4">
-          <div className="flex items-start justify-between gap-4 mb-3">
-            <p className="text-gold text-[0.65rem] font-semibold tracking-[0.2em] uppercase">Message + Enrollment Link</p>
-            <CopyButton text={shareMessage} />
-          </div>
-          <p className="text-charcoal/85 text-sm leading-relaxed whitespace-pre-wrap">{shareMessage}</p>
-        </div>
-
-        <div className="bg-cream-dark border-l-2 border-gold p-5">
-          <div className="flex items-start justify-between gap-4 mb-3">
-            <p className="text-gold text-[0.65rem] font-semibold tracking-[0.2em] uppercase">Enrollment Link Only</p>
-            <CopyButton text={ENROLLMENT_URL} />
-          </div>
-          <p className="text-charcoal/85 text-sm break-all">{ENROLLMENT_URL}</p>
-        </div>
-
-        <p className="text-charcoal/60 italic text-sm mt-6">
-          Remind them to mention your name when they enroll so you get credit for the referral.
-        </p>
-      </SectionCard>
-
-      <SectionCard>
-        <SectionHeading>QR Code for In-Person Sharing</SectionHeading>
-        <p className="text-charcoal/80 leading-relaxed">
-          Your Tiiny Host dashboard has a QR code for this Ambassador page. Use it when you're talking to a nurse face-to-face and want to give them something to scan and explore later.
-        </p>
       </SectionCard>
     </div>
   );

@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Users, UserPlus, Mail, TrendingUp, RefreshCw, Eye, BarChart3, Globe, GitBranch } from 'lucide-react';
+import { Users, UserPlus, Mail, TrendingUp, RefreshCw, Eye, BarChart3, Globe, GitBranch, DollarSign, Award } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 
 const RANGE_OPTIONS = [

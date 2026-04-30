@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, FileText, Lightbulb, Layers, Video, Zap } from 'lucide-react';
 import SEO from '../components/SEO';

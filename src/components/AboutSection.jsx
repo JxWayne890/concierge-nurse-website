@@ -59,7 +59,7 @@ export default function AboutSection() {
                <div className="navy-divider mb-8 h-[2px] w-12" />
                <div className="space-y-6 text-navy/70 text-[0.95rem] leading-loose max-w-lg">
                  <p>Tracy Pekurny is a registered nurse with more than twenty years of clinical experience and over a decade as an entrepreneur. She built her own concierge nurse business before she ever taught one.</p>
-                 <p>She created the Concierge Nurse Business Society to give experienced nurses what did not exist when she started: a clear, step-by-step pathway to building an independent concierge nurse business with clinical integrity and legal protection.</p>
+                 <p>She created the Concierge Nurse Business Society to give experienced nurses what did not exist when she started: a clear, step-by-step pathway to building an independent concierge nurse business with clinical integrity, business structure, and access to the right licensed professionals.</p>
                </div>
                <div className="mt-16">
                  <Link to="/about" className="btn-secondary border-navy text-navy hover:bg-navy hover:text-white inline-block">
@@ -106,7 +106,7 @@ export default function AboutSection() {
             {/* Body text */}
             <div className="text-center space-y-4 text-navy/65 text-[0.85rem] leading-relaxed max-w-sm mb-8">
               <p>Tracy Pekurny is a registered nurse with more than twenty years of clinical experience and over a decade as an entrepreneur. She built her own concierge nurse business before she ever taught one.</p>
-              <p>She created the Concierge Nurse Business Society to give experienced nurses what did not exist when she started: a clear, step-by-step pathway to building an independent concierge nurse business with clinical integrity and legal protection.</p>
+              <p>She created the Concierge Nurse Business Society to give experienced nurses what did not exist when she started: a clear, step-by-step pathway to building an independent concierge nurse business with clinical integrity, business structure, and access to the right licensed professionals.</p>
             </div>
 
             {/* CTA */}

@@ -36,7 +36,7 @@ Hey [Name],
 
 I wanted to share something with you because I think you'd be a really good fit. Last year I went through the Concierge Nurse Business Society Method Accelerator Cohort. It's a six-week program where you actually build your concierge nursing business. Not just learn about it. Build it.
 
-The woman who runs it, Tracy Pekurny, is an RN herself who built her own concierge business and now teaches other nurses how to do the same thing. In six weeks I had my LLC, my pricing, my client onboarding process, my legal protections, and a real plan for getting visible and getting clients. It wasn't theoretical. It was practical and it moved fast.
+The woman who runs it, Tracy Pekurny, is an RN herself who built her own concierge business and now teaches other nurses how to do the same thing. In six weeks I had my business structure, my pricing, my client onboarding process, the right professional referrals, and a real plan for getting visible and getting clients. It wasn't theoretical. It was practical and it moved fast.
 
 They have a new cohort starting in May and I thought of you because I know you've been thinking about doing something different.
 
@@ -50,7 +50,7 @@ No pressure. Just didn't want you to miss it.
 const social = [
   {
     title: 'Instagram / Facebook — Your Story',
-    body: `A year ago I was still trying to figure out how to start a concierge nursing business on my own. I had the clinical skills. I had the desire. What I didn't have was the business blueprint. Then I went through the Concierge Nurse Business Society Method Accelerator Cohort and in six weeks I had my business name, my LLC, my pricing, my onboarding process, my legal protections, and an actual plan to get in front of clients. Not someday. Now. If you're an RN who has been thinking about building an independent concierge nursing business but you don't know where to start or you're tired of trying to piece it together yourself, the next cohort starts in May. This is the program I wish I had found sooner. DM me if you want details.`,
+    body: `A year ago I was still trying to figure out how to start a concierge nursing business on my own. I had the clinical skills. I had the desire. What I didn't have was the business blueprint. Then I went through the Concierge Nurse Business Society Method Accelerator Cohort and in six weeks I had my business name, my structure, my pricing, my onboarding process, the right professional referrals, and an actual plan to get in front of clients. Not someday. Now. If you're an RN who has been thinking about building an independent concierge nursing business but you don't know where to start or you're tired of trying to piece it together yourself, the next cohort starts in May. This is the program I wish I had found sooner. DM me if you want details.`,
   },
   {
     title: 'Shorter Version',

@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Users, MessageCircle, Mail } from 'lucide-react';
 import { submitSubscribe } from '../lib/api';
 
+const FACEBOOK_COMMUNITY_URL = 'https://www.facebook.com/share/g/189a8JDbkz/';
+
 export default function CommunitySection() {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('idle');
@@ -36,7 +38,9 @@ export default function CommunitySection() {
 
         <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
           <a
-            href="#"
+            href={FACEBOOK_COMMUNITY_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="bg-cream border border-cream-dark p-8 text-center group hover:border-gold/40 transition-all duration-300 no-underline"
           >
             <div className="w-14 h-14 bg-navy mx-auto flex items-center justify-center mb-5">
@@ -55,7 +59,7 @@ export default function CommunitySection() {
           </a>
 
           <a
-            href="#"
+            href="/contact"
             className="bg-cream border border-cream-dark p-8 text-center group hover:border-gold/40 transition-all duration-300 no-underline"
           >
             <div className="w-14 h-14 bg-navy mx-auto flex items-center justify-center mb-5">
@@ -69,7 +73,7 @@ export default function CommunitySection() {
               and direct access to resources.
             </p>
             <span className="text-gold font-semibold text-[0.72rem] tracking-[0.08em] uppercase group-hover:underline">
-              Join Free
+              Request Access
             </span>
           </a>
 

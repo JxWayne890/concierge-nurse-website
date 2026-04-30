@@ -16,6 +16,9 @@ function FacebookIcon({ size = 24, className = '' }) {
   );
 }
 
+const INSTAGRAM_URL = 'https://www.instagram.com/tracypekurny';
+const FACEBOOK_URL = 'https://www.facebook.com/tracy.pekurny';
+
 export default function Hero() {
   return (
     <section className="bg-navy flex flex-col justify-between overflow-hidden h-screen max-md:-mt-[72px] max-md:pt-[72px] md:-mt-[90px] md:pt-[90px] relative">
@@ -41,10 +44,10 @@ export default function Hero() {
 
           {/* Social Icons at Bottom Left */}
           <div className="absolute bottom-10 left-10 lg:left-12 flex gap-5 z-20">
-            <a href="#" className="w-12 h-12 bg-navy/40 backdrop-blur-md border border-white/60 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-navy transition-all duration-300 shadow-lg group">
+            <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" aria-label="Tracy Pekurny on Instagram" className="w-12 h-12 bg-navy/40 backdrop-blur-md border border-white/60 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-navy transition-all duration-300 shadow-lg group">
               <InstagramIcon size={20} className="group-hover:scale-110 transition-transform duration-300" />
             </a>
-            <a href="#" className="w-12 h-12 bg-navy/40 backdrop-blur-md border border-white/60 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-navy transition-all duration-300 shadow-lg group">
+            <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" aria-label="Tracy Pekurny on Facebook" className="w-12 h-12 bg-navy/40 backdrop-blur-md border border-white/60 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-navy transition-all duration-300 shadow-lg group">
               <FacebookIcon size={20} className="group-hover:scale-110 transition-transform duration-300" />
             </a>
           </div>
@@ -126,10 +129,10 @@ export default function Hero() {
 
             {/* Mobile Social Icons matching desktop style */}
             <div className="flex justify-center gap-5 z-20">
-              <a href="#" className="w-12 h-12 bg-white/5 backdrop-blur-md border border-white/30 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-navy transition-all duration-300">
+              <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" aria-label="Tracy Pekurny on Instagram" className="w-12 h-12 bg-white/5 backdrop-blur-md border border-white/30 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-navy transition-all duration-300">
                 <InstagramIcon size={20} />
               </a>
-              <a href="#" className="w-12 h-12 bg-white/5 backdrop-blur-md border border-white/30 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-navy transition-all duration-300">
+              <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" aria-label="Tracy Pekurny on Facebook" className="w-12 h-12 bg-white/5 backdrop-blur-md border border-white/30 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-navy transition-all duration-300">
                 <FacebookIcon size={20} />
               </a>
             </div>

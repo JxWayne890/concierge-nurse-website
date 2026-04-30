@@ -1,8 +1,6 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, CalendarDays, CheckCircle2, FileText, Package, Shield } from 'lucide-react';
+import { ArrowRight, CalendarDays, CheckCircle2, FileText, Package, Shield, ShoppingBag } from 'lucide-react';
 import SEO from '../components/SEO';
-import { submitContactForm } from '../lib/api';
 
 const products = [
   {
@@ -17,23 +15,25 @@ const products = [
       'Consent and waiver templates',
       'Communication and scheduling templates',
       'Business positioning and offer guides',
-      'AND MORE',
+      'Additional launch templates and guides',
     ],
+    purchaseHref: import.meta.env.VITE_STRIPE_RN_TOOLKIT_URL || '',
   },
   {
     icon: Shield,
-    title: 'HIPAA Business Compliance Toolkit',
+    title: 'HIPAA Toolkit',
     tag: null,
     description:
-      'Business-side HIPAA documentation and templates for nurses building a concierge nurse business. Administrative documents that help you set up your business communications, technology consents, and client documentation with confidence.',
+      'Business-side HIPAA documentation templates for nurses building a concierge nurse business. These digital templates help you organize communications, technology consents, and client documentation. They are not a legal compliance guarantee.',
     features: [
-      'Business HIPAA consent templates',
+      'HIPAA-focused consent templates',
       'Technology and communication consent templates',
       'Home visit administrative addendum',
       'Termination of services notice template',
-      'Business documentation guides',
-      'AND MORE',
+      'Documentation setup guides',
+      'Additional privacy and admin templates',
     ],
+    purchaseHref: import.meta.env.VITE_STRIPE_HIPAA_TOOLKIT_URL || '',
   },
   {
     icon: Package,
@@ -47,6 +47,7 @@ const products = [
       'Complete business and administrative foundation',
       'Immediate digital access',
     ],
+    purchaseHref: import.meta.env.VITE_STRIPE_TOOLKIT_BUNDLE_URL || '',
   },
   {
     icon: CalendarDays,
@@ -61,62 +62,11 @@ const products = [
       'Fully customizable to fit your business',
       'Instant digital download',
     ],
+    purchaseHref: import.meta.env.VITE_STRIPE_PLANNER_URL || '',
   },
 ];
 
 export default function Toolkits() {
-  const [form, setForm] = useState({
-    first_name: '',
-    last_name: '',
-    email: '',
-    interest: 'toolkits_resources',
-    selected_toolkits: [],
-    message: '',
-  });
-  const [status, setStatus] = useState('idle');
-  const [errorMsg, setErrorMsg] = useState('');
-
-  function update(field) {
-    return (e) => setForm((prev) => ({ ...prev, [field]: e.target.value }));
-  }
-
-  function toggleToolkit(title) {
-    setForm((prev) => {
-      const exists = prev.selected_toolkits.includes(title);
-      return {
-        ...prev,
-        selected_toolkits: exists
-          ? prev.selected_toolkits.filter((item) => item !== title)
-          : [...prev.selected_toolkits, title],
-      };
-    });
-  }
-
-  function startToolkitInquiry(title) {
-    setForm((prev) => ({
-      ...prev,
-      selected_toolkits: prev.selected_toolkits.includes(title)
-        ? prev.selected_toolkits
-        : [...prev.selected_toolkits, title],
-    }));
-    document.getElementById('inquire')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setStatus('submitting');
-    setErrorMsg('');
-
-    try {
-      await submitContactForm(form);
-      setStatus('success');
-      setForm({ first_name: '', last_name: '', email: '', interest: 'toolkits_resources', selected_toolkits: [], message: '' });
-    } catch (err) {
-      setStatus('error');
-      setErrorMsg(err.message || 'Something went wrong. Please try again.');
-    }
-  }
-
   const toolkitSchema = products.map((p) => ({
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -175,6 +125,28 @@ export default function Toolkits() {
                   <p className="text-slate text-[0.95rem] leading-relaxed mb-6">
                     {product.description}
                   </p>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    {product.purchaseHref ? (
+                      <a
+                        href={product.purchaseHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-navy inline-flex items-center justify-center gap-2 no-underline"
+                      >
+                        Purchase <ShoppingBag size={14} />
+                      </a>
+                    ) : (
+                      <span className="btn-navy inline-flex items-center justify-center gap-2 opacity-60 cursor-not-allowed">
+                        Stripe Link Pending <ShoppingBag size={14} />
+                      </span>
+                    )}
+                    <Link
+                      to="/contact"
+                      className="btn-secondary border-navy text-navy hover:bg-navy hover:text-white inline-flex items-center justify-center gap-2 no-underline"
+                    >
+                      Ask a Question
+                    </Link>
+                  </div>
                 </div>
                 <div className="bg-navy p-8">
                   <p className="text-gold text-[0.65rem] font-semibold tracking-[0.2em] uppercase mb-4">
@@ -188,13 +160,20 @@ export default function Toolkits() {
                       </div>
                     ))}
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => startToolkitInquiry(product.title)}
-                    className="btn-primary w-full"
-                  >
-                    Inquire About This Toolkit
-                  </button>
+                  {product.purchaseHref ? (
+                    <a
+                      href={product.purchaseHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-primary w-full inline-flex items-center justify-center gap-2 no-underline"
+                    >
+                      Buy Now <ArrowRight size={14} />
+                    </a>
+                  ) : (
+                    <span className="btn-primary w-full inline-flex items-center justify-center gap-2 opacity-60 cursor-not-allowed">
+                      Stripe Link Pending <ArrowRight size={14} />
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
@@ -215,74 +194,6 @@ export default function Toolkits() {
           <Link to="/strategy" className="btn-primary inline-flex items-center justify-center gap-2">
             Book a Clarity Consult <ArrowRight size={14} />
           </Link>
-        </div>
-      </section>
-
-      <section id="inquire" className="py-24 bg-white border-t border-cream-dark">
-        <div className="max-w-4xl mx-auto px-6 lg:px-10">
-          <div className="bg-cream border border-cream-dark p-8 lg:p-12">
-            <div className="text-center max-w-2xl mx-auto mb-12">
-              <h2 className="font-heading text-3xl font-bold text-navy mb-4">
-                Inquire About Toolkits
-              </h2>
-              <p className="text-slate text-sm leading-relaxed">
-                Interested in a specific toolkit or a custom bundle for your team? 
-                Fill out the form below and we will follow up with details and next steps.
-              </p>
-            </div>
-
-            {status === 'success' ? (
-              <div className="bg-navy/5 border border-gold/30 p-8 text-center">
-                <p className="text-gold font-bold mb-2">Request submitted!</p>
-                <p className="text-navy/70 text-sm">We will get back to you via email within 48 hours.</p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid sm:grid-cols-2 gap-6">
-                  <div>
-                    <label className="text-[0.65rem] font-bold tracking-[0.15em] uppercase text-navy/40 mb-2 block">First Name</label>
-                    <input type="text" required value={form.first_name} onChange={update('first_name')} className="w-full px-4 py-3 bg-white border border-cream-dark text-sm focus:outline-none focus:border-gold transition-colors" />
-                  </div>
-                  <div>
-                    <label className="text-[0.65rem] font-bold tracking-[0.15em] uppercase text-navy/40 mb-2 block">Last Name</label>
-                    <input type="text" required value={form.last_name} onChange={update('last_name')} className="w-full px-4 py-3 bg-white border border-cream-dark text-sm focus:outline-none focus:border-gold transition-colors" />
-                  </div>
-                </div>
-                <div>
-                  <label className="text-[0.65rem] font-bold tracking-[0.15em] uppercase text-navy/40 mb-2 block">Email Address</label>
-                  <input type="email" required value={form.email} onChange={update('email')} className="w-full px-4 py-3 bg-white border border-cream-dark text-sm focus:outline-none focus:border-gold transition-colors" />
-                </div>
-                <div>
-                  <label className="text-[0.65rem] font-bold tracking-[0.15em] uppercase text-navy/40 mb-2 block">Which toolkits are you interested in?</label>
-                  <div className="grid sm:grid-cols-2 gap-3 mb-4">
-                    {products.map((product) => (
-                      <label
-                        key={product.title}
-                        className="flex items-start gap-3 bg-white border border-cream-dark px-4 py-3 text-sm text-navy cursor-pointer hover:border-gold/50 transition-colors"
-                      >
-                        <input
-                          type="checkbox"
-                          checked={form.selected_toolkits.includes(product.title)}
-                          onChange={() => toggleToolkit(product.title)}
-                          className="mt-1 accent-gold"
-                        />
-                        <span>{product.title}</span>
-                      </label>
-                    ))}
-                  </div>
-                  <textarea rows={4} value={form.message} onChange={update('message')} className="w-full px-4 py-3 bg-white border border-cream-dark text-sm focus:outline-none focus:border-gold transition-colors resize-none" placeholder="e.g. HIPAA Toolkit, Business Bundle, or a custom request..." />
-                </div>
-
-                {status === 'error' && (
-                  <p className="text-red-600 text-sm">{errorMsg}</p>
-                )}
-
-                <button type="submit" disabled={status === 'submitting'} className="btn-navy w-full disabled:opacity-60">
-                  {status === 'submitting' ? 'Sending Request...' : 'Send Inquiry'}
-                </button>
-              </form>
-            )}
-          </div>
         </div>
       </section>
     </>

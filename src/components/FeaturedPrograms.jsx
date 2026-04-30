@@ -31,7 +31,7 @@ export default function FeaturedPrograms() {
               <p className="font-body text-navy/70 text-[0.7rem] lg:text-[0.78rem] leading-relaxed mb-10 max-w-[300px]">
                 Six weeks. Live instruction. A small cohort of experienced nurses building a concierge nurse business using the proven six-step method. Structured. Strategic. Results-driven.
               </p>
-              <Link to="/accelerator" className="btn-secondary border-navy text-navy hover:bg-navy hover:text-white uppercase tracking-widest text-[0.65rem] px-8 py-[0.6rem]">
+              <Link to="/accelerator" className="featured-card-cta">
                 JOIN THE WAITLIST
               </Link>
             </div>
@@ -55,7 +55,7 @@ export default function FeaturedPrograms() {
               <p className="font-body text-white/75 text-[0.72rem] leading-relaxed mb-7 max-w-[300px]">
                 Six weeks. Live instruction. A small cohort of experienced nurses building a concierge nurse business using the proven six-step method.
               </p>
-              <Link to="/accelerator" className="btn-white text-white border-white bg-transparent hover:bg-white hover:text-navy hover:border-white text-center py-3.5 text-[0.65rem] tracking-[0.2em] uppercase">
+              <Link to="/accelerator" className="featured-card-cta featured-card-cta-light text-center">
                 JOIN THE WAITLIST
               </Link>
             </div>
@@ -80,7 +80,7 @@ export default function FeaturedPrograms() {
                 <p className="font-body text-navy/70 text-[0.7rem] lg:text-[0.78rem] leading-relaxed mb-10 pb-2 max-w-[300px]">
                   A focused 60-minute private Zoom session for nurses who are just starting or stuck in the early phases. We work on one thing: getting clear on the problem you solve and who you solve it for. You walk away with a digital outline of next steps, delivered within 48 hours.
                 </p>
-                <Link to="/strategy" className="btn-secondary border-navy text-navy hover:bg-navy hover:text-white uppercase tracking-widest text-[0.65rem] px-8 py-[0.6rem]">
+                <Link to="/strategy" className="featured-card-cta">
                   BOOK YOUR SESSION
                 </Link>
              </div>
@@ -106,7 +106,7 @@ export default function FeaturedPrograms() {
               <p className="font-body text-white/75 text-[0.72rem] leading-relaxed mb-7 max-w-[300px]">
                 A focused 60-minute private Zoom session for nurses who are just starting or stuck in the early phases. We work on one thing: getting clear on the problem you solve and who you solve it for. You walk away with a digital outline of next steps, delivered within 48 hours.
               </p>
-              <Link to="/strategy" className="btn-white text-white border-white bg-transparent hover:bg-white hover:text-navy hover:border-white text-center py-3.5 text-[0.65rem] tracking-[0.2em] uppercase">
+              <Link to="/strategy" className="featured-card-cta featured-card-cta-light text-center">
                 BOOK YOUR SESSION
               </Link>
             </div>
@@ -129,7 +129,7 @@ export default function FeaturedPrograms() {
              <p className="avery-italic text-navy/80 text-sm lg:text-[1.1rem] leading-relaxed mb-12 max-w-xl font-light px-4">
                For established concierge nurse business owners doing six to seven figures who have hit a ceiling. Deep diagnostics. Strategic implementation. Real results.
              </p>
-             <Link to="/consulting" className="btn-secondary border-navy text-navy hover:bg-navy hover:text-white text-[0.65rem] px-12 py-3 tracking-widest">
+             <Link to="/consulting" className="featured-card-cta">
                INQUIRE NOW
              </Link>
            </div>
@@ -152,7 +152,7 @@ export default function FeaturedPrograms() {
             <p className="font-body text-white/80 text-[0.8rem] leading-relaxed mb-7 max-w-[300px]">
               For concierge nurse business owners doing six to seven figures who have hit a ceiling. Deep diagnostics. Strategic implementation.
             </p>
-            <Link to="/consulting" className="btn-white text-white border-white bg-transparent hover:bg-white hover:text-navy hover:border-white text-center py-3.5 px-8 text-[0.65rem] tracking-[0.2em] uppercase">
+            <Link to="/consulting" className="featured-card-cta featured-card-cta-light text-center">
               INQUIRE NOW
             </Link>
           </div>

@@ -25,7 +25,13 @@ const homeSchema = [
       "description": "Registered nurse, entrepreneur, and business strategist who helps nurses build concierge nursing businesses"
     },
     "email": "info@conciergenursesociety.com",
-    "sameAs": []
+    "sameAs": [
+      "https://www.instagram.com/tracypekurny",
+      "https://www.facebook.com/tracy.pekurny",
+      "https://www.facebook.com/share/g/189a8JDbkz/",
+      "https://www.tiktok.com/@tracypekurny",
+      "https://www.linkedin.com/in/tracy-pekurny-296031149/"
+    ]
   }
 ];
 

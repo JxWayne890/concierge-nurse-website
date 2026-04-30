@@ -3,7 +3,7 @@ import { supabase } from '../../lib/supabase';
 import { Check, CheckCircle2, AlertTriangle, Loader2, Key, Tag, Webhook, ExternalLink, Copy } from 'lucide-react';
 
 const PRODUCT_DESCRIPTION_DEFAULT =
-  'Six-week live cohort building your concierge nursing business — LLC, pricing, operations, marketing, and legal protection.';
+  'Six-week live cohort building your concierge nursing business: structure, pricing, operations, marketing, and connections to licensed professionals for legal and financial setup.';
 
 export default function StripeSettings() {
   const [status, setStatus] = useState(null);

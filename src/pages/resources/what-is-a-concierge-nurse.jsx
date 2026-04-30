@@ -98,10 +98,10 @@ const relatedResources = [
     category: 'Legal & Compliance',
   },
   {
-    title: 'Concierge Nursing Niches',
-    description: 'Explore profitable specializations for your concierge nursing business.',
-    link: '/resources/concierge-nursing-niches',
-    category: 'Planning',
+    title: 'Toolkits & Resources',
+    description: 'Browse self-paced templates and resources for building your business foundation.',
+    link: '/toolkits',
+    category: 'Resources',
   },
 ];
 

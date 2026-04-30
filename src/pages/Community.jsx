@@ -4,6 +4,8 @@ import { Users, Mail, ArrowRight, MessageCircle, BookOpen, Calendar } from 'luci
 import SEO from '../components/SEO';
 import { submitSubscribe } from '../lib/api';
 
+const FACEBOOK_COMMUNITY_URL = 'https://www.facebook.com/share/g/189a8JDbkz/';
+
 export default function Community() {
   const [form, setForm] = useState({ first_name: '', email: '' });
   const [status, setStatus] = useState('idle');
@@ -76,7 +78,7 @@ export default function Community() {
                   </div>
                 ))}
               </div>
-              <a href="#" className="btn-navy inline-flex items-center gap-2">
+              <a href={FACEBOOK_COMMUNITY_URL} target="_blank" rel="noopener noreferrer" className="btn-navy inline-flex items-center gap-2">
                 Join Facebook Community <ArrowRight size={14} />
               </a>
             </div>
@@ -106,8 +108,8 @@ export default function Community() {
                   </div>
                 ))}
               </div>
-              <a href="#" className="btn-navy inline-flex items-center gap-2">
-                Join Heartbeat Community <ArrowRight size={14} />
+              <a href="/contact" className="btn-navy inline-flex items-center gap-2">
+                Request Heartbeat Access <ArrowRight size={14} />
               </a>
             </div>
           </div>

@@ -11,9 +11,9 @@ const toolkits = [
   },
   {
     icon: Shield,
-    title: 'HIPAA Business Compliance Toolkit',
+    title: 'HIPAA Toolkit',
     description:
-      'Business-side HIPAA documentation and templates for nurses building a concierge nurse business. Administrative documents that help you set up your business communications, technology consents, and client documentation with confidence.',
+      'Business-side HIPAA documentation templates for nurses building a concierge nurse business. These templates help organize communications, technology consents, and client documentation without guaranteeing legal compliance.',
     tag: null,
   },
   {
@@ -48,12 +48,12 @@ export default function ToolkitsSection() {
             </h2>
             <div className="gold-divider mb-8" />
             <p className="text-navy/70 text-[1.05rem] lg:text-[1.15rem] leading-relaxed mb-10 font-body max-w-xl">
-              Professional resources designed for nurses building a concierge nurse business. From legal toolkits to our signature 2026 Planner, these tools are built from real-world experience inside the work.
+              Professional resources designed for nurses building a concierge nurse business. From business templates to our signature 2026 Planner, these tools are built from real-world experience inside the work.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-6">
               <Link to="/toolkits" className="btn-navy px-10 py-4 text-center">
-                SHOP ALL RESOURCES
+                PURCHASE RESOURCES
               </Link>
               <Link to="/strategy" className="btn-secondary border-navy text-navy hover:bg-navy hover:text-white px-10 py-4 text-center">
                 WORK WITH TRACY
@@ -109,7 +109,7 @@ export default function ToolkitsSection() {
                   <tk.icon size={18} className="text-navy group-hover:text-gold transition-colors" />
                 </div>
                 <div className="flex items-center gap-2 text-gold font-body text-[0.65rem] tracking-[0.2em] uppercase transition-all">
-                  Details <ArrowRight size={13} className="group-hover:translate-x-2 transition-transform duration-300" />
+                  Purchase <ArrowRight size={13} className="group-hover:translate-x-2 transition-transform duration-300" />
                 </div>
               </div>
             </Link>

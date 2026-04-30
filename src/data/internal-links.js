@@ -5,7 +5,7 @@ export const internalLinks = {
   // Pillar Guides
   '/resources/what-is-a-concierge-nurse': [
     { title: 'How to Start a Concierge Nursing Business', description: 'Complete step-by-step guide to launching your practice.', link: '/resources/how-to-start-a-concierge-nursing-business', category: 'Pillar Guide' },
-    { title: 'Concierge Nursing Niches', description: 'Explore 12+ niches and find your specialty.', link: '/resources/concierge-nursing-niches', category: 'Pillar Guide' },
+    { title: 'Toolkits & Resources', description: 'Self-paced templates for building your business foundation.', link: '/toolkits', category: 'Resources' },
     { title: 'Concierge vs. Private Duty vs. Home Health', description: 'Understand the key differences between models.', link: '/resources/concierge-nursing-vs-private-duty-vs-home-health', category: 'Comparison' },
   ],
   '/resources/how-to-start-a-concierge-nursing-business': [
@@ -38,11 +38,6 @@ export const internalLinks = {
     { title: 'LLC vs. PLLC', description: 'Choose the right entity structure.', link: '/resources/legal/nursing-business-llc-vs-pllc', category: 'Legal' },
     { title: 'Insurance Requirements', description: 'What coverage you need.', link: '/resources/legal/concierge-nurse-insurance-requirements', category: 'Legal' },
   ],
-  '/resources/concierge-nursing-niches': [
-    { title: 'Post-Op Recovery Nursing', description: 'Start a post-op concierge practice.', link: '/resources/niches/post-op-recovery-nursing-business', category: 'Niches' },
-    { title: 'Postpartum Concierge Nursing', description: 'Support new mothers.', link: '/resources/niches/postpartum-concierge-nursing-business', category: 'Niches' },
-    { title: 'IV Therapy Nursing Business', description: 'Launch a mobile IV therapy practice.', link: '/resources/niches/iv-therapy-nursing-business', category: 'Niches' },
-  ],
   '/resources/concierge-nurse-business-plan': [
     { title: 'How to Start a Concierge Nursing Business', description: 'Complete startup guide.', link: '/resources/how-to-start-a-concierge-nursing-business', category: 'Pillar Guide' },
     { title: 'Startup Costs', description: 'Know your numbers.', link: '/resources/concierge-nursing-startup-costs', category: 'Financial' },
@@ -58,7 +53,7 @@ export const internalLinks = {
 // Default related resources for pages not explicitly mapped
 export const defaultRelated = [
   { title: 'How to Start a Concierge Nursing Business', description: 'Complete step-by-step startup guide.', link: '/resources/how-to-start-a-concierge-nursing-business', category: 'Pillar Guide' },
-  { title: 'Concierge Nursing Niches', description: 'Find the right niche for you.', link: '/resources/concierge-nursing-niches', category: 'Pillar Guide' },
+  { title: 'Toolkits & Resources', description: 'Self-paced templates and resources.', link: '/toolkits', category: 'Resources' },
   { title: 'Concierge Nursing FAQ', description: 'Answers to all your questions.', link: '/resources/concierge-nursing-faq', category: 'Pillar Guide' },
 ];
 

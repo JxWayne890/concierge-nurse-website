@@ -39,7 +39,7 @@ const paths = [
     ],
     nextSteps: [
       { label: 'RN Concierge Business Toolkit', link: '/toolkits' },
-      { label: 'HIPAA Business Compliance Toolkit', link: '/toolkits' },
+      { label: 'HIPAA Toolkit', link: '/toolkits' },
       { label: 'HIPAA + RN Business Bundle', link: '/toolkits' },
       { label: '2026 Concierge Nurse Planner', link: '/toolkits' },
     ],

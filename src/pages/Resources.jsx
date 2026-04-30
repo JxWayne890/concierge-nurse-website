@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, BookOpen, Layers } from 'lucide-react';
+import { ArrowRight, BookOpen } from 'lucide-react';
 import SEO from '../components/SEO';
 
 const approvedResources = [
@@ -9,13 +9,6 @@ const approvedResources = [
     description:
       'A category-awareness guide to understanding concierge nursing, who it serves, and how this emerging business model differs from traditional care settings.',
     link: '/resources/what-is-a-concierge-nurse',
-  },
-  {
-    icon: Layers,
-    title: 'Concierge Nursing Niches Guide',
-    description:
-      'A high-level guide to the kinds of concierge nurse business categories nurses are exploring as this private-pay model grows.',
-    link: '/resources/concierge-nursing-niches',
   },
 ];
 
@@ -55,7 +48,7 @@ export default function Resources() {
       </section>
 
       <section className="bg-cream py-20">
-        <div className="max-w-5xl mx-auto px-6 lg:px-10 grid md:grid-cols-2 gap-6">
+        <div className="max-w-3xl mx-auto px-6 lg:px-10">
           {approvedResources.map((resource) => (
             <Link
               key={resource.title}

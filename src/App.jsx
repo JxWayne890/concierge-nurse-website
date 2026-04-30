@@ -25,6 +25,7 @@ import Disclaimer from './pages/Disclaimer';
 
 const Blog = lazy(() => import('./pages/Blog'));
 const BlogPost = lazy(() => import('./pages/BlogPost'));
+const BlogCategory = lazy(() => import('./pages/BlogCategory'));
 const Ambassador = lazy(() => import('./pages/Ambassador'));
 const AmbassadorSignup = lazy(() => import('./pages/ambassador/Signup'));
 const AmbassadorLogin = lazy(() => import('./pages/ambassador/Login'));
@@ -129,7 +130,6 @@ const resourceRoutes = [
   ['/resources/concierge-nursing-vs-private-duty-vs-home-health', L('concierge-nursing-vs-private-duty-vs-home-health')],
   ['/resources/how-to-get-concierge-nursing-clients', L('how-to-get-concierge-nursing-clients')],
   ['/resources/concierge-nursing-startup-costs', L('concierge-nursing-startup-costs')],
-  ['/resources/concierge-nursing-niches', L('concierge-nursing-niches-guide')],
   ['/resources/concierge-nurse-business-plan', L('concierge-nurse-business-plan')],
   ['/resources/concierge-nursing-faq', L('concierge-nursing-faq')],
   // Hub Extras
@@ -350,7 +350,7 @@ const resourceRoutes = [
 ];
 
 const activeResourceRoutes = resourceRoutes.filter(([path]) =>
-  ['/resources/what-is-a-concierge-nurse', '/resources/concierge-nursing-niches'].includes(path)
+  ['/resources/what-is-a-concierge-nurse'].includes(path)
 );
 
 export default function App() {
@@ -375,8 +375,9 @@ export default function App() {
             <Route path="/community" element={<Community />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/resources" element={<Resources />} />
+            <Route path="/resources/concierge-nursing-niches" element={<Navigate to="/resources" replace />} />
             <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/category/:slug" element={<Navigate to="/blog" replace />} />
+            <Route path="/blog/category/:slug" element={<BlogCategory />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/directory" element={<Navigate to="/society" replace />} />
             <Route path="/ambassador" element={<Ambassador />} />

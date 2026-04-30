@@ -8,9 +8,9 @@ const methodSteps = [
   { num: '01', title: 'Clarify', desc: 'Define your business identity, your ideal client, and the specific problem you solve in the concierge nurse market.' },
   { num: '02', title: 'Validate', desc: 'Test your offer in the real market and confirm there are clients ready to pay for what you are building.' },
   { num: '03', title: 'Financial Blueprint', desc: 'Build the financial framework of your business: pricing, revenue model, and the numbers behind a profitable concierge nurse business.' },
-  { num: '04', title: 'Operationalize', desc: 'Build the legal, administrative, and operational structure your business needs to run professionally and confidently.' },
+  { num: '04', title: 'Operationalize', desc: 'Build the business administration, operations, and structural systems your business needs to run professionally and confidently. We connect you with the right licensed professionals to handle the legal and financial side.' },
   { num: '05', title: 'Get Visible', desc: 'Build your client acquisition strategy and the marketing foundation that brings the right clients to your business.' },
-  { num: '06', title: 'Protect', desc: 'Put the legal protections, business agreements, and professional infrastructure in place to safeguard everything you have built.' },
+  { num: '06', title: 'Protect', desc: 'Put the business agreements, professional documentation, and operational infrastructure in place to safeguard your business. We connect you with healthcare attorneys and licensed professionals for the legal work that protects what you build.' },
 ];
 
 const included = [
@@ -37,7 +37,7 @@ const included = [
   {
     icon: FileText,
     title: 'Complete Business Toolkit ($997 value)',
-    body: 'The RN Concierge Business Toolkit and the HIPAA Business Compliance Toolkit, included at no additional cost.',
+    body: 'The RN Concierge Business Toolkit and the HIPAA Toolkit, included at no additional cost.',
   },
   {
     icon: Users,

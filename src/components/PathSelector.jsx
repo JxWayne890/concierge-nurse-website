@@ -38,7 +38,7 @@ const paths = [
     ],
     nextSteps: [
       'RN Concierge Business Toolkit',
-      'HIPAA Business Compliance Toolkit',
+      'HIPAA Toolkit',
       'HIPAA + RN Business Bundle',
       '2026 Concierge Nurse Planner',
     ],
