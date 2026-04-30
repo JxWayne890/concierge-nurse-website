@@ -8,56 +8,42 @@ export default function FeaturedPrograms() {
         {/* Top Split Row */}
         <div className="flex flex-col lg:flex-row w-full gap-4 lg:gap-8 h-auto lg:h-[650px]">
 
-          {/* Left Block - The Accelerator (typography-forward, no photo) */}
-          <div className="flex-1 relative bg-navy flex flex-col items-center justify-center p-12 min-h-[500px] max-md:hidden border border-gold/20">
-            {/* Gold corner ornaments */}
-            <div className="absolute top-4 left-4 w-8 h-8 border-t border-l border-gold/50" />
-            <div className="absolute top-4 right-4 w-8 h-8 border-t border-r border-gold/50" />
-            <div className="absolute bottom-4 left-4 w-8 h-8 border-b border-l border-gold/50" />
-            <div className="absolute bottom-4 right-4 w-8 h-8 border-b border-r border-gold/50" />
+          {/* Left Block - The Accelerator (photo + frosted glass, matching Clarity Consult) */}
+          <div
+            className="flex-1 relative bg-cover bg-center flex items-center justify-center p-8 min-h-[500px] max-md:hidden"
+            style={{ backgroundImage: 'url("/images/accelerator-bg.jpg")' }}
+          >
+            <div className="absolute inset-0 bg-white/10 z-0 mix-blend-overlay" />
+            <div className="relative z-10 bg-cream/40 backdrop-blur-xl border border-white/30 p-12 lg:p-16 w-full max-w-md flex flex-col items-center text-center shadow-2xl">
+              {/* Gold corner ornaments */}
+              <div className="absolute top-4 left-4 w-6 h-6 border-t border-l border-gold/50" />
+              <div className="absolute top-4 right-4 w-6 h-6 border-t border-r border-gold/50" />
+              <div className="absolute bottom-4 left-4 w-6 h-6 border-b border-l border-gold/50" />
+              <div className="absolute bottom-4 right-4 w-6 h-6 border-b border-r border-gold/50" />
 
-            <div className="relative z-10 flex flex-col items-center text-center max-w-sm">
-              <p className="font-body text-gold text-[0.6rem] tracking-[0.3em] uppercase mb-4">
+              <p className="font-body text-gold text-[0.6rem] lg:text-[0.65rem] tracking-[0.3em] uppercase mb-3">
                 Live Cohort · Six Weeks · Flagship
               </p>
-              <h3 className="avery-title text-5xl lg:text-7xl text-white mb-6 uppercase tracking-normal drop-shadow-md leading-[0.9]">
-                THE ACCELERATOR
+              <h3 className="avery-title text-4xl lg:text-6xl text-navy mb-6 tracking-normal leading-[0.95] uppercase">
+                THE<br/>ACCELERATOR
               </h3>
               <div className="gold-divider mx-auto mb-6" />
-              <p className="font-body text-white/80 text-[0.7rem] lg:text-[0.78rem] leading-relaxed mb-6 drop-shadow">
+              <p className="font-body text-navy/70 text-[0.7rem] lg:text-[0.78rem] leading-relaxed mb-10 max-w-[300px]">
                 Six weeks. Live instruction. A small cohort of experienced nurses building a concierge nurse business using the proven six-step method. Structured. Strategic. Results-driven.
               </p>
-              
-              <div className="w-full text-left bg-white/5 border border-white/10 p-5 mb-8">
-                <p className="text-gold font-bold text-[0.55rem] tracking-[0.15em] uppercase mb-3 text-center">What is Included:</p>
-                <ul className="space-y-2">
-                  {[
-                    'Six weeks of live instruction and Q&A',
-                    'Both Toolkits and the Planner included',
-                    'Business structuring, offer development, pricing strategy, operations, and marketing modules',
-                    'Private community cohort group'
-                  ].map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-2">
-                      <span className="w-1 h-1 rounded-full bg-gold mt-1.5 flex-shrink-0" />
-                      <span className="text-white/80 text-[0.65rem] leading-snug">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <Link to="/accelerator" className="btn-white text-white border-white bg-transparent hover:bg-white hover:text-navy hover:border-white text-[0.65rem] px-8 tracking-[0.2em]">
+              <Link to="/accelerator" className="btn-secondary border-navy text-navy hover:bg-navy hover:text-white uppercase tracking-widest text-[0.65rem] px-8 py-[0.6rem]">
                 JOIN THE WAITLIST
               </Link>
             </div>
           </div>
 
-          {/* Mobile — Accelerator (typography-forward, no photo) */}
-          <div className="md:hidden relative min-h-[75vh] flex flex-col bg-navy border border-gold/20">
-            {/* Gold corner ornaments */}
-            <div className="absolute top-4 left-4 w-7 h-7 border-t border-l border-gold/50" />
-            <div className="absolute top-4 right-4 w-7 h-7 border-t border-r border-gold/50" />
-            <div className="absolute bottom-4 left-4 w-7 h-7 border-b border-l border-gold/50" />
-            <div className="absolute bottom-4 right-4 w-7 h-7 border-b border-r border-gold/50" />
-
+          {/* Mobile — Accelerator */}
+          <div className="md:hidden relative min-h-[75vh] flex flex-col">
+            <div
+              className="absolute inset-0 bg-cover"
+              style={{ backgroundImage: 'url("/images/accelerator-bg.jpg")', backgroundPosition: 'center' }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/60 to-transparent" />
             <div className="relative z-10 flex-grow flex flex-col justify-end px-6 pb-10">
               <p className="font-body text-gold text-[0.6rem] tracking-[0.25em] uppercase mb-4">
                 Live Cohort
@@ -67,7 +53,7 @@ export default function FeaturedPrograms() {
               </h3>
               <div className="gold-divider mb-5" />
               <p className="font-body text-white/75 text-[0.72rem] leading-relaxed mb-7 max-w-[300px]">
-                Six weeks. Live instruction. A small cohort of experienced nurses building a concierge nurse business using the proven six-step method. Structured. Strategic. Results-driven.
+                Six weeks. Live instruction. A small cohort of experienced nurses building a concierge nurse business using the proven six-step method.
               </p>
               <Link to="/accelerator" className="btn-white text-white border-white bg-transparent hover:bg-white hover:text-navy hover:border-white text-center py-3.5 text-[0.65rem] tracking-[0.2em] uppercase">
                 JOIN THE WAITLIST
@@ -78,7 +64,7 @@ export default function FeaturedPrograms() {
           {/* Right Block - Clarity Consult */}
           <div
             className="flex-1 relative bg-cover bg-center flex items-center justify-center p-8 min-h-[500px] max-md:hidden"
-            style={{ backgroundImage: 'url("/images/about-tracy-ai.png")'}}
+            style={{ backgroundImage: 'url("/images/clarity-consult-bg.png")'}}
           >
              <div className="absolute inset-0 bg-white/10 z-0 mix-blend-overlay"></div>
              <div className="relative z-10 bg-cream/40 backdrop-blur-xl border border-white/30 p-12 lg:p-16 w-full max-w-md flex flex-col items-center text-center shadow-2xl">
@@ -104,7 +90,7 @@ export default function FeaturedPrograms() {
           <div className="md:hidden relative min-h-[75vh] flex flex-col">
             <div
               className="absolute inset-0 bg-cover"
-              style={{ backgroundImage: 'url("/images/about-tracy-ai.png")', backgroundPosition: 'center' }}
+              style={{ backgroundImage: 'url("/images/clarity-consult-bg.png")', backgroundPosition: 'center' }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/60 to-transparent" />
             <div className="relative z-10 flex-grow flex flex-col justify-end px-6 pb-10">
@@ -130,34 +116,43 @@ export default function FeaturedPrograms() {
 
         {/* Bottom Full-Width Block - Business Diagnostics */}
         {/* Desktop */}
-        <div className="w-full relative h-[450px] lg:h-[620px] bg-cream flex-col items-center justify-center p-8 hidden md:flex border border-cream-dark">
-           <div className="absolute inset-0 bg-cream z-0"></div>
-           <div className="relative z-10 flex flex-col items-center text-center max-w-2xl mt-auto lg:mt-32 pb-12 lg:pb-0">
+        <div className="w-full relative h-[600px] lg:h-[800px] flex items-center justify-center p-8 hidden md:flex overflow-hidden">
+           <img 
+             src="/images/consulting-bg.jpg" 
+             alt="Luxury Office Consulting" 
+             className="absolute inset-0 w-full h-full object-cover z-0"
+           />
+           <div className="relative z-10 bg-white/20 backdrop-blur-xl border border-white/30 p-16 lg:p-24 w-full max-w-6xl flex flex-col items-center text-center shadow-[0_20px_50px_rgba(0,0,0,0.2)]">
              <h2 className="avery-title text-6xl md:text-[7rem] lg:text-[10rem] text-navy tracking-normal leading-[0.85] mb-6 select-none uppercase">
                CONSULTING
              </h2>
-             <p className="avery-italic text-navy/70 text-sm lg:text-md leading-relaxed mb-12 max-w-md font-light px-4">
+             <p className="avery-italic text-navy/80 text-sm lg:text-[1.1rem] leading-relaxed mb-12 max-w-xl font-light px-4">
                For established concierge nurse business owners doing six to seven figures who have hit a ceiling. Deep diagnostics. Strategic implementation. Real results.
              </p>
-             <Link to="/consulting" className="btn-secondary border-navy text-navy hover:bg-navy hover:text-white text-[0.65rem] px-8 tracking-widest">
+             <Link to="/consulting" className="btn-secondary border-navy text-navy hover:bg-navy hover:text-white text-[0.65rem] px-12 py-3 tracking-widest">
                INQUIRE NOW
              </Link>
            </div>
         </div>
 
         {/* Mobile — Consulting */}
-        <div className="md:hidden relative min-h-[60vh] flex flex-col bg-cream border border-cream-dark">
+        <div className="md:hidden relative min-h-[75vh] flex flex-col">
+          <div 
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: 'url("/images/consulting-bg.jpg")' }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/60 to-transparent" />
           <div className="relative z-10 flex-grow flex flex-col justify-end px-6 pb-10">
             <p className="font-body text-gold text-[0.6rem] tracking-[0.25em] uppercase mb-4">
               For Established Owners
             </p>
-            <h3 className="font-heading font-normal text-[2.25rem] text-navy mb-4 leading-[1.05] tracking-tight uppercase">
+            <h3 className="font-heading font-normal text-[2.25rem] text-white mb-4 leading-[1.05] tracking-tight uppercase">
               BUSINESS<br/>CONSULTING
             </h3>
-            <p className="font-body text-navy/70 text-[0.8rem] leading-relaxed mb-7 max-w-[300px]">
+            <p className="font-body text-white/80 text-[0.8rem] leading-relaxed mb-7 max-w-[300px]">
               For concierge nurse business owners doing six to seven figures who have hit a ceiling. Deep diagnostics. Strategic implementation.
             </p>
-            <Link to="/consulting" className="btn-secondary border-navy text-navy hover:bg-navy hover:text-white text-center py-3.5 text-[0.65rem] tracking-[0.2em] uppercase">
+            <Link to="/consulting" className="btn-white text-white border-white bg-transparent hover:bg-white hover:text-navy hover:border-white text-center py-3.5 px-8 text-[0.65rem] tracking-[0.2em] uppercase">
               INQUIRE NOW
             </Link>
           </div>

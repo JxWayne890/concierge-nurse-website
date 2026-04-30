@@ -11,52 +11,69 @@ export default function About() {
         type="website"
       />
 
-      {/* Editorial Hero Layout */}
-      <section className="relative pt-[180px] pb-32 overflow-hidden flex flex-col items-center border-b border-navy/5">
+      {/* Editorial Hero Layout (Avery Knox Style) */}
+      <section className="relative pt-32 lg:pt-48 pb-0 overflow-hidden flex flex-col justify-between" style={{ minHeight: '100vh' }}>
         
-        {/* Top content */}
-        <div className="relative z-10 text-center w-full flex flex-col items-center px-4">
-          <p className="avery-italic flex text-navy/70 text-lg lg:text-xl mb-4 text-center">
-            Registered Nurse. Founder. Strategist.
-          </p>
+        {/* Background Images Layer */}
+        <div 
+          className="absolute top-0 left-0 w-full h-[95%] flex justify-between pointer-events-none z-0"
+          style={{ maskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)' }}
+        >
+           {/* Left Image */}
+           <img 
+             src="/images/about-tracy-left.jpg" 
+             alt="" 
+             className="w-[40%] lg:w-[32%] object-cover object-top opacity-[0.12] lg:opacity-[0.35] grayscale-[15%]" 
+           />
+           {/* Right Image */}
+           <img 
+             src="/images/about-tracy-right.png" 
+             alt="" 
+             className="w-[40%] lg:w-[32%] object-cover object-top opacity-[0.12] lg:opacity-[0.35] grayscale-[15%] -scale-x-100" 
+           />
         </div>
 
-        {/* Photo + quote content */}
-        <div className="relative z-20 mt-8 lg:mt-12 w-full max-w-[1200px] mx-auto px-6 flex flex-col lg:flex-row items-center lg:items-start gap-12 lg:gap-24">
-          
-          {/* Overlapping Photo (Starts higher via negative margins on desktop to overlap text) */}
-          <div className="w-full max-w-[380px] lg:-mt-[120px] shadow-2xl z-30 ml-0 lg:ml-24">
-            <div className="w-full aspect-[3/4] bg-cover bg-center border border-white/20" style={{ backgroundImage: 'url("/images/about-tracy-ai.png")'}} />
-          </div>
+        {/* Content Container */}
+        <div className="relative z-10 max-w-6xl mx-auto px-6 w-full flex-grow flex items-center justify-center lg:justify-end py-10 lg:py-0">
+           
+           <div className="relative w-full max-w-[1000px] flex">
+             
+             {/* Text Block */}
+             <div className="relative z-10 w-full lg:w-[85%] ml-auto py-8 lg:py-20 pl-6 lg:pl-20 pr-6 lg:pr-0">
+                <p className="avery-italic text-navy/70 text-lg lg:text-[1.35rem] mb-12 text-left">
+                  Registered Nurse. Entrepreneur. Business Strategist.
+                </p>
+                
+                <h3 className="avery-italic text-[2.2rem] lg:text-[3.2rem] text-navy leading-[1.05] mb-10 text-left max-w-3xl drop-shadow-sm">
+                  "I built what I teach. Every framework, every tool, every system comes from real experience."
+                </h3>
 
-          {/* Text block on the right */}
-          <div className="flex flex-col mt-4 lg:mt-8 max-w-md bg-transparent">
-             <p className="avery-italic text-2xl lg:text-[1.75rem] text-navy leading-tight mb-8 drop-shadow-sm">
-               "I built what I teach. Every framework, every tool, every system comes from real experience."
-             </p>
-             <div className="font-body text-navy/60 text-[0.85rem] leading-relaxed space-y-4 mb-10 w-[90%] lg:w-[85%]">
-                <p>
-                  Tracy did not start the Concierge Nurse Business Society because she read about concierge nursing in a textbook. She started it because she lived it.
-                </p>
-                <p>
-                  She built her own concierge nurse business from the beginning, navigated the real challenges of running a private-pay model, refined the systems, and developed the frameworks that now form the foundation of every program she teaches.
-                </p>
+                <div className="space-y-6 text-navy/70 text-[0.95rem] lg:text-[1.05rem] leading-[1.8] max-w-lg text-left font-body">
+                  <p>
+                    Tracy did not start the Concierge Nurse Business Society because she read about concierge nursing in a textbook. She started it because she lived it.
+                  </p>
+                  <p>
+                    She built her own private-pay nursing business from scratch, navigated every obstacle, made the mistakes, found the solutions, and created the systems that actually work.
+                  </p>
+                </div>
+
+                <div className="mt-14 text-left">
+                  <Link to="/strategy" className="btn-secondary border-gold text-gold hover:bg-gold hover:text-navy px-10">
+                    WORK WITH TRACY
+                  </Link>
+                </div>
              </div>
-             <div>
-               <Link to="/accelerator" className="btn-secondary border-navy text-navy hover:bg-navy hover:text-white uppercase tracking-widest text-[0.65rem] px-8 py-3">
-                 EXPLORE THE COHORT ACCELERATOR
-               </Link>
-             </div>
-          </div>
+           </div>
+
         </div>
 
-        {/* Parallax scrolling text at bottom of hero */}
-        <div className="relative z-10 w-full overflow-hidden mt-16 lg:mt-24">
+        {/* Bottom Continuous Marquee */}
+        <div className="relative z-20 w-full overflow-hidden mt-10 lg:mt-20 pb-4 pt-4">
           <div className="marquee-left flex w-max">
             {[0, 1, 2, 3].map((i) => (
-              <h1 key={i} className="font-heading text-navy text-[5rem] md:text-[8rem] lg:text-[12rem] leading-[0.85] tracking-normal whitespace-nowrap opacity-90 select-none uppercase pointer-events-none px-10">
-                TWENTY YEARS NURSING. A DECADE BUILDING.
-              </h1>
+              <h2 key={i} className="font-heading text-navy text-[6rem] md:text-[9rem] lg:text-[15rem] leading-[0.75] tracking-tight whitespace-nowrap opacity-[0.95] pointer-events-none select-none uppercase pr-16 drop-shadow-sm">
+                EVERYTHING ABOUT
+              </h2>
             ))}
           </div>
         </div>
@@ -101,19 +118,17 @@ export default function About() {
       </section>
 
       {/* What Sets This Apart */}
-      <section className="py-24 lg:py-32 bg-navy">
-        <div className="max-w-[1200px] mx-auto px-6 lg:px-12">
-          <div className="text-center mb-12 lg:mb-20">
-            {/* Mobile label */}
-            <p className="section-label text-gold mb-3 lg:hidden">The Difference</p>
-            <h2 className="avery-title text-2xl lg:text-5xl text-white uppercase tracking-wide">
-              WHAT SETS THIS APART
+      <section className="py-24 lg:py-40 bg-navy">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+          <div className="text-center mb-20 lg:mb-32">
+            <p className="section-label text-gold mb-6 tracking-[0.3em]">The Difference</p>
+            <h2 className="avery-title text-5xl md:text-7xl lg:text-[8rem] text-white uppercase leading-[0.85] tracking-tight">
+              WHAT SETS<br/>THIS APART
             </h2>
-            <div className="w-10 h-[1px] bg-white/20 mx-auto mt-6 lg:hidden" />
           </div>
 
           {/* Desktop grid */}
-          <div className="hidden lg:grid lg:grid-cols-3 gap-16">
+          <div className="hidden lg:grid lg:grid-cols-3 gap-x-20 gap-y-24">
             {[
               'Built from real concierge nurse business experience inside the work, not from a coaching framework borrowed from another industry.',
               'A proprietary six-step method developed, tested, and refined inside live cohorts of working RNs.',
@@ -122,15 +137,17 @@ export default function About() {
               'Strategic, structured business education focused on real outcomes, not motivation or mindset alone.',
               'A complete ecosystem of education, toolkits, cohorts, consultations, and consulting, all built specifically for the concierge nurse business model.',
             ].map((item, i) => (
-              <div key={i} className="flex flex-col border-t border-white/20 pt-6">
-                <span className="avery-italic text-gold text-4xl mb-6">0{i+1}.</span>
-                <p className="font-body text-white/80 text-sm leading-loose">{item}</p>
+              <div key={i} className="flex flex-col relative pt-12 border-t border-white/10">
+                <span className="absolute -top-12 left-0 avery-italic text-gold opacity-30 text-[6rem] leading-none select-none">
+                  0{i+1}.
+                </span>
+                <p className="font-body text-white/90 text-lg leading-relaxed mt-6 relative z-10">{item}</p>
               </div>
             ))}
           </div>
 
           {/* Mobile — stacked cards with number accent */}
-          <div className="lg:hidden flex flex-col gap-6 max-w-sm mx-auto">
+          <div className="lg:hidden flex flex-col gap-16 max-w-sm mx-auto">
             {[
               'Built from real concierge nurse business experience inside the work, not from a coaching framework borrowed from another industry.',
               'A proprietary six-step method developed, tested, and refined inside live cohorts of working RNs.',
@@ -139,9 +156,11 @@ export default function About() {
               'Strategic, structured business education focused on real outcomes, not motivation or mindset alone.',
               'A complete ecosystem of education, toolkits, cohorts, consultations, and consulting, all built specifically for the concierge nurse business model.',
             ].map((item, i) => (
-              <div key={i} className="flex items-start gap-4 bg-white/[0.04] rounded-sm p-5 border border-white/[0.06]">
-                <span className="avery-italic text-gold text-2xl leading-none shrink-0 mt-0.5">0{i+1}</span>
-                <p className="font-body text-white/75 text-[0.8rem] leading-relaxed">{item}</p>
+              <div key={i} className="flex flex-col relative pt-10 border-t border-white/10">
+                <span className="absolute -top-10 left-0 avery-italic text-gold opacity-30 text-[5rem] leading-none select-none">
+                  0{i+1}.
+                </span>
+                <p className="font-body text-white/90 text-[0.95rem] leading-relaxed mt-4 relative z-10">{item}</p>
               </div>
             ))}
           </div>

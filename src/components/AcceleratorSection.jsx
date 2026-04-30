@@ -7,7 +7,7 @@ export default function AcceleratorSection() {
       <div className="w-full max-w-[1500px] mx-auto px-6 lg:px-12">
 
         {/* Large Typography Block for Accelerator */}
-        <div className="relative w-full min-h-[65vh] lg:min-h-[85vh] flex items-center justify-center bg-navy border border-gold/20 overflow-hidden">
+        <div className="relative w-full min-h-[65vh] lg:min-h-[85vh] flex items-center justify-center bg-navy overflow-hidden">
 
           {/* Subtle gold corner ornaments */}
           <div className="absolute top-6 left-6 w-12 h-12 border-t border-l border-gold/50" />

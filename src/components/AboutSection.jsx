@@ -24,18 +24,33 @@ export default function AboutSection() {
         <div className="max-w-[1200px] mx-auto px-6">
 
           {/* Desktop Layout — typography-forward quote card */}
-          <div className="hidden lg:grid lg:grid-cols-12 gap-20 items-start">
-            <div className="lg:col-span-5 relative pl-6">
-              <div className="relative border-l-2 border-gold pl-10 py-4">
-                <p className="avery-italic text-[2.6rem] text-navy leading-[1.15] mb-8">
+          <div className="hidden lg:grid lg:grid-cols-12 gap-16 lg:gap-24 items-center">
+            
+            {/* Left Column: Parallax Stacked Collage */}
+            <div className="lg:col-span-5 relative group pt-10 pb-16">
+              {/* Back Image Frame */}
+              <div className="relative w-[85%] aspect-[3/4] ml-auto overflow-hidden shadow-2xl">
+                <img 
+                  src="/images/about-tracy-desk.jpg" 
+                  alt="Tracy Pekurny"
+                  className="w-full h-full object-cover object-center transition-transform duration-[2000ms] ease-out group-hover:scale-105"
+                />
+                {/* Subtle overlay */}
+                <div className="absolute inset-0 bg-navy/5 mix-blend-overlay" />
+              </div>
+
+              {/* Floating Word Graphic (Stacked Over Bottom Left) */}
+              <div className="absolute bottom-4 -left-6 lg:-left-12 w-[90%] bg-white/60 backdrop-blur-xl border border-white/50 p-8 lg:p-10 shadow-2xl transition-all duration-[1000ms] ease-out translate-y-6 opacity-95 group-hover:translate-y-0 group-hover:opacity-100 group-hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)]">
+                <p className="avery-italic text-[1.75rem] lg:text-[2.1rem] text-navy leading-[1.2] mb-6">
                   "I built what I teach. Every framework, every tool, every system comes from real experience."
                 </p>
                 <div className="gold-divider mb-5" />
-                <p className="font-body text-[0.65rem] tracking-[0.3em] uppercase text-navy/60">
+                <p className="font-body text-[0.6rem] tracking-[0.25em] uppercase text-navy/60 font-semibold">
                   — Tracy Pekurny, RN
                 </p>
               </div>
             </div>
+
             <div className="lg:col-span-7 flex flex-col pt-8 pl-8">
                <p className="section-label text-gold mb-5">About Tracy</p>
                <h3 className="avery-title text-6xl md:text-7xl lg:text-[6.5rem] text-navy mb-10 leading-[0.9] uppercase">
@@ -54,18 +69,27 @@ export default function AboutSection() {
             </div>
           </div>
 
-          {/* Mobile Layout — quote card, no photo */}
+          {/* Mobile Layout */}
           <div className="lg:hidden flex flex-col items-center">
 
-            {/* Italic quote card */}
-            <div className="w-full max-w-sm mx-auto mb-12 border-l-2 border-gold pl-6 py-4">
-              <p className="avery-italic text-2xl text-navy leading-[1.2] mb-5">
-                "I built what I teach. Every framework, every tool, every system comes from real experience."
-              </p>
-              <div className="gold-divider mb-4" />
-              <p className="font-body text-[0.6rem] tracking-[0.3em] uppercase text-navy/60">
-                — Tracy Pekurny, RN
-              </p>
+            {/* Mobile Stacked Collage */}
+            <div className="relative w-full pt-4 pb-16 mb-8">
+              <div className="relative w-[85%] aspect-[4/5] ml-auto overflow-hidden shadow-xl">
+                <img 
+                  src="/images/about-tracy-desk.jpg" 
+                  alt="Tracy Pekurny"
+                  className="w-full h-full object-cover object-center"
+                />
+              </div>
+              <div className="absolute bottom-4 left-0 w-[90%] bg-white/60 backdrop-blur-xl border border-white/50 p-6 shadow-2xl">
+                <p className="avery-italic text-[1.6rem] text-navy leading-[1.2] mb-5">
+                  "I built what I teach. Every framework, every tool, every system comes from real experience."
+                </p>
+                <div className="gold-divider mb-4" />
+                <p className="font-body text-[0.55rem] tracking-[0.25em] uppercase text-navy/60 font-semibold">
+                  — Tracy Pekurny, RN
+                </p>
+              </div>
             </div>
 
             {/* Title */}

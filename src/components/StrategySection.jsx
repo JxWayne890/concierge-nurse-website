@@ -74,22 +74,11 @@ export default function StrategySection() {
                 {svc.title}
               </h3>
 
-              <p className={`text-sm leading-relaxed mb-5 ${
-                svc.highlight ? 'text-white/60' : 'text-slate'
+              <p className={`text-base lg:text-lg leading-relaxed mb-8 flex-1 ${
+                svc.highlight ? 'text-white/80' : 'text-slate'
               }`}>
                 {svc.description}
               </p>
-
-              <ul className="space-y-2 mb-6 flex-1 list-none p-0 m-0">
-                {svc.details.map((d) => (
-                  <li key={d} className="flex items-start gap-2">
-                    <span className="w-1 h-1 rounded-full bg-gold mt-2 flex-shrink-0" />
-                    <span className={`text-xs ${svc.highlight ? 'text-white/50' : 'text-charcoal/60'}`}>
-                      {d}
-                    </span>
-                  </li>
-                ))}
-              </ul>
 
               <Link
                 to="/strategy"

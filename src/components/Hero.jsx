@@ -18,13 +18,13 @@ function FacebookIcon({ size = 24, className = '' }) {
 
 export default function Hero() {
   return (
-    <section className="bg-navy flex flex-col justify-between overflow-hidden h-[calc(100vh-72px)] md:h-[calc(100vh-114px)] max-md:h-screen max-md:-mt-[72px] max-md:pt-[72px] relative">
+    <section className="bg-navy flex flex-col justify-between overflow-hidden h-screen max-md:-mt-[72px] max-md:pt-[72px] md:-mt-[90px] md:pt-[90px] relative">
       
       {/* Top Part: Content Wrapper */}
       <div className="w-full flex-grow flex flex-col items-center pt-4 lg:pt-12 px-6 lg:px-8 xl:px-12 max-w-[1600px] mx-auto">
         
         {/* Desktop Layout — photo on left, text on right */}
-        <div className="hidden md:flex relative w-full h-full min-h-[450px] items-center border border-white/10">
+        <div className="hidden md:flex relative w-full h-full min-h-[450px] items-center">
           
           {/* Image Container */}
           <div className="absolute inset-y-0 left-0 h-full w-[60%] flex items-end justify-start z-0">
@@ -114,7 +114,7 @@ export default function Hero() {
 
             {/* Elegant Subheadline Block */}
             <div className="flex flex-col items-center mb-10 w-full max-w-[280px]">
-              <div className="border-t border-b border-gold/40 py-4 w-full">
+              <div className="py-4 w-full">
                 <p className="text-white/70 font-body text-[0.6rem] tracking-[0.25em] uppercase text-center mb-2">
                   You have the clinical skills.
                 </p>

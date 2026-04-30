@@ -65,12 +65,11 @@ export default function TestimonialsSection() {
           {/* Left Column: Sticky Tracy Image */}
           <div className="hidden lg:block relative sticky top-32">
             <div
-              className="w-full aspect-[4/5] max-w-lg ml-auto bg-no-repeat"
+              className="w-full aspect-[4/5] max-w-lg ml-auto bg-no-repeat -scale-x-100"
               style={{
-                backgroundImage: 'url("https://i.imgur.com/jxBFHqK.jpeg")',
-                backgroundSize: '160% auto',
-                backgroundPosition: 'right center',
-                transform: 'scaleX(-1)',
+                backgroundImage: 'url("/images/testimonials-tracy-new.jpg")',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
                 maskImage: 'radial-gradient(ellipse 85% 92% at center, black 30%, transparent 95%)',
                 WebkitMaskImage: 'radial-gradient(ellipse 85% 92% at center, black 30%, transparent 95%)',
               }}

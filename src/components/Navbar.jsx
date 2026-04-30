@@ -106,7 +106,7 @@ function DesktopDropdown({ item, pathname }) {
       </button>
 
       {open && (
-        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-0 bg-navy border border-white/10 min-w-[260px] shadow-2xl">
+        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-0 bg-navy/90 backdrop-blur-xl border border-white/10 min-w-[260px] shadow-2xl">
           {item.children.map((child) => (
             <Link
               key={child.path}
@@ -148,11 +148,13 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const isHomePage = location.pathname === '/';
+
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 bg-navy transition-shadow duration-300 ${scrolled ? 'shadow-lg shadow-black/20' : ''}`}>
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled || !isHomePage ? 'bg-navy/95 backdrop-blur-xl shadow-lg shadow-black/20' : 'bg-transparent'}`}>
 
       {/* Desktop Single Row Nav */}
-      <div className="hidden xl:block border-b border-white/10">
+      <div className="hidden xl:block">
         <div className="max-w-[1400px] mx-auto px-8 h-[90px] flex items-center justify-between">
           
           {/* Left: Navigation */}
@@ -176,16 +178,9 @@ export default function Navbar() {
 
           {/* Center: Logo */}
           <div className="flex justify-center w-1/3">
-            <Link to="/" className="flex items-center leading-none text-center no-underline gap-4">
-              <BrandMark />
-              <span className="flex flex-col items-center gap-1">
-                <span className="avery-title text-3xl tracking-[0.12em] text-white">
-                  CONCIERGE NURSE
-                </span>
-                <span className="font-body text-[0.55rem] tracking-[0.35em] font-medium text-gold uppercase">
-                  Business Society
-                </span>
-              </span>
+            <Link to="/" className="block relative w-[280px] h-[55px]">
+              <img src="/images/logo-part1.png" alt="CNBS" className="absolute inset-0 w-full h-full object-contain animate-logo-1" />
+              <img src="/images/logo-part2.png" alt="The Concierge Nurse Business Society" className="absolute inset-0 w-full h-full object-contain animate-logo-2" />
             </Link>
           </div>
 
@@ -193,7 +188,7 @@ export default function Navbar() {
           <div className="w-1/3 flex justify-end items-center gap-6">
             <Link
               to="/ambassador/login"
-              className="text-white hover:text-gold transition-colors flex items-center justify-center w-9 h-9 rounded-full border border-white/20 hover:border-gold"
+              className="text-white hover:text-gold transition-colors flex items-center justify-center w-9 h-9 rounded-full"
               title="Ambassador Login"
             >
               <User size={15} />
@@ -210,16 +205,9 @@ export default function Navbar() {
       <nav className="xl:hidden max-w-[1400px] mx-auto px-6 h-[70px] flex items-center justify-between">
         <div className="w-1/3" />
         <div className="w-1/3 flex justify-center">
-          <Link to="/" className="flex items-center leading-none text-center no-underline gap-2 pt-1" onClick={() => setMobileOpen(false)}>
-            <BrandMark compact />
-            <span className="flex flex-col items-center gap-1">
-              <span className="avery-title text-xl sm:text-2xl tracking-[0.1em] text-white">
-                CONCIERGE NURSE
-              </span>
-              <span className="font-body text-[0.55rem] tracking-[0.3em] font-medium text-gold uppercase hidden sm:block">
-                Business Society
-              </span>
-            </span>
+          <Link to="/" className="block relative w-[220px] h-[38px] mt-1" onClick={() => setMobileOpen(false)}>
+            <img src="/images/logo-part1.png" alt="CNBS" className="absolute inset-0 w-full h-full object-contain animate-logo-1" />
+            <img src="/images/logo-part2.png" alt="The Concierge Nurse Business Society" className="absolute inset-0 w-full h-full object-contain animate-logo-2" />
           </Link>
         </div>
         <div className="w-1/3 flex justify-end">
@@ -230,10 +218,13 @@ export default function Navbar() {
       {/* Mobile Menu Overlay */}
       {mobileOpen && (
         <div className="mobile-menu-overlay animate-menu-fade">
-          <div className="h-[70px] px-6 flex items-center justify-between border-b border-white/5">
+          <div className="h-[70px] px-6 flex items-center justify-between">
             <div className="w-1/3" />
             <div className="w-1/3 flex justify-center">
-              <BrandMark compact />
+              <div className="relative w-[180px] h-[30px]">
+                <img src="/images/logo-part1.png" alt="CNBS" className="absolute inset-0 w-full h-full object-contain animate-logo-1" />
+                <img src="/images/logo-part2.png" alt="The Concierge Nurse Business Society" className="absolute inset-0 w-full h-full object-contain animate-logo-2" />
+              </div>
             </div>
             <div className="w-1/3 flex justify-end">
               <HamburgerIcon isOpen={mobileOpen} onClick={() => setMobileOpen(false)} />
@@ -246,7 +237,7 @@ export default function Navbar() {
                 return (
                   <div
                     key={item.path}
-                    className="animate-link-slide border-b border-white/5"
+                    className="animate-link-slide"
                     style={{ animationDelay: `${index * 0.05 + 0.1}s` }}
                   >
                     <Link
@@ -263,7 +254,7 @@ export default function Navbar() {
               return (
                 <div
                   key={item.label}
-                  className="animate-link-slide border-b border-white/5"
+                  className="animate-link-slide"
                   style={{ animationDelay: `${index * 0.05 + 0.1}s` }}
                 >
                   <button

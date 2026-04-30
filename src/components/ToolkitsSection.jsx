@@ -78,41 +78,34 @@ export default function ToolkitsSection() {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {toolkits.map((tk) => (
-            <div
+            <Link
+              to="/toolkits"
               key={tk.title}
-              className="bg-cream/50 border border-cream-dark p-7 flex flex-col group hover:border-gold/40 transition-all duration-300"
+              className="bg-cream/50 p-8 flex flex-col justify-between group hover:bg-navy transition-all duration-500 min-h-[320px]"
             >
-              {tk.tag && (
-                <span className="self-start text-[0.6rem] font-bold tracking-[0.15em] uppercase text-navy bg-gold/20 px-3 py-1 mb-4">
-                  {tk.tag}
-                </span>
-              )}
-              <div className="w-10 h-10 bg-navy flex items-center justify-center mb-5">
-                <tk.icon size={18} className="text-gold" />
+              <div className="flex flex-col items-start gap-8">
+                {tk.tag ? (
+                  <span className="text-[0.65rem] font-bold tracking-[0.15em] uppercase text-navy bg-gold/20 px-3 py-1 group-hover:bg-gold/30 group-hover:text-white transition-colors">
+                    {tk.tag}
+                  </span>
+                ) : (
+                  <span className="h-[24px]" /> // Placeholder for alignment
+                )}
+                
+                <h3 className="avery-title text-3xl lg:text-4xl text-navy group-hover:text-white transition-colors leading-[1.1] uppercase">
+                  {tk.title}
+                </h3>
               </div>
-              <h3 className="avery-title text-2xl lg:text-3xl text-navy mb-4 leading-tight uppercase">
-                {tk.title}
-              </h3>
-              <p className="text-slate text-sm leading-relaxed flex-1 mb-6">
-                {tk.description}
-              </p>
-              {tk.includes && (
-                <div className="mb-6">
-                  <p className="text-[0.65rem] font-bold tracking-[0.1em] text-navy uppercase mb-3">What Is Included:</p>
-                  <ul className="space-y-2">
-                    {tk.includes.map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-2">
-                        <span className="w-1 h-1 rounded-full bg-gold mt-1.5 flex-shrink-0" />
-                        <span className="text-xs text-charcoal/80 leading-snug">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+              
+              <div className="flex items-center justify-between w-full mt-auto">
+                <div className="w-12 h-12 flex items-center justify-center transition-colors">
+                  <tk.icon size={20} className="text-navy/50 group-hover:text-gold transition-colors" />
                 </div>
-              )}
-              <div className="flex items-center gap-2 text-gold font-semibold text-[0.72rem] tracking-[0.08em] uppercase group-hover:gap-3 transition-all cursor-pointer mt-auto">
-                Learn More <ArrowRight size={13} />
+                <div className="flex items-center gap-2 text-gold font-body text-[0.65rem] tracking-[0.15em] uppercase transition-all">
+                  Explore <ArrowRight size={13} className="group-hover:translate-x-2 transition-transform duration-300" />
+                </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 

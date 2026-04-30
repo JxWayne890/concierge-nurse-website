@@ -14,9 +14,10 @@ export default function ConsultingSection() {
           {/* Left */}
           <div>
             <p className="section-label mb-6 tracking-[0.3em]">For Established Business Owners</p>
-            <h2 className="avery-title text-5xl md:text-6xl lg:text-[5rem] text-navy leading-[0.9] mb-8 uppercase">
-              Business Diagnostics &{' '}
-              <span className="text-gold-gradient block mt-2">Implementation Pathway</span>
+            <h2 className="avery-title text-4xl md:text-5xl lg:text-[3.5rem] text-navy leading-[1.0] mb-8 uppercase">
+              Business Diagnostics<br />
+              &amp;{' '}
+              <span className="text-gold-gradient">Implementation Pathway</span>
             </h2>
             <p className="text-navy/70 text-[0.95rem] leading-relaxed mb-8 max-w-lg">
               You built the business. Revenue is coming in. But something is not

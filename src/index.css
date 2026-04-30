@@ -213,8 +213,36 @@
   animation: link-slide-up 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
+/* Luxury Animated Logo Transitions */
+@keyframes logo-crossfade-1 {
+  0%, 42% { opacity: 1; }
+  50%, 92% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes logo-crossfade-2 {
+  0%, 42% { opacity: 0; }
+  50%, 92% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes logo-breathe {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.025); }
+  100% { transform: scale(1); }
+}
+.animate-logo-1 {
+  animation: logo-crossfade-1 12s infinite ease-in-out;
+}
+.animate-logo-2 {
+  animation: logo-crossfade-2 12s infinite ease-in-out;
+}
+.animate-logo-breathe {
+  animation: logo-breathe 12s infinite ease-in-out;
+}
+
 .mobile-menu-overlay {
-  background: radial-gradient(circle at center, var(--color-navy-light) 0%, var(--color-navy-dark) 100%);
+  background: linear-gradient(135deg, rgba(10, 22, 40, 0.95) 0%, rgba(6, 14, 26, 0.98) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   position: fixed;
   inset: 0;
   z-index: 60;
