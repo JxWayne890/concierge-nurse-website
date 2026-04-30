@@ -39,6 +39,7 @@ const AdminDashboard = lazy(() => import('./pages/admin/Dashboard'));
 const AdminLeads = lazy(() => import('./pages/admin/Leads'));
 const AdminLeadDetail = lazy(() => import('./pages/admin/LeadDetail'));
 const AdminSegments = lazy(() => import('./pages/admin/Segments'));
+const AdminSegmentDetail = lazy(() => import('./pages/admin/SegmentDetail'));
 const AdminCampaigns = lazy(() => import('./pages/admin/Campaigns'));
 const AdminNewEmailCampaign = lazy(() => import('./pages/admin/NewEmailCampaign'));
 const AdminEditEmailCampaign = lazy(() => import('./pages/admin/EditEmailCampaign'));
@@ -415,6 +416,7 @@ export default function App() {
             <Route path="leads/:id" element={<AdminLeadDetail />} />
             <Route path="pipelines" element={<AdminPipelines />} />
             <Route path="segments" element={<AdminSegments />} />
+            <Route path="segments/:id" element={<AdminSegmentDetail />} />
             <Route path="campaigns" element={<AdminCampaigns />} />
             <Route path="campaigns/email/new" element={<AdminNewEmailCampaign />} />
             <Route path="campaigns/email/:id/edit" element={<AdminEditEmailCampaign />} />

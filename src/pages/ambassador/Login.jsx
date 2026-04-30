@@ -99,7 +99,7 @@ export default function AmbassadorLogin() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center gap-2 bg-gold text-navy px-8 py-3.5 text-xs font-semibold tracking-[0.2em] uppercase hover:bg-gold/90 disabled:opacity-70 transition-colors"
+              className="w-full mt-4 flex items-center justify-center gap-3 py-5 px-8 rounded-2xl bg-gradient-to-r from-gold-muted via-gold to-gold-light text-navy font-bold text-base tracking-wide hover:shadow-[0_15px_40px_-10px_rgba(196,162,101,0.5)] disabled:opacity-70 transition-all duration-300 hover:-translate-y-1 active:translate-y-0 shadow-[0_10px_30px_-5px_rgba(196,162,101,0.3)]"
             >
               {loading ? 'Signing in…' : (<>Sign In <ArrowRight size={14} /></>)}
             </button>

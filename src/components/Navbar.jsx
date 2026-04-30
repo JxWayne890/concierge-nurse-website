@@ -188,10 +188,11 @@ export default function Navbar() {
           <div className="w-1/3 flex justify-end items-center gap-6">
             <Link
               to="/ambassador/login"
-              className="text-white hover:text-gold transition-colors flex items-center justify-center w-9 h-9 rounded-full"
+              className="group flex items-center gap-3 px-6 py-2.5 rounded-full border border-gold/40 bg-gold/5 text-gold hover:bg-gold hover:text-navy transition-all duration-500 no-underline"
               title="Ambassador Login"
             >
-              <User size={15} />
+              <User size={18} className="group-hover:scale-110 transition-transform" />
+              <span className="font-body text-[0.65rem] font-bold tracking-[0.2em] uppercase">Portal</span>
             </Link>
             <Link to="/contact" className="text-white border border-white rounded-full hover:bg-white hover:text-navy transition-colors font-body text-[0.6rem] uppercase tracking-[0.2em] font-medium" style={{ padding: '0.65rem 1.8rem' }}>
               CONTACT / BOOK

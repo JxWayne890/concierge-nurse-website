@@ -51,17 +51,17 @@ export default function AdminLayout() {
   }
 
   return (
-    <div className="min-h-screen bg-cream flex">
-      {/* Sidebar */}
-      <aside className="w-56 bg-navy flex flex-col shrink-0">
-        <div className="p-6 border-b border-white/10">
-          <Link to="/" className="no-underline">
-            <p className="font-heading text-sm font-bold text-white tracking-wide">CNBS</p>
-            <p className="text-white/40 text-[0.6rem] tracking-widest uppercase">Admin</p>
+    <div className="min-h-screen bg-[#F0ECE4] flex font-sans selection:bg-gold/20">
+      {/* Floating Minimalist Sidebar */}
+      <aside className="w-64 flex flex-col shrink-0 border-r border-navy/10 bg-[#F0ECE4]">
+        <div className="p-10 pb-6">
+          <Link to="/" className="no-underline flex flex-col items-start">
+            <span className="avery-title text-4xl text-navy tracking-tight mb-2">CNBS</span>
+            <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase text-navy/80">Concierge Desk</span>
           </Link>
         </div>
 
-        <nav className="flex-1 p-4 space-y-1">
+        <nav className="flex-1 py-8 px-8 space-y-3 overflow-y-auto">
           {navItems.map((item) => {
             const count = item.countKey ? counts[item.countKey] : 0;
             return (
@@ -70,39 +70,47 @@ export default function AdminLayout() {
                 to={item.path}
                 end={item.path === '/admin'}
                 className={({ isActive }) =>
-                  `flex items-center gap-3 px-3 py-2.5 text-sm no-underline transition-colors ${
+                  `group flex items-center gap-4 py-2 no-underline transition-all duration-500 ${
                     isActive
-                      ? 'bg-white/10 text-gold'
-                      : 'text-white/60 hover:text-white hover:bg-white/5'
+                      ? 'text-navy translate-x-1'
+                      : 'text-navy/70 hover:text-navy hover:translate-x-1'
                   }`
                 }
               >
-                <item.icon size={16} />
-                <span className="flex-1">{item.label}</span>
-                {count > 0 && (
-                  <span className="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 bg-gold text-navy text-[0.65rem] font-bold rounded-full">
-                    {count}
-                  </span>
+                {({ isActive }) => (
+                  <>
+                    <span className={`w-1.5 h-1.5 rounded-full transition-colors duration-500 ${isActive ? 'bg-navy' : 'bg-transparent group-hover:bg-navy/30'}`} />
+                    <span className={`flex-1 transition-all duration-500 ${isActive ? 'font-heading text-xl italic tracking-wide' : 'font-normal text-base tracking-wide'}`}>
+                      {item.label}
+                    </span>
+                    {count > 0 && (
+                      <span className="inline-flex items-center justify-center min-w-[24px] h-6 px-2 bg-navy/10 text-navy text-xs font-bold rounded-full">
+                        {count}
+                      </span>
+                    )}
+                  </>
                 )}
               </NavLink>
             );
           })}
         </nav>
 
-        <div className="p-4 border-t border-white/10">
+        <div className="p-8 pt-4">
           <button
             onClick={handleLogout}
-            className="flex items-center gap-3 px-3 py-2.5 text-sm text-white/40 hover:text-white transition-colors w-full"
+            className="flex items-center gap-3 py-2 text-sm font-medium tracking-widest uppercase text-navy/70 hover:text-navy transition-colors w-full"
           >
-            <LogOut size={16} />
+            <LogOut size={16} strokeWidth={2} />
             Sign Out
           </button>
         </div>
       </aside>
 
-      {/* Main content */}
-      <main className="flex-1 p-8 overflow-auto">
-        <Outlet />
+      {/* Main content - airy and spacious */}
+      <main className="flex-1 px-12 py-10 overflow-auto">
+        <div className="max-w-[1400px] mx-auto h-full">
+          <Outlet />
+        </div>
       </main>
     </div>
   );

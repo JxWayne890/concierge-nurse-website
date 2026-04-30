@@ -170,233 +170,268 @@ export default function Leads() {
   }
 
   return (
-    <div>
-      <h1 className="font-heading text-2xl font-bold text-navy mb-8">Leads</h1>
+    <div className="pb-20">
+      <h1 className="avery-title text-5xl text-navy italic tracking-tight font-light mb-12">Leads Overview</h1>
 
       {/* Search and filters */}
-      <div className="flex flex-col sm:flex-row gap-3 mb-6">
-        <div className="flex-1 relative">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-charcoal/30" />
+      <div className="flex flex-col xl:flex-row items-center justify-between gap-6 mb-12">
+        <div className="w-full xl:w-1/3 relative">
+          <Search size={16} strokeWidth={1.5} className="absolute left-4 top-1/2 -translate-y-1/2 text-navy/30" />
           <input
             type="text"
             placeholder="Search by name or email..."
             value={search}
             onChange={(e) => { setSearch(e.target.value); setPage(0); }}
-            className="w-full pl-10 pr-4 py-2.5 border border-cream-dark bg-white text-sm focus:outline-none focus:border-gold transition-colors"
+            className="w-full pl-12 pr-4 py-3 bg-white shadow-[0_4px_15px_-4px_rgba(0,0,0,0.03)] border border-navy/5 rounded-full text-sm font-light focus:outline-none focus:ring-1 focus:ring-gold/50 transition-all duration-300"
           />
         </div>
-        <select
-          value={intentFilter}
-          onChange={(e) => { setIntentFilter(e.target.value); setPage(0); }}
-          className="px-4 py-2.5 border border-cream-dark bg-white text-sm text-charcoal focus:outline-none focus:border-gold"
-        >
-          <option value="all">All Intents</option>
-          {Object.entries(INTENTS).map(([key, meta]) => (
-            <option key={key} value={key}>{meta.emoji} {meta.label}</option>
-          ))}
-        </select>
-        <select
-          value={tempFilter}
-          onChange={(e) => { setTempFilter(e.target.value); setPage(0); }}
-          className="px-4 py-2.5 border border-cream-dark bg-white text-sm text-charcoal focus:outline-none focus:border-gold"
-        >
-          <option value="all">All Temperatures</option>
-          <option value="hot">🔥 Hot (70+)</option>
-          <option value="warm">🟠 Warm (40–69)</option>
-          <option value="cool">🔵 Cool (&lt;40)</option>
-        </select>
-        <select
-          value={filter}
-          onChange={(e) => { setFilter(e.target.value); setPage(0); }}
-          className="px-4 py-2.5 border border-cream-dark bg-white text-sm text-charcoal focus:outline-none focus:border-gold"
-        >
-          <option value="all">All Stages</option>
-          <option value="Explorer">Explorer</option>
-          <option value="DIYer">DIYer</option>
-          <option value="Builder">Builder</option>
-          <option value="Established Owner">Established Owner</option>
-        </select>
-        <Link
-          to="/admin/import"
-          className="btn-navy text-sm flex items-center gap-2 shrink-0 no-underline"
-        >
-          <Upload size={14} /> Import
-        </Link>
-        <button
-          onClick={handleExportAll}
-          disabled={exporting}
-          className="btn-navy text-sm flex items-center gap-2 shrink-0"
-        >
-          <Download size={14} />
-          {exporting ? 'Exporting...' : 'Export'}
-        </button>
+
+        <div className="flex flex-wrap items-center gap-4">
+          <div className="flex bg-white rounded-full p-1 shadow-[0_4px_15px_-4px_rgba(0,0,0,0.03)] border border-navy/5">
+            <select
+              value={intentFilter}
+              onChange={(e) => { setIntentFilter(e.target.value); setPage(0); }}
+              className="px-5 py-2 text-[0.65rem] font-light uppercase tracking-widest bg-transparent text-navy focus:outline-none cursor-pointer"
+            >
+              <option value="all">All Intents</option>
+              {Object.entries(INTENTS).map(([key, meta]) => (
+                <option key={key} value={key}>{meta.emoji} {meta.label}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex bg-white rounded-full p-1 shadow-[0_4px_15px_-4px_rgba(0,0,0,0.03)] border border-navy/5">
+            <select
+              value={tempFilter}
+              onChange={(e) => { setTempFilter(e.target.value); setPage(0); }}
+              className="px-5 py-2 text-[0.65rem] font-light uppercase tracking-widest bg-transparent text-navy focus:outline-none cursor-pointer"
+            >
+              <option value="all">All Temps</option>
+              <option value="hot">🔥 Hot (70+)</option>
+              <option value="warm">🟠 Warm (40–69)</option>
+              <option value="cool">🔵 Cool (&lt;40)</option>
+            </select>
+          </div>
+
+          <div className="flex bg-white rounded-full p-1 shadow-[0_4px_15px_-4px_rgba(0,0,0,0.03)] border border-navy/5">
+            <select
+              value={filter}
+              onChange={(e) => { setFilter(e.target.value); setPage(0); }}
+              className="px-5 py-2 text-[0.65rem] font-light uppercase tracking-widest bg-transparent text-navy focus:outline-none cursor-pointer"
+            >
+              <option value="all">All Stages</option>
+              <option value="Explorer">Explorer</option>
+              <option value="DIYer">DIYer</option>
+              <option value="Builder">Builder</option>
+              <option value="Established Owner">Established Owner</option>
+            </select>
+          </div>
+
+          <div className="flex items-center gap-3 ml-2">
+            <Link
+              to="/admin/import"
+              className="px-6 py-2.5 bg-navy/5 text-navy hover:bg-navy/10 hover:text-navy text-[0.65rem] uppercase tracking-widest font-light transition-all duration-300 rounded-full flex items-center gap-2 no-underline"
+            >
+              <Upload size={14} strokeWidth={1.5} /> Import
+            </Link>
+            <button
+              onClick={handleExportAll}
+              disabled={exporting}
+              className="px-6 py-2.5 bg-white shadow-[0_4px_15px_-4px_rgba(0,0,0,0.03)] border border-navy/5 hover:border-gold/30 text-navy text-[0.65rem] uppercase tracking-widest font-light transition-all duration-300 rounded-full flex items-center gap-2"
+            >
+              <Download size={14} strokeWidth={1.5} />
+              {exporting ? 'Exporting...' : 'Export'}
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Bulk action bar */}
       {selected.size > 0 && (
-        <div className="flex items-center gap-4 mb-4 px-5 py-3 bg-navy text-white text-sm">
-          <span className="font-semibold">{selected.size} selected</span>
-          <div className="flex items-center gap-3 ml-auto">
+        <div className="flex items-center gap-6 mb-8 px-8 py-5 bg-navy/95 backdrop-blur-md text-white shadow-[0_20px_50px_-15px_rgba(0,0,0,0.3)] rounded-full transform transition-all sticky top-6 z-50">
+          <span className="text-[0.65rem] font-light tracking-[0.3em] uppercase text-gold">{selected.size} SELECTED</span>
+          <div className="flex items-center gap-2 ml-auto">
             {/* Tag dropdown */}
             <div className="relative group">
-              <button className="flex items-center gap-1.5 px-3 py-1.5 bg-white/10 hover:bg-white/20 transition-colors text-sm">
-                <Tag size={14} /> Tag
+              <button className="flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-white/10 border border-white/5 transition-colors text-[0.65rem] font-light uppercase tracking-widest rounded-full">
+                <Tag size={14} strokeWidth={1.5} /> Tag
               </button>
-              <div className="absolute top-full right-0 mt-1 bg-white border border-cream-dark shadow-lg z-10 min-w-[160px] hidden group-hover:block">
+              <div className="absolute top-full right-0 mt-3 bg-white border border-navy/5 shadow-2xl z-10 min-w-[200px] hidden group-hover:block rounded-2xl overflow-hidden py-2">
                 {tags.map((tag) => (
                   <button
                     key={tag.id}
                     onClick={() => handleTagSelected(tag.id)}
-                    className="block w-full text-left px-4 py-2 text-sm text-charcoal hover:bg-cream transition-colors"
+                    className="block w-full text-left px-6 py-3 text-sm font-light text-navy hover:bg-navy/5 hover:text-gold transition-colors"
                   >
                     {tag.name}
                   </button>
                 ))}
                 {tags.length === 0 && (
-                  <p className="px-4 py-2 text-sm text-slate">No tags yet</p>
+                  <p className="px-6 py-3 text-sm font-light text-navy/30 italic">No tags yet</p>
                 )}
               </div>
             </div>
-            <button onClick={handleExportSelected} className="flex items-center gap-1.5 px-3 py-1.5 bg-white/10 hover:bg-white/20 transition-colors text-sm">
-              <Download size={14} /> Export
+            <button onClick={handleExportSelected} className="flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-white/10 border border-white/5 transition-colors text-[0.65rem] font-light uppercase tracking-widest rounded-full">
+              <Download size={14} strokeWidth={1.5} /> Export
             </button>
             {deleteConfirm ? (
-              <div className="flex items-center gap-2">
-                <button onClick={handleDeleteSelected} className="px-3 py-1.5 bg-red-600 hover:bg-red-700 transition-colors text-sm">Confirm Delete</button>
-                <button onClick={() => setDeleteConfirm(false)} className="px-2 py-1.5 hover:bg-white/20 transition-colors">
-                  <X size={14} />
+              <div className="flex items-center gap-2 bg-red-900/50 rounded-full p-1 pl-4">
+                <button onClick={handleDeleteSelected} className="text-[0.65rem] font-medium tracking-widest uppercase text-white hover:text-red-200 transition-colors">Confirm</button>
+                <button onClick={() => setDeleteConfirm(false)} className="p-2 hover:bg-white/10 transition-colors rounded-full">
+                  <X size={14} strokeWidth={1.5} />
                 </button>
               </div>
             ) : (
-              <button onClick={() => setDeleteConfirm(true)} className="flex items-center gap-1.5 px-3 py-1.5 bg-white/10 hover:bg-red-600 transition-colors text-sm">
-                <Trash2 size={14} /> Delete
+              <button onClick={() => setDeleteConfirm(true)} className="flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-red-500/20 hover:text-red-400 border border-white/5 transition-colors text-[0.65rem] font-light uppercase tracking-widest rounded-full">
+                <Trash2 size={14} strokeWidth={1.5} /> Delete
               </button>
             )}
-            <button onClick={() => setSelected(new Set())} className="px-2 py-1.5 hover:bg-white/20 transition-colors">
-              <X size={14} />
+            <div className="w-[1px] h-6 bg-white/10 mx-2" />
+            <button onClick={() => setSelected(new Set())} className="p-2.5 hover:bg-white/10 transition-colors rounded-full text-white/50 hover:text-white">
+              <X size={16} strokeWidth={1.5} />
             </button>
           </div>
         </div>
       )}
 
-      {/* Table */}
-      <div className="bg-white border border-cream-dark overflow-hidden">
+      {/* Leads List */}
+      <div>
         {loading ? (
-          <div className="p-10 text-center">
+          <div className="p-20 text-center">
             <div className="w-8 h-8 border-2 border-gold border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-            <p className="text-slate text-sm">Loading...</p>
+            <p className="text-navy/30 text-sm font-light italic">Loading leads...</p>
           </div>
         ) : leads.length === 0 ? (
-          <div className="p-10 text-center">
-            <p className="text-slate text-sm">No leads found.</p>
+          <div className="bg-white rounded-3xl p-20 text-center shadow-[0_15px_40px_-15px_rgba(0,0,0,0.05)] border border-navy/5">
+            <p className="text-navy/30 text-sm font-light italic">No leads found.</p>
           </div>
         ) : (
           <>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-cream-dark text-left">
-                    <th className="px-3 py-3 w-10">
-                      <input
-                        type="checkbox"
-                        checked={selected.size === leads.length && leads.length > 0}
-                        onChange={toggleAll}
-                        className="accent-gold"
-                      />
-                    </th>
-                    {[
-                      { key: 'first_name', label: 'Name' },
-                      { key: 'email', label: 'Email' },
-                      { key: 'intent', label: 'Intent' },
-                      { key: 'lead_score', label: 'Score' },
-                      { key: 'lifecycle_stage', label: 'Stage' },
-                      { key: 'created_at', label: 'Date' },
-                    ].map((col) => (
-                      <th
-                        key={col.key}
-                        onClick={() => handleSort(col.key)}
-                        className="px-5 py-3 text-[0.65rem] font-semibold tracking-[0.1em] uppercase text-charcoal/40 cursor-pointer select-none hover:text-charcoal transition-colors group"
+            <div className="flex items-center justify-between mb-6 px-4">
+              <label className="flex items-center gap-3 cursor-pointer group">
+                <input
+                  type="checkbox"
+                  checked={selected.size === leads.length && leads.length > 0}
+                  onChange={toggleAll}
+                  className="w-4 h-4 rounded border-navy/20 text-gold focus:ring-gold/20 transition-colors cursor-pointer"
+                />
+                <span className="text-[0.6rem] font-light tracking-[0.2em] uppercase text-navy/40 group-hover:text-navy transition-colors">Select All</span>
+              </label>
+              
+              <div className="flex items-center gap-6">
+                {[
+                  { key: 'first_name', label: 'Name' },
+                  { key: 'lead_score', label: 'Score' },
+                  { key: 'created_at', label: 'Date' },
+                ].map((col) => (
+                  <button
+                    key={col.key}
+                    onClick={() => handleSort(col.key)}
+                    className="flex items-center gap-2 text-[0.6rem] font-light tracking-[0.2em] uppercase text-navy/40 hover:text-navy transition-colors group focus:outline-none"
+                  >
+                    {col.label}
+                    {sortCol === col.key ? (
+                      sortAsc ? <ArrowUp size={12} className="text-gold" /> : <ArrowDown size={12} className="text-gold" />
+                    ) : (
+                      <ArrowUpDown size={12} className="text-navy/20 group-hover:text-navy/40 transition-colors opacity-0 group-hover:opacity-100" />
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              {leads.map((lead) => {
+                const intentMeta = getIntentMeta(lead.intent);
+                const temp = getTemperature(lead.lead_score || 0);
+                const isSelected = selected.has(lead.id);
+                const isSelecting = selected.size > 0;
+
+                const cardContent = (
+                  <div className="flex-1 min-w-0 grid grid-cols-12 gap-6 items-center">
+                    <div className="col-span-12 md:col-span-5">
+                      <p className="font-heading text-2xl text-navy tracking-tight group-hover:text-gold transition-colors duration-500 mb-1 truncate">
+                        {lead.first_name || ''} {lead.last_name || ''}
+                        {!lead.first_name && !lead.last_name && <span className="text-navy/30 italic font-light">No name</span>}
+                      </p>
+                      <p className="text-navy/50 text-xs font-light tracking-wide truncate">{lead.email}</p>
+                    </div>
+
+                    <div className="col-span-12 md:col-span-3 flex flex-col gap-3">
+                      <div className="flex items-center gap-2">
+                        <span className="text-base">{intentMeta.emoji}</span>
+                        <span className="text-[0.6rem] font-light tracking-[0.2em] uppercase text-navy/70">{intentMeta.shortLabel}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className={`w-1.5 h-1.5 rounded-full ${temp.dotClass}`} />
+                        <span className="text-[0.6rem] font-light tracking-[0.2em] uppercase text-navy/70">{temp.label}</span>
+                        <span className="font-heading text-lg text-gold ml-1">{lead.lead_score || 0}</span>
+                      </div>
+                    </div>
+
+                    <div className="col-span-12 md:col-span-4 flex flex-col md:items-end justify-center gap-2">
+                      <span className="inline-block px-4 py-1.5 text-[0.6rem] font-medium tracking-[0.2em] uppercase rounded-full bg-navy/5 text-navy/60 text-center">
+                        {lead.lifecycle_stage || 'Explorer'}
+                      </span>
+                      <span className="text-navy/30 text-[0.65rem] font-light tracking-widest uppercase mt-2">
+                        {new Date(lead.created_at).toLocaleDateString()}
+                      </span>
+                    </div>
+                  </div>
+                );
+
+                return (
+                  <div
+                    key={lead.id}
+                    onClick={() => isSelecting ? toggleSelect(lead.id) : undefined}
+                    className={`group bg-white rounded-3xl p-6 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.03)] hover:shadow-[0_15px_40px_-15px_rgba(0,0,0,0.06)] border transition-all duration-500 relative flex items-center gap-6
+                      ${isSelected ? 'border-gold/60 bg-gold/[0.02]' : 'border-navy/5'}
+                      ${isSelecting ? 'cursor-pointer select-none' : ''}`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={isSelected}
+                      onChange={() => toggleSelect(lead.id)}
+                      onClick={(e) => e.stopPropagation()}
+                      className="w-4 h-4 rounded border-navy/20 text-gold focus:ring-gold/20 transition-colors cursor-pointer shrink-0 ml-2"
+                    />
+
+                    {isSelecting ? (
+                      cardContent
+                    ) : (
+                      <Link
+                        to={`/admin/leads/${lead.id}`}
+                        className="flex-1 min-w-0 block no-underline"
                       >
-                        <span className="inline-flex items-center gap-1.5">
-                          {col.label}
-                          {sortCol === col.key ? (
-                            sortAsc ? <ArrowUp size={12} className="text-gold" /> : <ArrowDown size={12} className="text-gold" />
-                          ) : (
-                            <ArrowUpDown size={12} className="text-charcoal/20 group-hover:text-charcoal/40 transition-colors" />
-                          )}
-                        </span>
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-cream-dark">
-                  {leads.map((lead) => {
-                    const intentMeta = getIntentMeta(lead.intent);
-                    const temp = getTemperature(lead.lead_score || 0);
-                    return (
-                      <tr key={lead.id} className={`hover:bg-cream/30 transition-colors ${selected.has(lead.id) ? 'bg-cream/50' : ''}`}>
-                        <td className="px-3 py-3">
-                          <input
-                            type="checkbox"
-                            checked={selected.has(lead.id)}
-                            onChange={() => toggleSelect(lead.id)}
-                            className="accent-gold"
-                          />
-                        </td>
-                        <td className="px-5 py-3">
-                          <Link to={`/admin/leads/${lead.id}`} className="text-navy font-semibold no-underline hover:text-gold">
-                            {lead.first_name || ''} {lead.last_name || ''}
-                            {!lead.first_name && !lead.last_name && <span className="text-slate italic">No name</span>}
-                          </Link>
-                        </td>
-                        <td className="px-5 py-3 text-slate">{lead.email}</td>
-                        <td className="px-5 py-3">
-                          <span className={`inline-flex items-center gap-1 px-2 py-0.5 text-[0.6rem] font-semibold tracking-wider uppercase ${intentMeta.chipClass}`}>
-                            <span>{intentMeta.emoji}</span>
-                            <span>{intentMeta.shortLabel}</span>
-                          </span>
-                        </td>
-                        <td className="px-5 py-3">
-                          <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 text-[0.6rem] font-semibold tracking-wider uppercase ${temp.chipClass}`}>
-                            <span className={`w-1.5 h-1.5 rounded-full ${temp.dotClass}`} />
-                            <span>{temp.label}</span>
-                            <span className="font-mono text-[0.6rem] opacity-70">{lead.lead_score || 0}</span>
-                          </span>
-                        </td>
-                        <td className="px-5 py-3">
-                          <span className="inline-block px-2 py-0.5 text-[0.6rem] font-semibold tracking-wider uppercase bg-cream text-charcoal/60 border border-cream-dark">
-                            {lead.lifecycle_stage || 'Explorer'}
-                          </span>
-                        </td>
-                        <td className="px-5 py-3 text-slate text-xs">{new Date(lead.created_at).toLocaleDateString()}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+                        {cardContent}
+                      </Link>
+                    )}
+                  </div>
+                );
+              })}
             </div>
 
             {/* Pagination */}
             {totalPages > 1 && (
-              <div className="flex items-center justify-between px-5 py-3 border-t border-cream-dark">
-                <p className="text-slate text-xs">{total} total leads</p>
-                <div className="flex items-center gap-2">
+              <div className="flex items-center justify-between mt-12 px-6">
+                <p className="text-navy/40 text-[0.6rem] font-light tracking-[0.2em] uppercase">{total} TOTAL LEADS</p>
+                <div className="flex items-center gap-6 bg-white rounded-full p-2 shadow-[0_4px_15px_-4px_rgba(0,0,0,0.03)] border border-navy/5">
                   <button
                     onClick={() => setPage((p) => Math.max(0, p - 1))}
                     disabled={page === 0}
-                    className="p-1.5 hover:bg-cream transition-colors disabled:opacity-30"
+                    className="p-2 hover:bg-navy/5 transition-colors disabled:opacity-20 rounded-full"
                   >
-                    <ChevronLeft size={16} className="text-charcoal" />
+                    <ChevronLeft size={16} strokeWidth={1.5} className="text-navy" />
                   </button>
-                  <span className="text-xs text-charcoal">
+                  <span className="text-[0.65rem] font-light tracking-[0.3em] text-navy">
                     {page + 1} / {totalPages}
                   </span>
                   <button
                     onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
                     disabled={page >= totalPages - 1}
-                    className="p-1.5 hover:bg-cream transition-colors disabled:opacity-30"
+                    className="p-2 hover:bg-navy/5 transition-colors disabled:opacity-20 rounded-full"
                   >
-                    <ChevronRight size={16} className="text-charcoal" />
+                    <ChevronRight size={16} strokeWidth={1.5} className="text-navy" />
                   </button>
                 </div>
               </div>

@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
-import { Plus, Pencil, Trash2, X, Check } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Plus, Pencil, Trash2, X, Check, Users, ChevronRight } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 
 export default function Segments() {
@@ -34,17 +35,13 @@ export default function Segments() {
     setLoading(false);
   }, []);
 
-  useEffect(() => {
-    load(true);
-  }, [load]);
+  useEffect(() => { load(true); }, [load]);
 
   async function handleCreate(e) {
     e.preventDefault();
     if (!form.name.trim()) return;
     setSaving(true);
-
     await supabase.from('tags').insert({ name: form.name.trim(), description: form.description.trim() || null });
-
     setForm({ name: '', description: '' });
     setShowCreate(false);
     setSaving(false);
@@ -55,9 +52,7 @@ export default function Segments() {
     e.preventDefault();
     if (!form.name.trim()) return;
     setSaving(true);
-
     await supabase.from('tags').update({ name: form.name.trim(), description: form.description.trim() || null }).eq('id', editingId);
-
     setEditingId(null);
     setForm({ name: '', description: '' });
     setSaving(false);
@@ -71,7 +66,9 @@ export default function Segments() {
     load();
   }
 
-  function startEdit(tag) {
+  function startEdit(e, tag) {
+    e.preventDefault();
+    e.stopPropagation();
     setEditingId(tag.id);
     setForm({ name: tag.name, description: tag.description || '' });
     setShowCreate(false);
@@ -82,47 +79,58 @@ export default function Segments() {
     setForm({ name: '', description: '' });
   }
 
+  const totalContacts = Object.values(counts).reduce((a, b) => a + b, 0);
+
   return (
-    <div>
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="font-heading text-2xl font-bold text-navy">Segments</h1>
+    <div className="pb-20">
+      {/* Header */}
+      <div className="flex items-end justify-between mb-12">
+        <div>
+          <h1 className="avery-title text-5xl text-navy italic tracking-tight font-light mb-2">Segments</h1>
+          <p className="text-navy/60 font-light text-base">
+            {tags.length} segments &nbsp;·&nbsp; {totalContacts} total contacts
+          </p>
+        </div>
         <button
           onClick={() => { setShowCreate(true); setEditingId(null); setForm({ name: '', description: '' }); }}
-          className="btn-primary flex items-center gap-2 text-sm"
+          className="px-6 py-3 bg-navy text-white text-xs uppercase tracking-widest font-medium hover:bg-navy/90 transition-all duration-300 rounded-sm flex items-center gap-2"
         >
-          <Plus size={16} /> Create Segment
+          <Plus size={14} strokeWidth={2} /> Create Segment
         </button>
       </div>
 
       {/* Create form */}
       {showCreate && (
-        <form onSubmit={handleCreate} className="bg-white border border-cream-dark p-6 mb-6">
-          <h3 className="text-[0.7rem] font-semibold tracking-[0.1em] uppercase text-charcoal/40 mb-4">New Segment</h3>
+        <form onSubmit={handleCreate} className="bg-white rounded-3xl p-8 mb-8 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.06)] border border-navy/10">
+          <h3 className="font-heading text-xl text-navy mb-6">New Segment</h3>
           <div className="space-y-4">
             <div>
-              <label className="text-[0.7rem] font-semibold tracking-[0.1em] uppercase text-charcoal/40 block mb-1">Name *</label>
+              <label className="text-xs font-semibold tracking-widest uppercase text-navy/60 block mb-2">Name *</label>
               <input
                 type="text"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 required
-                className="w-full px-4 py-3 border border-cream-dark bg-white text-sm focus:outline-none focus:border-gold transition-colors"
+                autoFocus
+                className="w-full px-4 py-3 border border-navy/15 bg-white rounded-xl text-sm font-light focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold/50 transition-all"
               />
             </div>
             <div>
-              <label className="text-[0.7rem] font-semibold tracking-[0.1em] uppercase text-charcoal/40 block mb-1">Description</label>
+              <label className="text-xs font-semibold tracking-widest uppercase text-navy/60 block mb-2">Description <span className="font-light normal-case tracking-normal text-navy/40">(optional)</span></label>
               <textarea
                 value={form.description}
                 onChange={(e) => setForm({ ...form, description: e.target.value })}
-                rows={3}
-                className="w-full px-4 py-3 border border-cream-dark bg-white text-sm focus:outline-none focus:border-gold transition-colors resize-none"
+                rows={2}
+                className="w-full px-4 py-3 border border-navy/15 bg-white rounded-xl text-sm font-light focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold/50 transition-all resize-none"
               />
             </div>
-            <div className="flex gap-3">
-              <button type="submit" disabled={saving} className="btn-primary text-sm">
+            <div className="flex gap-3 pt-2">
+              <button type="submit" disabled={saving} className="px-6 py-2.5 bg-navy text-white text-xs uppercase tracking-widest font-medium hover:bg-navy/90 transition-all rounded-sm">
                 {saving ? 'Saving...' : 'Create Segment'}
               </button>
-              <button type="button" onClick={() => setShowCreate(false)} className="btn-navy text-sm">Cancel</button>
+              <button type="button" onClick={() => setShowCreate(false)} className="px-6 py-2.5 text-navy/60 text-xs uppercase tracking-widest font-medium hover:text-navy transition-colors">
+                Cancel
+              </button>
             </div>
           </div>
         </form>
@@ -130,80 +138,127 @@ export default function Segments() {
 
       {/* Grid */}
       {loading ? (
-        <div className="text-center py-10">
-          <div className="w-8 h-8 border-2 border-gold border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-slate text-sm">Loading...</p>
+        <div className="flex items-center justify-center py-20">
+          <div className="w-8 h-8 border-2 border-gold border-t-transparent rounded-full animate-spin" />
         </div>
       ) : tags.length === 0 ? (
-        <div className="bg-white border border-cream-dark p-10 text-center">
-          <p className="text-slate text-sm">No segments yet. Create your first segment to get started.</p>
+        <div className="bg-white rounded-3xl p-16 text-center shadow-[0_15px_40px_-15px_rgba(0,0,0,0.05)] border border-navy/10">
+          <div className="w-16 h-16 bg-navy/5 rounded-full flex items-center justify-center mx-auto mb-5">
+            <Users size={28} strokeWidth={1.5} className="text-navy/40" />
+          </div>
+          <p className="text-navy font-medium text-lg mb-2">No segments yet</p>
+          <p className="text-navy/50 font-light text-sm">Create your first segment to start organizing your contacts.</p>
         </div>
       ) : (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {tags.map((tag) => (
-            <div key={tag.id} className="bg-white border border-cream-dark p-6">
-              {editingId === tag.id ? (
-                <form onSubmit={handleUpdate} className="space-y-3">
-                  <input
-                    type="text"
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    required
-                    className="w-full px-3 py-2 border border-cream-dark bg-white text-sm focus:outline-none focus:border-gold transition-colors"
-                  />
-                  <textarea
-                    value={form.description}
-                    onChange={(e) => setForm({ ...form, description: e.target.value })}
-                    rows={2}
-                    placeholder="Description"
-                    className="w-full px-3 py-2 border border-cream-dark bg-white text-sm focus:outline-none focus:border-gold transition-colors resize-none"
-                  />
-                  <div className="flex gap-2">
-                    <button type="submit" disabled={saving} className="p-1.5 hover:bg-cream transition-colors text-gold">
-                      <Check size={16} />
-                    </button>
-                    <button type="button" onClick={cancelEdit} className="p-1.5 hover:bg-cream transition-colors text-charcoal/40">
-                      <X size={16} />
-                    </button>
-                  </div>
-                </form>
-              ) : (
-                <>
-                  <div className="flex items-start justify-between mb-3">
-                    <h3 className="font-heading text-base font-bold text-navy">{tag.name}</h3>
-                    <div className="flex gap-1">
-                      <button onClick={() => startEdit(tag)} className="p-1.5 hover:bg-cream transition-colors text-charcoal/40 hover:text-gold">
-                        <Pencil size={14} />
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {tags.map((tag) => {
+            const count = counts[tag.id] || 0;
+            return (
+              <div key={tag.id} className="relative group">
+                {editingId === tag.id ? (
+                  /* ── Edit mode ── */
+                  <form
+                    onSubmit={handleUpdate}
+                    className="bg-white rounded-3xl p-6 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.06)] border-2 border-gold/40 space-y-3"
+                  >
+                    <input
+                      type="text"
+                      value={form.name}
+                      onChange={(e) => setForm({ ...form, name: e.target.value })}
+                      required
+                      autoFocus
+                      className="w-full px-3 py-2 border border-navy/15 bg-white rounded-lg text-sm font-light focus:outline-none focus:ring-2 focus:ring-gold/30 transition-all"
+                    />
+                    <textarea
+                      value={form.description}
+                      onChange={(e) => setForm({ ...form, description: e.target.value })}
+                      rows={2}
+                      placeholder="Description (optional)"
+                      className="w-full px-3 py-2 border border-navy/15 bg-white rounded-lg text-sm font-light focus:outline-none focus:ring-2 focus:ring-gold/30 transition-all resize-none"
+                    />
+                    <div className="flex gap-2">
+                      <button type="submit" disabled={saving} className="flex items-center gap-1.5 px-4 py-2 bg-navy text-white text-xs uppercase tracking-widest rounded-sm hover:bg-navy/90 transition-colors">
+                        <Check size={14} strokeWidth={2} /> {saving ? 'Saving...' : 'Save'}
                       </button>
-                      {deleteConfirm === tag.id ? (
-                        <div className="flex items-center gap-1">
-                          <button onClick={() => handleDelete(tag.id)} className="p-1.5 text-red-500 hover:bg-red-50 transition-colors text-xs font-semibold">
-                            Confirm
-                          </button>
-                          <button onClick={() => setDeleteConfirm(null)} className="p-1.5 text-charcoal/40 hover:bg-cream transition-colors">
-                            <X size={14} />
-                          </button>
-                        </div>
-                      ) : (
-                        <button onClick={() => setDeleteConfirm(tag.id)} className="p-1.5 hover:bg-cream transition-colors text-charcoal/40 hover:text-red-500">
-                          <Trash2 size={14} />
-                        </button>
-                      )}
+                      <button type="button" onClick={cancelEdit} className="flex items-center gap-1.5 px-4 py-2 text-navy/50 text-xs uppercase tracking-widest hover:text-navy transition-colors">
+                        <X size={14} strokeWidth={2} /> Cancel
+                      </button>
                     </div>
-                  </div>
-                  {tag.description && <p className="text-slate text-sm mb-3">{tag.description}</p>}
-                  <div className="flex items-center justify-between">
-                    <span className="inline-block px-2 py-0.5 text-[0.6rem] font-semibold tracking-wider uppercase bg-cream text-charcoal/60 border border-cream-dark">
-                      {counts[tag.id] || 0} contacts
-                    </span>
-                    <span className="text-slate text-[0.65rem]">
-                      {new Date(tag.created_at).toLocaleDateString()}
-                    </span>
-                  </div>
-                </>
-              )}
-            </div>
-          ))}
+                  </form>
+                ) : (
+                  /* ── View mode – clickable card ── */
+                  <Link
+                    to={`/admin/segments/${tag.id}`}
+                    className="block bg-white rounded-3xl p-7 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.04)] hover:shadow-[0_15px_40px_-12px_rgba(0,0,0,0.08)] border border-navy/8 hover:border-gold/25 transition-all duration-400 no-underline h-full"
+                  >
+                    {/* Top row: name + action buttons */}
+                    <div className="flex items-start justify-between mb-4">
+                      <h3 className="font-heading text-lg text-navy group-hover:text-gold transition-colors duration-400 leading-snug pr-2">
+                        {tag.name}
+                      </h3>
+                      <div
+                        className="flex gap-1 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        onClick={(e) => e.preventDefault()}
+                      >
+                        <button
+                          onClick={(e) => startEdit(e, tag)}
+                          className="p-1.5 rounded-lg hover:bg-navy/8 text-navy/50 hover:text-gold transition-all"
+                          title="Rename"
+                        >
+                          <Pencil size={13} strokeWidth={2} />
+                        </button>
+                        {deleteConfirm === tag.id ? (
+                          <>
+                            <button
+                              onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleDelete(tag.id); }}
+                              className="px-2 py-1 rounded-lg text-red-600 hover:bg-red-50 text-[0.65rem] font-semibold transition-colors"
+                            >
+                              Confirm
+                            </button>
+                            <button
+                              onClick={(e) => { e.preventDefault(); e.stopPropagation(); setDeleteConfirm(null); }}
+                              className="p-1.5 rounded-lg hover:bg-navy/8 text-navy/40 transition-all"
+                            >
+                              <X size={13} strokeWidth={2} />
+                            </button>
+                          </>
+                        ) : (
+                          <button
+                            onClick={(e) => { e.preventDefault(); e.stopPropagation(); setDeleteConfirm(tag.id); }}
+                            className="p-1.5 rounded-lg hover:bg-red-50 text-navy/50 hover:text-red-500 transition-all"
+                            title="Delete"
+                          >
+                            <Trash2 size={13} strokeWidth={2} />
+                          </button>
+                        )}
+                      </div>
+                    </div>
+
+                    {tag.description && (
+                      <p className="text-sm font-light text-navy/60 mb-5 leading-relaxed line-clamp-2">{tag.description}</p>
+                    )}
+
+                    {/* Bottom row: count + date + arrow */}
+                    <div className="flex items-center justify-between mt-auto pt-4 border-t border-navy/6">
+                      <div className="flex items-center gap-2">
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center ${count > 0 ? 'bg-gold/10' : 'bg-navy/5'}`}>
+                          <Users size={14} strokeWidth={1.5} className={count > 0 ? 'text-gold' : 'text-navy/40'} />
+                        </div>
+                        <div>
+                          <p className={`font-heading text-xl leading-none ${count > 0 ? 'text-navy' : 'text-navy/40'}`}>{count}</p>
+                          <p className="text-[0.6rem] uppercase tracking-widest font-medium text-navy/40 mt-0.5">Contacts</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2 text-navy/30 group-hover:text-gold transition-colors duration-400">
+                        <span className="text-xs font-light text-navy/40">{new Date(tag.created_at).toLocaleDateString()}</span>
+                        <ChevronRight size={16} strokeWidth={2} className="group-hover:translate-x-0.5 transition-transform duration-300" />
+                      </div>
+                    </div>
+                  </Link>
+                )}
+              </div>
+            );
+          })}
         </div>
       )}
     </div>

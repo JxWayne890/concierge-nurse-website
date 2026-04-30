@@ -172,12 +172,12 @@ export default function Settings() {
   }
 
   return (
-    <div>
-      <h1 className="font-heading text-2xl font-bold text-navy mb-8">Settings</h1>
+    <div className="pb-20">
+      <h1 className="avery-title text-5xl text-navy italic tracking-tight font-light mb-12">Settings</h1>
 
-      <div className="space-y-8 max-w-2xl">
+      <div className="space-y-12 max-w-3xl">
         {/* Branding */}
-        <div className="bg-white border border-cream-dark p-6">
+        <div className="bg-white rounded-3xl p-10 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.05)] border border-navy/5">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-[0.7rem] font-semibold tracking-[0.1em] uppercase text-charcoal/40">Branding</h3>
             <span className="text-[0.6rem] text-charcoal/40">Used in every email you send</span>
@@ -318,8 +318,7 @@ export default function Settings() {
           )}
         </div>
 
-        {/* Blog Sign-Off */}
-        <div className="bg-white border border-cream-dark p-6">
+        <div className="bg-white rounded-3xl p-10 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.05)] border border-navy/5">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-[0.7rem] font-semibold tracking-[0.1em] uppercase text-charcoal/40">Blog Sign-Off</h3>
             <span className="text-[0.6rem] text-charcoal/40">Default sign-off for every blog post</span>
@@ -397,9 +396,8 @@ export default function Settings() {
           )}
         </div>
 
-        {/* Comments Moderation */}
         {blog && (
-          <div className="bg-white border border-cream-dark p-6">
+          <div className="bg-white rounded-3xl p-10 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.05)] border border-navy/5">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-[0.7rem] font-semibold tracking-[0.1em] uppercase text-charcoal/40">Comments Moderation</h3>
               <span className="text-[0.6rem] text-charcoal/40">Auto-filters + approval rules</span>
@@ -490,8 +488,7 @@ export default function Settings() {
         {/* Stripe */}
         <StripeSettings />
 
-        {/* Data Management */}
-        <div className="bg-white border border-cream-dark p-6">
+        <div className="bg-white rounded-3xl p-10 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.05)] border border-navy/5">
           <h3 className="text-[0.7rem] font-semibold tracking-[0.1em] uppercase text-charcoal/40 mb-4">Data Management</h3>
           <div className="flex flex-wrap gap-3">
             <button onClick={handleExport} disabled={exporting} className="btn-navy text-sm">

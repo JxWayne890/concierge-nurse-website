@@ -179,33 +179,33 @@ export default function Pipelines() {
   }
 
   return (
-    <div className="h-full flex flex-col">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="font-heading text-2xl font-bold text-navy">Pipelines</h1>
+    <div className="h-full flex flex-col pt-4">
+      <div className="flex items-center justify-between mb-12">
+        <h1 className="avery-title text-5xl text-navy italic tracking-tight font-light">Pipelines</h1>
       </div>
 
       {/* Pipeline tabs */}
-      <div className="flex border-b border-cream-dark mb-6">
+      <div className="flex gap-8 mb-12">
         {pipelines.map((p) => {
           const count = activePipeline === p.id ? pipelineContacts.length : null;
           return (
             <button
               key={p.id}
               onClick={() => setActivePipeline(p.id)}
-              className={`px-5 py-3 text-sm font-semibold transition-colors relative ${
+              className={`pb-2 text-lg tracking-wide transition-all duration-500 relative ${
                 activePipeline === p.id
-                  ? 'text-navy'
-                  : 'text-charcoal/40 hover:text-charcoal'
+                  ? 'font-heading text-navy italic'
+                  : 'font-light text-navy/40 hover:text-navy/70'
               }`}
             >
               {p.name}
               {count !== null && count > 0 && (
-                <span className="ml-2 text-[0.6rem] bg-gold text-navy px-1.5 py-0.5 font-bold">
+                <span className={`ml-2 text-[0.6rem] px-2 py-0.5 rounded-full ${activePipeline === p.id ? 'bg-gold/10 text-gold font-bold' : 'bg-transparent text-navy/30'}`}>
                   {count}
                 </span>
               )}
               {activePipeline === p.id && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gold" />
+                <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-navy/20" />
               )}
             </button>
           );
@@ -216,7 +216,7 @@ export default function Pipelines() {
       {stages.length === 0 ? (
         <p className="text-slate text-sm">No stages configured for this pipeline.</p>
       ) : (
-        <div className="flex gap-4 overflow-x-auto pb-4 flex-1 min-h-0">
+        <div className="flex gap-8 overflow-x-auto pb-10 flex-1 min-h-0 snap-x">
           {stages.map((stage) => {
             const stageContacts = getContactsInStage(stage);
             return (
@@ -224,22 +224,22 @@ export default function Pipelines() {
                 key={stage}
                 onDragOver={handleDragOver}
                 onDrop={(e) => handleDrop(e, stage)}
-                className="flex-shrink-0 w-72 flex flex-col"
+                className="flex-shrink-0 w-[320px] flex flex-col snap-start"
               >
                 {/* Column header */}
-                <div className="flex items-center justify-between mb-3 px-1">
-                  <h3 className="text-[0.7rem] font-semibold tracking-[0.1em] uppercase text-charcoal/50">
+                <div className="flex items-center justify-between mb-6 px-2">
+                  <h3 className="text-[0.6rem] font-light tracking-[0.3em] uppercase text-navy/40">
                     {stage}
                   </h3>
-                  <span className="text-[0.65rem] font-semibold text-charcoal/30 bg-cream px-2 py-0.5 border border-cream-dark">
+                  <span className="text-[0.6rem] font-light text-navy/30">
                     {stageContacts.length}
                   </span>
                 </div>
 
-                {/* Cards */}
-                <div className="flex-1 bg-cream/50 border border-cream-dark p-2 space-y-2 min-h-[200px]">
+                {/* Cards Container - No Background, Pure Space */}
+                <div className="flex-1 space-y-4 min-h-[200px]">
                   {stageContacts.length === 0 && (
-                    <div className="flex items-center justify-center h-20 text-charcoal/20 text-xs">
+                    <div className="flex items-center justify-center h-32 text-navy/20 text-xs italic font-light tracking-wide border border-dashed border-navy/10 rounded-2xl">
                       Drop leads here
                     </div>
                   )}
@@ -253,25 +253,26 @@ export default function Pipelines() {
                         draggable
                         onDragStart={() => handleDragStart(pc)}
                         onDragEnd={handleDragEnd}
-                        className={`bg-white border border-cream-dark border-l-4 ${STAGE_COLORS[stage] || 'border-l-charcoal/20'} p-3 cursor-grab active:cursor-grabbing hover:shadow-sm transition-shadow`}
+                        className="bg-white p-6 cursor-grab active:cursor-grabbing shadow-[0_15px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.08)] transition-all duration-500 rounded-2xl group border border-navy/5"
                       >
                         <Link
                           to={`/admin/leads/${c.id}`}
-                          className="no-underline"
+                          className="no-underline block mb-2"
                           onClick={(e) => e.stopPropagation()}
                         >
-                          <p className="text-navy font-semibold text-sm hover:text-gold transition-colors">
-                            {name || <span className="text-slate italic">No name</span>}
+                          <p className="font-heading text-xl text-navy tracking-tight group-hover:text-gold transition-colors duration-500">
+                            {name || <span className="text-navy/30 italic font-light">No name</span>}
                           </p>
                         </Link>
-                        <p className="text-slate text-xs mt-0.5 truncate">{c.email}</p>
-                        <div className="flex items-center justify-between mt-2">
+                        <p className="text-navy/50 text-xs font-light tracking-wide truncate mb-5">{c.email}</p>
+                        
+                        <div className="flex items-center justify-between pt-4 border-t border-navy/5">
                           {c.interest && (
-                            <span className="text-[0.55rem] font-semibold tracking-wider uppercase text-charcoal/30 truncate max-w-[60%]">
-                              {c.interest.replace(/_/g, ' ')}
+                            <span className="text-[0.65rem] italic text-gold/70 tracking-wide truncate max-w-[60%]">
+                              {c.interest.replace(/_/g, ' ').toLowerCase()}
                             </span>
                           )}
-                          <span className="text-[0.55rem] text-charcoal/25 ml-auto shrink-0">
+                          <span className="text-[0.55rem] tracking-widest uppercase font-light text-navy/30 ml-auto shrink-0">
                             {timeInStage(pc.entered_stage_at)}
                           </span>
                         </div>

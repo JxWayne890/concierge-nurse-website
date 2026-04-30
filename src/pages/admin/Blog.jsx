@@ -57,143 +57,149 @@ export default function Blog() {
   }, {});
 
   return (
-    <div>
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="font-heading text-2xl font-bold text-navy">Blog</h1>
-        <div className="flex items-center gap-3">
-          <Link to="/admin/blog/comments" className="btn-navy text-sm flex items-center gap-2 no-underline relative">
-            <MessageSquare size={14} /> Comments
+    <div className="pb-20">
+      <div className="flex items-end justify-between mb-12">
+        <h1 className="avery-title text-5xl text-navy italic tracking-tight font-light">Journal</h1>
+        <div className="flex items-center gap-6">
+          <Link to="/admin/blog/comments" className="text-[0.65rem] uppercase tracking-widest font-light text-navy/40 hover:text-navy transition-colors flex items-center gap-2 no-underline relative">
+            <MessageSquare size={14} strokeWidth={1.5} /> Comments
             {pendingComments > 0 && (
-              <span className="absolute -top-2 -right-2 bg-gold text-navy text-[0.55rem] font-bold px-1.5 py-0.5 rounded-full">
+              <span className="absolute -top-3 -right-3 bg-gold/10 text-gold text-[0.6rem] font-bold px-1.5 py-0.5 rounded-full">
                 {pendingComments}
               </span>
             )}
           </Link>
-          <Link to="/admin/blog/categories" className="btn-navy text-sm flex items-center gap-2 no-underline">
-            <FolderOpen size={14} /> Categories
+          <Link to="/admin/blog/categories" className="text-[0.65rem] uppercase tracking-widest font-light text-navy/40 hover:text-navy transition-colors flex items-center gap-2 no-underline">
+            <FolderOpen size={14} strokeWidth={1.5} /> Categories
           </Link>
-          <Link to="/admin/blog/new" className="btn-primary text-sm flex items-center gap-2 no-underline">
-            <Plus size={14} /> New Post
+          <Link to="/admin/blog/new" className="px-6 py-3 bg-navy text-white text-[0.65rem] uppercase tracking-widest font-light hover:bg-navy/90 transition-all duration-300 rounded-sm flex items-center gap-2 no-underline">
+            <Plus size={14} strokeWidth={1.5} /> New Entry
           </Link>
         </div>
       </div>
 
       {/* Filters */}
-      <div className="flex flex-col sm:flex-row gap-3 mb-6">
-        <div className="flex-1 relative">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-charcoal/30" />
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-6 mb-12">
+        <div className="w-full sm:w-1/2 relative">
+          <Search size={16} strokeWidth={1.5} className="absolute left-4 top-1/2 -translate-y-1/2 text-navy/30" />
           <input
             type="text"
-            placeholder="Search posts by title..."
+            placeholder="Search entries..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 border border-cream-dark bg-white text-sm focus:outline-none focus:border-gold transition-colors"
+            className="w-full pl-12 pr-4 py-3 bg-white shadow-[0_4px_15px_-4px_rgba(0,0,0,0.03)] border border-navy/5 rounded-full text-sm font-light focus:outline-none focus:ring-1 focus:ring-gold/50 transition-all duration-300"
           />
         </div>
-        <select
-          value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value)}
-          className="px-4 py-2.5 border border-cream-dark bg-white text-sm text-charcoal focus:outline-none focus:border-gold"
-        >
-          <option value="all">All Statuses</option>
-          <option value="draft">Drafts</option>
-          <option value="published">Published</option>
-          <option value="scheduled">Scheduled</option>
-          <option value="archived">Archived</option>
-        </select>
+
+        <div className="flex bg-white rounded-full p-1 shadow-[0_4px_15px_-4px_rgba(0,0,0,0.03)] border border-navy/5">
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className="px-5 py-2 text-[0.65rem] font-light uppercase tracking-widest bg-transparent text-navy focus:outline-none cursor-pointer"
+          >
+            <option value="all">All Entries</option>
+            <option value="draft">Drafts</option>
+            <option value="published">Published</option>
+            <option value="scheduled">Scheduled</option>
+            <option value="archived">Archived</option>
+          </select>
+        </div>
       </div>
 
       {/* Status counts */}
       {statusFilter === 'all' && posts.length > 0 && (
-        <div className="flex gap-3 mb-6 text-xs">
+        <div className="flex gap-6 mb-10 text-[0.6rem] tracking-widest uppercase font-light text-navy/40">
           {Object.entries(STATUS_META).map(([key, meta]) => (
-            <span key={key} className={`inline-flex items-center gap-2 px-2.5 py-1 ${meta.chipClass}`}>
-              {meta.label} · <span className="font-semibold">{countsByStatus[key] || 0}</span>
+            <span key={key} className="flex items-center gap-2">
+              {meta.label} <span className="font-medium text-navy/60">{countsByStatus[key] || 0}</span>
             </span>
           ))}
         </div>
       )}
 
       {/* Posts list */}
-      <div className="bg-white border border-cream-dark">
+      <div>
         {loading ? (
-          <div className="p-10 text-center">
+          <div className="p-20 text-center">
             <div className="w-8 h-8 border-2 border-gold border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-            <p className="text-slate text-sm">Loading...</p>
+            <p className="text-navy/30 text-sm font-light italic">Loading entries...</p>
           </div>
         ) : posts.length === 0 ? (
-          <div className="p-16 text-center">
-            <p className="text-slate text-sm mb-4">No posts yet.</p>
-            <Link to="/admin/blog/new" className="btn-primary text-sm inline-flex items-center gap-2 no-underline">
-              <Plus size={14} /> Write your first post
+          <div className="bg-white rounded-3xl p-20 text-center shadow-[0_15px_40px_-15px_rgba(0,0,0,0.05)] border border-navy/5">
+            <p className="text-navy/30 text-sm mb-6 font-light italic">No entries yet. Begin your journal.</p>
+            <Link to="/admin/blog/new" className="px-8 py-3 bg-navy text-white text-[0.65rem] uppercase tracking-widest font-light hover:bg-navy/90 transition-all duration-300 rounded-sm inline-flex items-center gap-2 no-underline">
+              <Plus size={14} strokeWidth={1.5} /> Write your first entry
             </Link>
           </div>
         ) : (
-          <div className="divide-y divide-cream-dark">
+          <div className="space-y-6">
             {posts.map((post) => {
               const meta = STATUS_META[post.status] || STATUS_META.draft;
               return (
-                <div key={post.id} className="px-5 py-4 hover:bg-cream/30 transition-colors">
-                  <div className="flex items-start justify-between gap-4">
+                <div key={post.id} className="group bg-white rounded-3xl p-8 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.03)] hover:shadow-[0_15px_40px_-15px_rgba(0,0,0,0.06)] border border-navy/5 transition-all duration-500 relative overflow-hidden">
+                  <div className="flex items-start justify-between gap-8">
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-3 mb-1">
-                        <span className={`inline-block px-2 py-0.5 text-[0.6rem] font-semibold tracking-wider uppercase ${meta.chipClass}`}>
+                      <div className="flex items-center gap-4 mb-4">
+                        <span className={`inline-block px-3 py-1 text-[0.55rem] font-medium tracking-[0.2em] uppercase rounded-sm ${post.status === 'published' ? 'bg-navy/5 text-navy/70' : 'bg-transparent border border-navy/10 text-navy/40'}`}>
                           {meta.label}
                         </span>
                         {post.status === 'scheduled' && post.scheduled_for && (
-                          <span className="text-[0.65rem] text-slate">
-                            → {new Date(post.scheduled_for).toLocaleString()}
+                          <span className="text-[0.6rem] font-light tracking-wide text-navy/40">
+                            &mdash; {new Date(post.scheduled_for).toLocaleString()}
                           </span>
                         )}
                         {post.published_at && post.status === 'published' && (
-                          <span className="text-[0.65rem] text-slate">
+                          <span className="text-[0.6rem] font-light tracking-wide text-navy/40">
                             {new Date(post.published_at).toLocaleDateString()}
                           </span>
                         )}
                       </div>
                       <Link
                         to={`/admin/blog/${post.id}/edit`}
-                        className="font-heading text-base font-bold text-navy hover:text-gold no-underline block"
+                        className="block no-underline mb-3"
                       >
-                        {post.title || <span className="italic text-slate">Untitled</span>}
+                        <h2 className="font-heading text-2xl text-navy tracking-tight group-hover:text-gold transition-colors duration-500">
+                          {post.title || <span className="italic text-navy/30 font-light">Untitled</span>}
+                        </h2>
                       </Link>
                       {post.excerpt && (
-                        <p className="text-slate text-xs mt-1 line-clamp-2">{post.excerpt}</p>
+                        <p className="text-navy/50 text-sm font-light leading-relaxed mb-6 line-clamp-2 max-w-3xl">{post.excerpt}</p>
                       )}
-                      <p className="text-charcoal/40 text-[0.65rem] mt-1.5">
-                        /blog/{post.slug} · updated {new Date(post.updated_at).toLocaleDateString()}
+                      <p className="text-navy/30 text-[0.65rem] font-light tracking-widest uppercase">
+                        /blog/{post.slug} <span className="mx-2">&mdash;</span> updated {new Date(post.updated_at).toLocaleDateString()}
                       </p>
                     </div>
-                    <div className="flex items-center gap-2 shrink-0">
+
+                    <div className="flex items-center gap-3 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 absolute top-8 right-8 bg-white/80 backdrop-blur-sm p-2 rounded-lg shadow-sm border border-navy/5">
                       {post.status === 'published' && (
                         <a
                           href={`/blog/${post.slug}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="p-2 text-charcoal/60 hover:text-gold transition-colors"
+                          className="p-2 text-navy/40 hover:text-gold transition-colors"
                           title="View live"
                         >
-                          <ExternalLink size={14} />
+                          <ExternalLink size={16} strokeWidth={1.5} />
                         </a>
                       )}
                       <Link
                         to={`/admin/blog/${post.id}/edit`}
-                        className="p-2 text-charcoal/60 hover:text-gold transition-colors"
+                        className="p-2 text-navy/40 hover:text-gold transition-colors"
                         title="Edit"
                       >
-                        <Edit2 size={14} />
+                        <Edit2 size={16} strokeWidth={1.5} />
                       </Link>
                       {deletingId === post.id ? (
-                        <div className="flex items-center gap-1">
+                        <div className="flex items-center gap-2 pl-2 border-l border-navy/10">
                           <button
                             onClick={() => handleDelete(post.id)}
-                            className="px-2 py-1 bg-red-600 text-white text-[0.65rem] hover:bg-red-700 transition-colors"
+                            className="px-3 py-1.5 bg-red-600/90 text-white text-[0.65rem] font-medium tracking-wide rounded-sm hover:bg-red-600 transition-colors"
                           >
                             Confirm
                           </button>
                           <button
                             onClick={() => setDeletingId(null)}
-                            className="px-2 py-1 text-charcoal/60 text-[0.65rem] hover:text-charcoal"
+                            className="px-3 py-1.5 text-navy/40 text-[0.65rem] font-light tracking-wide hover:text-navy transition-colors"
                           >
                             Cancel
                           </button>
@@ -201,10 +207,10 @@ export default function Blog() {
                       ) : (
                         <button
                           onClick={() => setDeletingId(post.id)}
-                          className="p-2 text-charcoal/60 hover:text-red-600 transition-colors"
+                          className="p-2 text-navy/40 hover:text-red-500 transition-colors"
                           title="Delete"
                         >
-                          <Trash2 size={14} />
+                          <Trash2 size={16} strokeWidth={1.5} />
                         </button>
                       )}
                     </div>

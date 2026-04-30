@@ -184,53 +184,71 @@ export default function Dashboard() {
 
   const maxChart = Math.max(...chartData.map((d) => d.count), 1);
 
-  const leadCards = [
-    { label: 'Total Leads', value: stats.total, icon: Users, color: 'text-navy' },
-    { label: 'New This Week', value: stats.thisWeek, icon: UserPlus, color: 'text-green-600' },
-    { label: 'Subscribers', value: stats.subscribers, icon: Mail, color: 'text-blue-600' },
-    { label: 'Consulting', value: stats.consulting, icon: TrendingUp, color: 'text-gold' },
-  ];
-
   return (
-    <div>
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="font-heading text-2xl font-bold text-navy">Dashboard</h1>
-        <button onClick={() => { loadLeads(); loadAnalytics(); }} className="flex items-center gap-2 text-sm text-charcoal/40 hover:text-navy transition-colors">
-          <RefreshCw size={14} /> Refresh
+    <div className="pb-20">
+      <div className="flex items-end justify-between mb-12">
+        <h1 className="avery-title text-5xl text-navy italic tracking-tight font-light">Daily Brief</h1>
+        <p className="text-sm tracking-widest uppercase font-medium text-navy/70">
+          {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
+        </p>
+        <button onClick={() => { loadLeads(); loadAnalytics(); }} className="flex items-center gap-2 text-xs font-light uppercase tracking-widest text-navy/30 hover:text-navy transition-colors">
+          <RefreshCw size={12} /> Refresh
         </button>
       </div>
 
-      {/* Lead stat cards */}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-        {leadCards.map((s) => (
-          <div key={s.label} className="bg-white border border-cream-dark p-6">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-[0.7rem] font-semibold tracking-[0.1em] uppercase text-charcoal/40">
-                {s.label}
-              </span>
-              <s.icon size={18} className={s.color} />
-            </div>
-            <p className="font-heading text-3xl font-bold text-navy">{s.value}</p>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+        <div className="group bg-white rounded-3xl p-8 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.06)] hover:shadow-[0_15px_40px_-15px_rgba(0,0,0,0.1)] border border-navy/10 transition-all duration-500 relative overflow-hidden">
+          <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity duration-500">
+            <Users size={64} strokeWidth={1} className="text-gold" />
           </div>
-        ))}
+          <p className="text-xs tracking-widest uppercase font-semibold text-navy/70 mb-4">Total Contacts</p>
+          <div className="flex items-baseline gap-3">
+            <h2 className="font-heading text-5xl text-navy tracking-tight group-hover:text-gold transition-colors duration-500">{stats.total}</h2>
+            <span className="text-sm font-medium text-navy/60">Active</span>
+          </div>
+        </div>
+        <div className="group bg-white rounded-3xl p-8 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.06)] hover:shadow-[0_15px_40px_-15px_rgba(0,0,0,0.1)] border border-navy/10 transition-all duration-500 relative overflow-hidden">
+          <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity duration-500">
+            <UserPlus size={64} strokeWidth={1} className="text-gold" />
+          </div>
+          <p className="text-xs tracking-widest uppercase font-semibold text-navy/70 mb-4">New This Week</p>
+          <div className="flex items-baseline gap-3">
+            <h2 className="font-heading text-5xl text-navy tracking-tight group-hover:text-gold transition-colors duration-500">{stats.thisWeek}</h2>
+            <span className="text-sm font-medium text-green-600/80">+{stats.thisWeek}%</span>
+          </div>
+        </div>
+        <div className="group bg-white rounded-3xl p-8 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.06)] hover:shadow-[0_15px_40px_-15px_rgba(0,0,0,0.1)] border border-navy/10 transition-all duration-500 relative overflow-hidden">
+          <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity duration-500">
+            <Award size={64} strokeWidth={1} className="text-gold" />
+          </div>
+          <p className="text-xs tracking-widest uppercase font-semibold text-navy/70 mb-4">Newsletter</p>
+          <h2 className="font-heading text-3xl text-navy tracking-tight group-hover:text-gold transition-colors duration-500 truncate mt-2">{stats.subscribers}</h2>
+          <p className="text-sm font-medium text-navy/60 mt-2">Active Subscribers</p>
+        </div>
+        <div className="group bg-white rounded-3xl p-8 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.06)] hover:shadow-[0_15px_40px_-15px_rgba(0,0,0,0.1)] border border-navy/10 transition-all duration-500 relative overflow-hidden">
+          <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity duration-500">
+            <DollarSign size={64} strokeWidth={1} className="text-gold" />
+          </div>
+          <p className="text-xs tracking-widest uppercase font-semibold text-navy/70 mb-4">Consulting</p>
+          <div className="flex items-baseline gap-3">
+            <h2 className="font-heading text-5xl text-navy tracking-tight group-hover:text-gold transition-colors duration-500">{stats.consulting}</h2>
+            <span className="text-sm font-medium text-amber-600/80">Inquiries</span>
+          </div>
+        </div>
       </div>
 
-      {/* ── Website Analytics ── */}
-      <div className="mb-10">
-        <div className="flex items-center justify-between mb-5">
-          <div className="flex items-center gap-2">
-            <BarChart3 size={18} className="text-gold" />
-            <h2 className="font-heading text-lg font-bold text-navy">Website Traffic</h2>
-          </div>
-          <div className="flex border border-cream-dark">
+      <div className="mb-16">
+        <div className="flex items-end justify-between mb-8 px-2">
+          <h2 className="font-heading text-2xl text-navy italic font-light tracking-wide">Traffic & Engagement</h2>
+          <div className="flex bg-white rounded-full p-1 shadow-[0_4px_15px_-4px_rgba(0,0,0,0.03)] border border-navy/5">
             {RANGE_OPTIONS.map((opt) => (
               <button
                 key={opt.value}
                 onClick={() => setRange(opt.value)}
-                className={`px-3 py-1.5 text-xs font-semibold transition-colors ${
+                className={`px-5 py-2 text-[0.65rem] font-light uppercase tracking-widest rounded-full transition-all duration-500 ${
                   range === opt.value
-                    ? 'bg-navy text-gold'
-                    : 'bg-white text-charcoal/50 hover:text-charcoal'
+                    ? 'bg-navy/5 text-navy font-medium'
+                    : 'text-navy/30 hover:text-navy/60'
                 }`}
               >
                 {opt.label}
@@ -239,180 +257,137 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Visitor stat cards */}
-        <div className="grid sm:grid-cols-3 gap-4 mb-6">
-          <div className="bg-white border border-cream-dark p-5">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-[0.7rem] font-semibold tracking-[0.1em] uppercase text-charcoal/40">Today</span>
-              <Eye size={16} className="text-green-500" />
+        <div className="grid sm:grid-cols-3 gap-6 mb-8">
+          <div className="bg-white rounded-3xl p-8 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.05)] border border-navy/5">
+            <div className="flex items-center justify-between mb-6">
+              <span className="text-[0.6rem] font-light tracking-[0.3em] uppercase text-navy/40">Today</span>
+              <Eye size={16} strokeWidth={1.5} className="text-navy/30" />
             </div>
-            <p className="font-heading text-2xl font-bold text-navy">{viewStats.today}</p>
-            <p className="text-[0.65rem] text-charcoal/30 mt-1">page views</p>
+            <p className="font-heading text-4xl text-navy tracking-tight">{viewStats.today}</p>
           </div>
-          <div className="bg-white border border-cream-dark p-5">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-[0.7rem] font-semibold tracking-[0.1em] uppercase text-charcoal/40">Last {range} Days</span>
-              <BarChart3 size={16} className="text-blue-500" />
+          <div className="bg-white rounded-3xl p-8 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.05)] border border-navy/5">
+            <div className="flex items-center justify-between mb-6">
+              <span className="text-[0.6rem] font-light tracking-[0.3em] uppercase text-navy/40">Last {range} Days</span>
+              <BarChart3 size={16} strokeWidth={1.5} className="text-navy/30" />
             </div>
-            <p className="font-heading text-2xl font-bold text-navy">{viewStats.period}</p>
-            <p className="text-[0.65rem] text-charcoal/30 mt-1">total page views</p>
+            <p className="font-heading text-4xl text-navy tracking-tight">{viewStats.period}</p>
           </div>
-          <div className="bg-white border border-cream-dark p-5">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-[0.7rem] font-semibold tracking-[0.1em] uppercase text-charcoal/40">Active Days</span>
-              <Globe size={16} className="text-gold" />
+          <div className="bg-white rounded-3xl p-8 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.05)] border border-navy/5">
+            <div className="flex items-center justify-between mb-6">
+              <span className="text-[0.6rem] font-light tracking-[0.3em] uppercase text-navy/40">Active Days</span>
+              <Globe size={16} strokeWidth={1.5} className="text-navy/30" />
             </div>
-            <p className="font-heading text-2xl font-bold text-navy">{viewStats.unique}</p>
-            <p className="text-[0.65rem] text-charcoal/30 mt-1">days with traffic</p>
+            <p className="font-heading text-4xl text-navy tracking-tight">{viewStats.unique}</p>
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-6">
-          {/* Bar chart */}
-          <div className="lg:col-span-2 bg-white border border-cream-dark p-6">
-            <h3 className="text-[0.7rem] font-semibold tracking-[0.1em] uppercase text-charcoal/40 mb-4">Daily Page Views</h3>
+        <div className="grid lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2 bg-white rounded-3xl p-8 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.05)] border border-navy/5">
+            <h3 className="text-[0.6rem] font-light tracking-[0.3em] uppercase text-navy/40 mb-8">Daily Page Views</h3>
             {chartData.length === 0 ? (
-              <p className="text-slate text-sm py-8 text-center">No data yet. Views will appear as visitors browse the site.</p>
+              <p className="text-navy/50 font-medium text-sm text-center py-12">No data yet. Views will appear as visitors browse the site.</p>
             ) : (
-              <div className="flex items-end gap-[2px] h-44">
+              <div className="flex items-end gap-1 h-52">
                 {chartData.map((d) => {
                   const height = maxChart > 0 ? (d.count / maxChart) * 100 : 0;
                   return (
                     <div key={d.date} className="flex-1 flex flex-col items-center group relative">
-                      {/* Tooltip */}
-                      <div className="absolute bottom-full mb-2 hidden group-hover:block z-10">
-                        <div className="bg-navy text-white text-[0.6rem] px-2 py-1 whitespace-nowrap">
-                          {formatDate(d.date)}: {d.count} views
+                      <div className="absolute bottom-full mb-3 hidden group-hover:block z-10">
+                        <div className="bg-white shadow-xl text-navy text-[0.65rem] font-light tracking-wide px-3 py-2 rounded-lg border border-navy/5 whitespace-nowrap">
+                          {formatDate(d.date)} &mdash; <span className="font-medium text-gold">{d.count} views</span>
                         </div>
                       </div>
                       <div
-                        className="w-full bg-gold/70 hover:bg-gold transition-colors rounded-t-sm min-h-[2px]"
-                        style={{ height: `${Math.max(height, 1)}%` }}
+                        className="w-full bg-gold/20 group-hover:bg-gold/60 transition-all duration-300 rounded-t-sm min-h-[4px]"
+                        style={{ height: `${Math.max(height, 2)}%` }}
                       />
                     </div>
                   );
                 })}
               </div>
             )}
-            {chartData.length > 0 && (
-              <div className="flex justify-between mt-2">
-                <span className="text-[0.6rem] text-charcoal/30">{formatDate(chartData[0]?.date)}</span>
-                <span className="text-[0.6rem] text-charcoal/30">{formatDate(chartData[chartData.length - 1]?.date)}</span>
-              </div>
-            )}
           </div>
 
-          {/* Top pages */}
-          <div className="bg-white border border-cream-dark p-6">
-            <h3 className="text-[0.7rem] font-semibold tracking-[0.1em] uppercase text-charcoal/40 mb-4">Top Pages</h3>
+          <div className="bg-white rounded-3xl p-8 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.05)] border border-navy/5">
+            <h3 className="text-[0.6rem] font-light tracking-[0.3em] uppercase text-navy/40 mb-8">Top Pages</h3>
             {topPages.length === 0 ? (
-              <p className="text-slate text-sm">No data yet.</p>
+              <p className="text-navy/30 text-sm font-light italic">No data yet.</p>
             ) : (
-              <div className="space-y-3">
-                {topPages.map((p, i) => {
-                  const pct = viewStats.period > 0 ? (p.count / viewStats.period) * 100 : 0;
-                  return (
-                    <div key={p.path}>
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="text-xs text-charcoal truncate max-w-[70%]" title={p.path}>
-                          {p.path === '/' ? 'Homepage' : p.path}
-                        </span>
-                        <span className="text-xs text-charcoal/50 shrink-0 ml-2">{p.count}</span>
-                      </div>
-                      <div className="w-full bg-cream h-1.5">
-                        <div
-                          className="h-full bg-gold/60 transition-all"
-                          style={{ width: `${pct}%` }}
-                        />
-                      </div>
+              <div className="space-y-6">
+                {topPages.map((p) => (
+                  <div key={p.path} className="group">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs text-navy font-light tracking-wide truncate max-w-[75%]" title={p.path}>{p.path === '/' ? 'Homepage' : p.path}</span>
+                      <span className="text-[0.65rem] font-medium text-navy/40 shrink-0">{p.count}</span>
                     </div>
-                  );
-                })}
+                  </div>
+                ))}
               </div>
             )}
           </div>
         </div>
       </div>
 
-      {/* ── Pipeline Summary ── */}
       {pipelineSummary.length > 0 && (
-        <div className="mb-10">
-          <div className="flex items-center justify-between mb-5">
-            <div className="flex items-center gap-2">
-              <GitBranch size={18} className="text-gold" />
-              <h2 className="font-heading text-lg font-bold text-navy">Pipelines</h2>
+        <div className="mb-16">
+          <div className="bg-white rounded-3xl p-10 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.05)] border border-navy/10 col-span-1 lg:col-span-2">
+            <div className="flex items-center justify-between mb-10">
+              <h3 className="font-heading text-2xl text-navy tracking-tight">Lifecycle Stages</h3>
+              <span className="text-sm tracking-widest uppercase font-semibold text-navy/50">Current Contacts</span>
             </div>
-            <Link to="/admin/pipelines" className="text-gold text-sm font-semibold no-underline hover:underline">
-              View Board
-            </Link>
-          </div>
-
-          <div className="grid lg:grid-cols-3 gap-4">
-            {pipelineSummary.map((p) => (
-              <div key={p.id} className="bg-white border border-cream-dark p-5">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-heading text-base font-bold text-navy">{p.name}</h3>
-                  <span className="text-[0.65rem] font-semibold text-charcoal/30">{p.total} total</span>
-                </div>
-                <div className="space-y-2">
-                  {p.stages.map((stage) => {
-                    const count = p.stageCounts[stage] || 0;
-                    const pct = p.total > 0 ? (count / p.total) * 100 : 0;
-                    return (
-                      <div key={stage} className="flex items-center gap-3">
-                        <span className="text-xs text-charcoal/50 w-28 shrink-0 truncate">{stage}</span>
-                        <div className="flex-1 bg-cream h-2">
-                          <div className="h-full bg-gold/60 transition-all" style={{ width: `${pct}%` }} />
+            <div className="grid lg:grid-cols-3 gap-6">
+              {pipelineSummary.map((p) => (
+                <div key={p.id}>
+                  <h4 className="text-navy font-semibold mb-4">{p.name}</h4>
+                  <div className="space-y-4">
+                    {p.stages.map((stage) => {
+                      const count = p.stageCounts[stage] || 0;
+                      return (
+                        <div key={stage} className="flex items-center justify-between mb-3">
+                          <span className="text-sm font-semibold tracking-wide text-navy">{stage}</span>
+                          <span className="text-sm font-bold text-navy">{count}</span>
                         </div>
-                        <span className="text-xs text-charcoal/40 w-6 text-right shrink-0">{count}</span>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       )}
 
-      {/* Recent leads */}
-      <div className="bg-white border border-cream-dark">
-        <div className="px-6 py-4 border-b border-cream-dark flex items-center justify-between">
-          <h2 className="font-heading text-lg font-bold text-navy">Recent Leads</h2>
-          <Link to="/admin/leads" className="text-gold text-sm font-semibold no-underline hover:underline">
+      <div>
+        <div className="flex items-end justify-between mb-6 px-2">
+          <h2 className="font-heading text-2xl text-navy italic font-light tracking-wide">Recent Activity</h2>
+          <Link to="/admin/leads" className="text-[0.65rem] uppercase tracking-widest font-light text-gold hover:text-navy transition-colors no-underline">
             View All
           </Link>
         </div>
 
         {recentLeads.length === 0 ? (
-          <div className="p-10 text-center">
-            <p className="text-slate text-sm">No leads yet. They will appear here once someone submits a form.</p>
+          <div className="bg-white rounded-3xl p-16 text-center shadow-[0_15px_40px_-15px_rgba(0,0,0,0.05)] border border-navy/5">
+            <p className="text-navy/30 text-sm italic font-light">No leads yet. They will appear here once someone submits a form.</p>
           </div>
         ) : (
-          <div className="divide-y divide-cream-dark">
-            {recentLeads.map((lead) => (
-              <Link
-                key={lead.id}
-                to={`/admin/leads/${lead.id}`}
-                className="flex items-center justify-between px-6 py-4 hover:bg-cream/50 transition-colors no-underline"
-              >
-                <div>
-                  <p className="text-navy font-semibold text-sm">
-                    {lead.first_name || ''} {lead.last_name || ''}
-                    {!lead.first_name && !lead.last_name && <span className="text-slate italic">No name</span>}
-                  </p>
-                  <p className="text-slate text-xs">{lead.email}</p>
-                </div>
-                <div className="text-right">
-                  <span className="inline-block px-2 py-0.5 text-[0.6rem] font-semibold tracking-wider uppercase bg-cream text-charcoal/60 border border-cream-dark">
-                    {lead.lifecycle_stage || 'Explorer'}
-                  </span>
-                  <p className="text-slate text-[0.65rem] mt-1">
-                    {new Date(lead.created_at).toLocaleDateString()}
-                  </p>
-                </div>
-              </Link>
-            ))}
+          <div className="bg-white rounded-3xl shadow-[0_15px_40px_-15px_rgba(0,0,0,0.05)] border border-navy/5 overflow-hidden">
+            <div className="divide-y divide-navy/5">
+              {recentLeads.map((lead) => (
+                <Link
+                  key={lead.id}
+                  to={`/admin/leads/${lead.id}`}
+                  className="group flex items-center justify-between px-8 py-6 hover:bg-[#FDFCFB] transition-colors duration-500 no-underline"
+                >
+                  <div>
+                    <p className="font-heading text-lg text-navy tracking-wide group-hover:text-gold transition-colors duration-500">
+                      {lead.first_name || ''} {lead.last_name || ''}
+                      {!lead.first_name && !lead.last_name && <span className="text-navy/30 italic font-light">No name</span>}
+                    </p>
+                    <p className="text-navy/40 text-xs font-light mt-1 tracking-wide">{lead.email}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
         )}
       </div>
