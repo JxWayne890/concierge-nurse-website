@@ -104,11 +104,14 @@ export default function Pipelines() {
   }
 
   function timeInStage(enteredAt) {
-    const diff = Date.now() - new Date(enteredAt).getTime();
+    if (!enteredAt) return '—';
+    const entered = new Date(enteredAt);
+    const diff = Date.now() - entered.getTime();
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    if (days === 0) return 'Today';
-    if (days === 1) return '1 day';
-    return `${days} days`;
+    const dateStr = entered.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    if (days === 0) return dateStr;
+    if (days === 1) return `${dateStr} · 1d`;
+    return `${dateStr} · ${days}d`;
   }
 
   function handleDragStart(pc) {

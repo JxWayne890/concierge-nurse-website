@@ -374,7 +374,7 @@ export default function Leads() {
                         {lead.lifecycle_stage || 'Explorer'}
                       </span>
                       <span className="text-navy/30 text-[0.65rem] font-light tracking-widest uppercase mt-2">
-                        {new Date(lead.created_at).toLocaleDateString()}
+                        {new Date(lead.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                       </span>
                     </div>
                   </div>

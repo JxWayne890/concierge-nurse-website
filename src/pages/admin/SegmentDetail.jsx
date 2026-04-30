@@ -194,7 +194,7 @@ export default function SegmentDetail() {
                     )}
                     <span className="flex items-center gap-1.5 text-xs font-light text-navy/40 tracking-wide">
                       <Calendar size={11} strokeWidth={1.5} />
-                      {new Date(contact.created_at).toLocaleDateString()}
+                      {new Date(contact.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                     </span>
                   </div>
 
