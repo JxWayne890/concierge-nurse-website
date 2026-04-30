@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { Upload, X, Image as ImageIcon } from 'lucide-react';
-import { uploadToImgBB } from '../../lib/imgbb';
+import { uploadPublicImage } from '../../lib/supabaseStorage';
 
 export default function ImageUpload({
   currentUrl,
@@ -26,7 +26,7 @@ export default function ImageUpload({
     setError('');
     setUploading(true);
     try {
-      const url = await uploadToImgBB(file);
+      const url = await uploadPublicImage(file, { folder: 'brand' });
       onUpload(url);
     } catch (err) {
       setError(err.message || 'Upload failed');

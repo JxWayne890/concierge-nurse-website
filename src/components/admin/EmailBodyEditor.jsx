@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { Image as ImageIcon } from 'lucide-react';
 import { EMAIL_TEMPLATES } from './emailTemplates';
-import { uploadToImgBB } from '../../lib/imgbb';
+import { uploadPublicImage } from '../../lib/supabaseStorage';
 import { wrapInBrandTemplate } from '../../lib/emailBrand';
 
 const PERSONALIZATION_TOKENS = ['{firstName}', '{lastName}', '{email}'];
@@ -45,7 +45,7 @@ export default function EmailBodyEditor({ value, onChange, rows = 14, onTemplate
     setImageError('');
     setUploadingImage(true);
     try {
-      const url = await uploadToImgBB(file);
+      const url = await uploadPublicImage(file, { folder: 'email' });
       insertAtCursor(`<img src="${url}" alt="" style="max-width:100%;height:auto;display:block;margin:16px auto;" />`);
     } catch (err) {
       setImageError(err.message || 'Upload failed');

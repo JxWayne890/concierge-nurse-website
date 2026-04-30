@@ -367,10 +367,10 @@ export default function Settings() {
                   type="url"
                   value={blog.signoff_photo_url || ''}
                   onChange={(e) => setBlogField({ signoff_photo_url: e.target.value })}
-                  placeholder="https://i.ibb.co/..."
+                  placeholder="https://..."
                   className="w-full px-4 py-3 border border-cream-dark bg-white text-sm focus:outline-none focus:border-gold"
                 />
-                <p className="text-[0.65rem] text-charcoal/40 mt-1">Square crop. Upload to ImgBB and paste the URL here.</p>
+                <p className="text-[0.65rem] text-charcoal/40 mt-1">Square crop. Use a public Supabase Storage URL.</p>
               </div>
 
               {/* Preview */}
