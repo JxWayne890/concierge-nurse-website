@@ -99,13 +99,15 @@ async function handleCheckoutCompleted(supabase, session) {
     status: 'paid',
   };
 
-  // Link to an existing contact by email (helps the admin UI).
-  const { data: contact } = await supabase
-    .from('contacts')
-    .select('id')
-    .ilike('email', nurse_email)
-    .maybeSingle();
-  if (contact) payload.contact_id = contact.id;
+  const contactId = await upsertAcceleratorContact(supabase, {
+    email: nurse_email,
+    name: payload.nurse_name,
+    phone: payload.nurse_phone,
+    sessionId: session.id,
+    plan: payload.plan,
+    amountCents: payload.amount_cents,
+  });
+  if (contactId) payload.contact_id = contactId;
 
   const { data: existing } = await supabase
     .from('enrollments')
@@ -180,4 +182,163 @@ async function markFailedSession(supabase, session) {
 function emptyToNull(v) {
   if (v === undefined || v === null || v === '') return null;
   return v;
+}
+
+function parseName(fullName = '') {
+  const parts = fullName.trim().split(/\s+/).filter(Boolean);
+  return {
+    first_name: parts[0] || null,
+    last_name: parts.slice(1).join(' ') || null,
+  };
+}
+
+const LIFECYCLE_RANK = {
+  Explorer: 1,
+  DIYer: 2,
+  Builder: 3,
+  'Established Owner': 4,
+};
+
+function shouldUpgradeLifecycle(current, proposed) {
+  return (LIFECYCLE_RANK[proposed] || 0) > (LIFECYCLE_RANK[current] || 0);
+}
+
+async function upsertAcceleratorContact(supabase, { email, name, phone, sessionId, plan, amountCents }) {
+  const emailLower = email.toLowerCase();
+  const { first_name, last_name } = parseName(name || '');
+
+  const { data: existing } = await supabase
+    .from('contacts')
+    .select('*')
+    .ilike('email', emailLower)
+    .maybeSingle();
+
+  let contactId;
+  if (existing) {
+    const updates = {
+      updated_at: new Date().toISOString(),
+      interest: 'accelerator_cohort',
+    };
+    if (!existing.first_name && first_name) updates.first_name = first_name;
+    if (!existing.last_name && last_name) updates.last_name = last_name;
+    if (!existing.phone && phone) updates.phone = phone;
+    if (shouldUpgradeLifecycle(existing.lifecycle_stage, 'Builder')) {
+      updates.lifecycle_stage = 'Builder';
+    }
+
+    await supabase.from('contacts').update(updates).eq('id', existing.id);
+    contactId = existing.id;
+  } else {
+    const { data: created } = await supabase
+      .from('contacts')
+      .insert({
+        first_name,
+        last_name,
+        email: emailLower,
+        phone: phone || null,
+        interest: 'accelerator_cohort',
+        status: 'new',
+        source: 'stripe_checkout',
+        lifecycle_stage: 'Builder',
+        intent: 'accelerator',
+        lead_score: 80,
+        score_reasons: [
+          { signal: 'Completed Accelerator checkout', points: 80 },
+        ],
+      })
+      .select('id')
+      .maybeSingle();
+    contactId = created?.id;
+  }
+
+  if (!contactId) return null;
+
+  await assignTag(supabase, contactId, 'Accelerator Enrolled');
+  await assignTag(supabase, contactId, 'Accelerator Inquiry');
+  await upsertPipelineStage(supabase, contactId, 'Accelerator', 'Enrolled');
+  await supabase.from('activity_log').insert({
+    contact_id: contactId,
+    type: 'payment',
+    description: 'Completed Accelerator checkout',
+    metadata: {
+      source: 'stripe_checkout',
+      routed_pipeline: 'Accelerator',
+      stage: 'Enrolled',
+      stripe_checkout_session_id: sessionId,
+      plan,
+      amount_cents: amountCents,
+    },
+  });
+
+  return contactId;
+}
+
+async function assignTag(supabase, contactId, tagName) {
+  const { data: existingTag } = await supabase
+    .from('tags')
+    .select('id')
+    .eq('name', tagName)
+    .maybeSingle();
+
+  let tagId = existingTag?.id;
+  if (!tagId) {
+    const { data: created } = await supabase
+      .from('tags')
+      .insert({ name: tagName })
+      .select('id')
+      .maybeSingle();
+    tagId = created?.id;
+  }
+
+  if (!tagId) return;
+
+  await supabase
+    .from('contact_tags')
+    .upsert({ contact_id: contactId, tag_id: tagId }, { onConflict: 'contact_id,tag_id', ignoreDuplicates: true });
+}
+
+async function upsertPipelineStage(supabase, contactId, pipelineName, stage) {
+  const { data: pipeline } = await supabase
+    .from('pipelines')
+    .select('id')
+    .eq('name', pipelineName)
+    .maybeSingle();
+
+  if (!pipeline) return;
+
+  const { data: existing } = await supabase
+    .from('pipeline_contacts')
+    .select('id, stage')
+    .eq('pipeline_id', pipeline.id)
+    .eq('contact_id', contactId)
+    .maybeSingle();
+
+  if (existing) {
+    if (existing.stage !== 'Completed') {
+      await supabase
+        .from('pipeline_contacts')
+        .update({ stage, entered_stage_at: new Date().toISOString() })
+        .eq('id', existing.id);
+    }
+  } else {
+    await supabase.from('pipeline_contacts').insert({
+      pipeline_id: pipeline.id,
+      contact_id: contactId,
+      stage,
+    });
+  }
+
+  const { data: general } = await supabase
+    .from('pipelines')
+    .select('id')
+    .eq('name', 'General')
+    .maybeSingle();
+
+  if (general) {
+    await supabase
+      .from('pipeline_contacts')
+      .delete()
+      .eq('pipeline_id', general.id)
+      .eq('contact_id', contactId);
+  }
 }

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, FileText, Lightbulb, Layers, Video, Zap } from 'lucide-react';
 import SEO from '../components/SEO';
+import { submitContactForm } from '../lib/api';
 
 const strategySchema = [
   {
@@ -56,6 +57,35 @@ const graduateOffers = [
 ];
 
 export default function Strategy() {
+  const [form, setForm] = useState({
+    first_name: '',
+    last_name: '',
+    email: '',
+    interest: 'clarity_consult',
+    message: '',
+  });
+  const [status, setStatus] = useState('idle');
+  const [errorMsg, setErrorMsg] = useState('');
+
+  function update(field) {
+    return (e) => setForm((prev) => ({ ...prev, [field]: e.target.value }));
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setStatus('submitting');
+    setErrorMsg('');
+
+    try {
+      await submitContactForm(form);
+      setStatus('success');
+      setForm({ first_name: '', last_name: '', email: '', interest: 'clarity_consult', message: '' });
+    } catch (err) {
+      setStatus('error');
+      setErrorMsg(err.message || 'Something went wrong. Please try again.');
+    }
+  }
+
   return (
     <>
       <SEO
@@ -115,7 +145,7 @@ export default function Strategy() {
                   ))}
                 </div>
 
-                <button className="btn-primary">Book a Clarity Consult</button>
+                <a href="#book" className="btn-primary no-underline inline-block">Book a Clarity Consult</a>
               </div>
 
               <div className="bg-[#F8F6F1] border border-gold/20 p-8">
@@ -177,9 +207,62 @@ export default function Strategy() {
                     </li>
                   ))}
                 </ul>
-                <button className="btn-navy w-full">Inquire</button>
+                <a href="#book" className="btn-navy w-full no-underline inline-block text-center">Inquire</a>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+
+      <section id="book" className="py-24 bg-white">
+        <div className="max-w-4xl mx-auto px-6 lg:px-10">
+          <div className="bg-cream border border-cream-dark p-8 lg:p-12">
+            <div className="text-center max-w-2xl mx-auto mb-12">
+              <h2 className="font-heading text-3xl font-bold text-navy mb-4">
+                Inquire About a Consult
+              </h2>
+              <p className="text-slate text-sm leading-relaxed">
+                Ready to get clear? Fill out the form below and Tracy will follow
+                up to schedule your 60-minute strategy session.
+              </p>
+            </div>
+
+            {status === 'success' ? (
+              <div className="bg-navy/5 border border-gold/30 p-8 text-center">
+                <p className="text-gold font-bold mb-2">Request submitted!</p>
+                <p className="text-navy/70 text-sm">Tracy will follow up with you via email within 48 hours to schedule your session.</p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid sm:grid-cols-2 gap-6">
+                  <div>
+                    <label className="text-[0.65rem] font-bold tracking-[0.15em] uppercase text-navy/40 mb-2 block">First Name</label>
+                    <input type="text" required value={form.first_name} onChange={update('first_name')} className="w-full px-4 py-3 bg-white border border-cream-dark text-sm focus:outline-none focus:border-gold transition-colors" />
+                  </div>
+                  <div>
+                    <label className="text-[0.65rem] font-bold tracking-[0.15em] uppercase text-navy/40 mb-2 block">Last Name</label>
+                    <input type="text" required value={form.last_name} onChange={update('last_name')} className="w-full px-4 py-3 bg-white border border-cream-dark text-sm focus:outline-none focus:border-gold transition-colors" />
+                  </div>
+                </div>
+                <div>
+                  <label className="text-[0.65rem] font-bold tracking-[0.15em] uppercase text-navy/40 mb-2 block">Email Address</label>
+                  <input type="email" required value={form.email} onChange={update('email')} className="w-full px-4 py-3 bg-white border border-cream-dark text-sm focus:outline-none focus:border-gold transition-colors" />
+                </div>
+                <div>
+                  <label className="text-[0.65rem] font-bold tracking-[0.15em] uppercase text-navy/40 mb-2 block">Briefly describe your current business stage or challenge</label>
+                  <textarea rows={4} value={form.message} onChange={update('message')} className="w-full px-4 py-3 bg-white border border-cream-dark text-sm focus:outline-none focus:border-gold transition-colors resize-none" />
+                </div>
+
+                {status === 'error' && (
+                  <p className="text-red-600 text-sm">{errorMsg}</p>
+                )}
+
+                <button type="submit" disabled={status === 'submitting'} className="btn-navy w-full disabled:opacity-60">
+                  {status === 'submitting' ? 'Sending Request...' : 'Send Inquiry'}
+                </button>
+              </form>
+            )}
           </div>
         </div>
       </section>

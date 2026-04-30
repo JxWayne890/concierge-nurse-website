@@ -159,6 +159,42 @@ export default function BlogCommentForm({ postId, onSubmitted }) {
           // Attach contact to the comment row
           await supabase.from('blog_comments').update({ contact_id: contactId }).eq('id', commentRow.id);
 
+          if (!existing) {
+            const { error: routeError } = await supabase.rpc('route_contact_to_pipeline', {
+              p_contact_id: contactId,
+              p_pipeline_name: 'General',
+              p_stage: null,
+            });
+
+            if (routeError) {
+              const { data: pipeline } = await supabase
+                .from('pipelines')
+                .select('id, stages')
+                .eq('name', 'General')
+                .maybeSingle();
+
+              if (pipeline) {
+                await supabase.from('pipeline_contacts').insert({
+                  pipeline_id: pipeline.id,
+                  contact_id: contactId,
+                  stage: pipeline.stages?.[0] || 'New',
+                });
+              }
+            }
+          }
+
+          await supabase.from('activity_log').insert({
+            contact_id: contactId,
+            type: 'form_submission',
+            description: 'Submitted blog comment',
+            metadata: {
+              source: 'blog_comment',
+              page_url: window.location.pathname,
+              post_id: postId,
+              comment_id: commentRow.id,
+            },
+          });
+
           // Score the lead — commenters have some intent, treat as newsletter-level signal
           const scoring = scoreLead({
             formType: 'newsletter',

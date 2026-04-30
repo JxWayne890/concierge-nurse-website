@@ -34,12 +34,13 @@ async function applyScoring(contactId, existing, scoring) {
     .eq('id', contactId);
 }
 
-function getMetadata(source) {
+function getMetadata(source, extra = {}) {
   return {
     source,
     page_url: window.location.pathname,
     ...getUTMParams(),
     referrer: document.referrer || null,
+    ...extra,
   };
 }
 
@@ -67,31 +68,39 @@ async function getOrCreateTag(tagName) {
     .from('tags')
     .select('id')
     .eq('name', tagName)
-    .single();
+    .maybeSingle();
 
   if (existing) return existing.id;
 
-  const { data: created } = await supabase
+  const { data: created, error } = await supabase
     .from('tags')
     .insert({ name: tagName })
     .select('id')
-    .single();
+    .maybeSingle();
 
-  return created.id;
+  if (error) return null;
+  return created?.id || null;
 }
 
 async function assignTag(contactId, tagName) {
   const tagId = await getOrCreateTag(tagName);
+  if (!tagId) return;
 
   const { data: existing } = await supabase
     .from('contact_tags')
     .select('contact_id')
     .eq('contact_id', contactId)
     .eq('tag_id', tagId)
-    .single();
+    .maybeSingle();
 
   if (!existing) {
     await supabase.from('contact_tags').insert({ contact_id: contactId, tag_id: tagId });
+  }
+}
+
+async function assignTags(contactId, tagNames = []) {
+  for (const tagName of tagNames.filter(Boolean)) {
+    await assignTag(contactId, tagName);
   }
 }
 
@@ -101,6 +110,14 @@ async function addNote(contactId, content) {
 }
 
 async function assignPipeline(contactId, pipelineName) {
+  const { error: routeError } = await supabase.rpc('route_contact_to_pipeline', {
+    p_contact_id: contactId,
+    p_pipeline_name: pipelineName,
+    p_stage: null,
+  });
+
+  if (!routeError) return;
+
   // Find pipeline
   const { data: pipeline } = await supabase
     .from('pipelines')
@@ -127,6 +144,69 @@ async function assignPipeline(contactId, pipelineName) {
     contact_id: contactId,
     stage: firstStage,
   });
+
+  if (pipelineName !== 'General') {
+    const { data: general } = await supabase
+      .from('pipelines')
+      .select('id')
+      .eq('name', 'General')
+      .maybeSingle();
+
+    if (general) {
+      await supabase
+        .from('pipeline_contacts')
+        .delete()
+        .eq('pipeline_id', general.id)
+        .eq('contact_id', contactId);
+    }
+  }
+}
+
+const FORM_ROUTING = {
+  accelerator_cohort: {
+    pipeline: 'Accelerator',
+    tag: 'Accelerator Inquiry',
+    lifecycle: 'Builder',
+  },
+  business_consulting: {
+    pipeline: 'Consulting',
+    tag: 'Consulting Inquiry',
+    lifecycle: 'Established Owner',
+  },
+  clarity_consult: {
+    pipeline: 'Consulting',
+    tag: 'Clarity Consult Inquiry',
+    lifecycle: 'Explorer',
+  },
+  vip_bridge_session: {
+    pipeline: 'Consulting',
+    tag: 'VIP Bridge Inquiry',
+    lifecycle: 'Builder',
+  },
+  private_coaching: {
+    pipeline: 'Consulting',
+    tag: 'Private Coaching Inquiry',
+    lifecycle: 'Builder',
+  },
+  toolkits_resources: {
+    pipeline: 'Toolkits',
+    tag: 'Toolkit Inquiry',
+    lifecycle: 'DIYer',
+  },
+  general_question: {
+    pipeline: 'General',
+    tag: 'General Inquiry',
+    lifecycle: 'Explorer',
+  },
+  other: {
+    pipeline: 'General',
+    tag: 'General Inquiry',
+    lifecycle: 'Explorer',
+  },
+};
+
+function getRoutingForInterest(interest) {
+  return FORM_ROUTING[interest] || FORM_ROUTING.general_question;
 }
 
 async function enrollInSequences(contactId) {
@@ -179,7 +259,7 @@ async function findContactByEmail(email) {
     .from('contacts')
     .select('*')
     .eq('email', email.toLowerCase())
-    .single();
+    .maybeSingle();
   return data;
 }
 
@@ -193,18 +273,27 @@ function parseName(fullName) {
 
 // ── Form submission functions ───────────────────────────────
 
-export async function submitContactForm({ first_name, last_name, email, interest, message }) {
-  const meta = getMetadata('contact_form');
+export async function submitContactForm({ first_name, last_name, email, interest, message, selected_toolkits = [] }) {
+  const routing = getRoutingForInterest(interest);
+  const meta = getMetadata('contact_form', {
+    interest,
+    selected_toolkits,
+    routed_pipeline: routing.pipeline,
+  });
   const emailLower = email.toLowerCase();
   const existing = await findContactByEmail(emailLower);
+  const lifecycle = routing.lifecycle || 'Explorer';
 
   let contactId;
 
   if (existing) {
-    const updates = { updated_at: new Date().toISOString() };
+    const updates = { updated_at: new Date().toISOString(), interest: 'business_consulting' };
     if (!existing.first_name && first_name) updates.first_name = first_name;
     if (!existing.last_name && last_name) updates.last_name = last_name;
     if (interest) updates.interest = interest;
+    if (shouldUpgradeLifecycle(existing.lifecycle_stage, lifecycle)) {
+      updates.lifecycle_stage = lifecycle;
+    }
 
     await supabase.from('contacts').update(updates).eq('id', existing.id);
     contactId = existing.id;
@@ -218,7 +307,7 @@ export async function submitContactForm({ first_name, last_name, email, interest
         interest,
         status: 'new',
         source: 'form_submission',
-        lifecycle_stage: 'Explorer',
+        lifecycle_stage: lifecycle,
         ...getContactAttribution(),
       })
       .select('id')
@@ -228,13 +317,19 @@ export async function submitContactForm({ first_name, last_name, email, interest
     contactId = data.id;
   }
 
-  await assignTag(contactId, 'Contact Form Lead');
-  await addNote(contactId, message);
-  await logActivity(contactId, `Submitted contact form — interest: ${interest}`, meta);
-  await assignPipeline(contactId, 'General');
+  const toolkitNote = selected_toolkits.length
+    ? `Selected toolkit interest: ${selected_toolkits.join(', ')}`
+    : '';
+  const noteContent = [toolkitNote, message].filter(Boolean).join('\n\n');
+  const toolkitTags = selected_toolkits.map((name) => `Toolkit: ${name}`);
+
+  await assignTags(contactId, ['Contact Form Lead', routing.tag, ...toolkitTags]);
+  await addNote(contactId, noteContent);
+  await logActivity(contactId, `Submitted contact form — interest: ${interest}; routed to ${routing.pipeline}`, meta);
+  await assignPipeline(contactId, routing.pipeline);
   await enrollInSequences(contactId);
 
-  const merged = { ...(existing || {}), first_name, last_name, interest, lifecycle_stage: existing?.lifecycle_stage || 'Explorer' };
+  const merged = { ...(existing || {}), first_name, last_name, interest, lifecycle_stage: lifecycle };
   const scoring = scoreLead({
     formType: 'contact',
     interest,
@@ -279,6 +374,7 @@ export async function submitConsultingInquiry({ full_name, email, business_name,
         first_name,
         last_name,
         email: emailLower,
+        interest: 'business_consulting',
         business_name: business_name || null,
         annual_revenue: annual_revenue || null,
         status: 'new',
@@ -324,7 +420,7 @@ export async function submitAcceleratorWaitlist({ full_name, email }) {
   let contactId;
 
   if (existing) {
-    const updates = { updated_at: new Date().toISOString() };
+    const updates = { updated_at: new Date().toISOString(), interest: 'accelerator_cohort' };
     if (!existing.first_name && first_name) updates.first_name = first_name;
     if (!existing.last_name && last_name) updates.last_name = last_name;
     if (shouldUpgradeLifecycle(existing.lifecycle_stage, 'Builder')) {
@@ -340,6 +436,7 @@ export async function submitAcceleratorWaitlist({ full_name, email }) {
         first_name,
         last_name,
         email: emailLower,
+        interest: 'accelerator_cohort',
         status: 'new',
         source: 'form_submission',
         lifecycle_stage: 'Builder',
@@ -408,7 +505,9 @@ export async function submitSubscribe({ email, first_name, source }) {
 
   await assignTag(contactId, tagName);
   await logActivity(contactId, `Subscribed via ${source.replace(/_/g, ' ')}`, meta);
-  await assignPipeline(contactId, 'General');
+  if (!existing) {
+    await assignPipeline(contactId, 'General');
+  }
   await enrollInSequences(contactId);
 
   const scoring = scoreLead({

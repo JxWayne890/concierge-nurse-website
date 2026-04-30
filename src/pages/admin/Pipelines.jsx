@@ -13,6 +13,7 @@ const STAGE_COLORS = {
   'Active Client': 'border-l-green-500',
   Nurturing: 'border-l-cyan-400',
   Converted: 'border-l-green-500',
+  Purchased: 'border-l-green-500',
   Closed: 'border-l-charcoal/30',
 };
 
@@ -20,6 +21,7 @@ const STAGE_COLORS = {
 const DEFAULT_PIPELINES = {
   Accelerator: ['New', 'Contacted', 'Consult Booked', 'Enrolled', 'Completed'],
   Consulting: ['New', 'Contacted', 'Discovery Call', 'Proposal Sent', 'Active Client'],
+  Toolkits: ['New', 'Contacted', 'Nurturing', 'Purchased', 'Closed'],
   General: ['New', 'Contacted', 'Nurturing', 'Converted', 'Closed'],
 };
 
